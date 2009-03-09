@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# php_app will be deprecated for web_app (apache2 cookbook).
 
 define :php_app, :docroot => nil, :canonical_hostname => nil, :template => "php/php.conf.erb" do
   
