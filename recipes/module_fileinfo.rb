@@ -20,7 +20,7 @@
 #
 
 case node['platform']
-when "centos", "redhat", "fedora"
+when "centos", "redhat", "fedora", "scientific"
   # enabled by default in php53
 when "debian", "ubuntu"
   package "php5-fileinfo" do

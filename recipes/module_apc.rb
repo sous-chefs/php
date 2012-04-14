@@ -20,7 +20,7 @@
 #
 
 case node['platform']
-when "centos", "redhat", "fedora"
+when "centos", "redhat", "fedora", "scientific"
   %w{ httpd-devel pcre pcre-devel }.each do |pkg|
     package pkg do
       action :install

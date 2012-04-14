@@ -20,7 +20,7 @@
 #
 
 case node['platform']
-when "centos", "redhat", "fedora"
+when "centos", "redhat", "fedora", "scientific"
   pearhub_chan = php_pear_channel "pearhub.org" do
     action :discover
   end

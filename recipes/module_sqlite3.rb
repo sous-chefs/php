@@ -20,7 +20,7 @@
 #
 
 case node['platform']
-when "centos", "redhat", "fedora"
+when "centos", "redhat", "fedora", "scientific"
   #already there in centos, --with-pdo-sqlite=shared
 when "debian", "ubuntu"
   package "php5-sqlite" do
