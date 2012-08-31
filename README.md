@@ -26,7 +26,9 @@ These cookbooks are only used when building PHP from source.
 Attributes
 ==========
 
-* `node["php"]["install_method"]` = method to install php with, default `package`.
+* `node['php']['install_method']` = method to install php with, default `package`.
+* `node['php']['directives']` = Hash of directives and values to append
+  to `php.ini`, default `{}`.
 
 The file also contains the following attribute types:
 
