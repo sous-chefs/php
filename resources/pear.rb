@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+default_action :install
 actions :install, :upgrade, :remove, :purge
 
 attribute :package_name, :kind_of => String, :name_attribute => true
