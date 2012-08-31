@@ -21,6 +21,7 @@
 lib_dir = kernel['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
 default['php']['install_method'] = 'package'
+default['php']['directives'] = {}
 
 case node["platform_family"]
 when "rhel", "fedora"
