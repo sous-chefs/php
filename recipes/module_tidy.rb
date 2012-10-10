@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-tidy" },
-    "debian" => { "default" => "php5-tidy" }
+    [ "rhel", "fedora" ] => "php-tidy",
+    "debian" => "php5-tidy"
 )
 
 package pkg do

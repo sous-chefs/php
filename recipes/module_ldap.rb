@@ -22,8 +22,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-ldap" },
-    "debian" => { "default" => "php5-ldap" }
+    [ "rhel", "fedora" ] => "php-ldap",
+    "debian" => "php5-ldap"
 )
 
 package pkg do

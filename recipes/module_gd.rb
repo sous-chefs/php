@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-gd" },
-    "debian" => { "default" => "php5-gd" }
+    [ "rhel", "fedora" ] => "php-gd",
+    "debian" => "php5-gd"
 )
 
 package pkg do

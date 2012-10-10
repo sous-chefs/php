@@ -21,12 +21,8 @@
 #
 
 pkgs = value_for_platform_family(
-  [ "rhel", "fedora" ] => {
-    "default" => %w{ php php-common php-devel php-cli php-pear }
-  },
-  "debian" => {
-    "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
-  }
+  [ "rhel", "fedora" ] => %w{ php php-common php-devel php-cli php-pear },
+  "debian" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
 )
 
 include_recipe "yumrepo::atomic" if platform?("centos", "redhat")

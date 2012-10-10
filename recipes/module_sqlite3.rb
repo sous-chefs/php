@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-sqlite" },
-    "debian" => { "default" => "php5-sqlite" }
+    [ "rhel", "fedora" ] => "php-sqlite",
+    "debian" => "php5-sqlite"
 )
 
 package pkg do

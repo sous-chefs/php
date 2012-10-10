@@ -20,8 +20,8 @@
 #
 
 pkgname = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-fpm" },
-    "debian" => { "default" => "php5-fpm" }
+    [ "rhel", "fedora" ] => "php-fpm",
+    "debian" => "php5-fpm"
 )
 
 package pkgname

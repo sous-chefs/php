@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-mcrypt" },
-    "debian" => { "default" => "php5-mcrypt" }
+    [ "rhel", "fedora" ] => "php-mcrypt",
+    "debian" => "php5-mcrypt"
 )
 
 package pkg do

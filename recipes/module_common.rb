@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => %w{ php-common php-cli php-mbstring php-gd php-intl php-pspell php-mcrypt php-soap php-sqlite php-xml php-xmlrpc } }, 
-    "debian" => { "default" => %w{ php5-curl php5-json php5-cli php5-gd php5-intl php5-pspell php5-mcrypt php5-mhash php5-sqlite php5-xsl php5-xmlrpc } }
+    [ "rhel", "fedora" ] => %w{ php-common php-cli php-mbstring php-gd php-intl php-pspell php-mcrypt php-soap php-sqlite php-xml php-xmlrpc }, 
+    "debian" => %w{ php5-curl php5-json php5-cli php5-gd php5-intl php5-pspell php5-mcrypt php5-mhash php5-sqlite php5-xsl php5-xmlrpc }
 )
 
 pkg.each do |ppkg| 

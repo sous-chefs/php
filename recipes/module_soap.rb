@@ -19,11 +19,6 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-   [ "rhel", "fedora" ] => { "default" => "php-soap" },
-   "debian" => { "default" => "php5-soap" }
-)
-
 # Ubuntu/Debian already ship SOAP with the PHP common package
 
 package "php-soap" do
