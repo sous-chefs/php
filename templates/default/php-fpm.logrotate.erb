@@ -1,0 +1,12 @@
+<%= node['php']['fpm_logfile'] %> <%= node['php']['fpm_log_dir'] %>/*.log {
+	rotate 4
+	weekly
+	copytruncate
+	missingok
+	notifempty
+	sharedscripts
+	delaycompress
+	postrotate
+		/bin/kill -SIGUSR1 `cat <%= node['php']['fpm_pidfile'] %> 2>/dev/null` 2>/dev/null || true
+	endscript
+}

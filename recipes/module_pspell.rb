@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: php
-# Recipe:: module_fileinfo
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Cookbook Name:: php
+# Recipe:: module_pspell
+#
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when "rhel", "fedora"
-  # enabled by default in php53
-when "debian"
-  package "php5-fileinfo" do
-    action :upgrade
-  end
+pkg = value_for_platform_family(
+    [ "rhel", "fedora" ] => { "default" => "php-pspell" },
+    "debian" => { "default" => "php5-pspell" }
+)
+
+package pkg do
+  action :install
 end

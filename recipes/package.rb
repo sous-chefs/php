@@ -1,5 +1,7 @@
 #
 # Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+#
 # Cookbook Name:: php
 # Recipe:: package
 #
@@ -18,16 +20,16 @@
 # limitations under the License.
 #
 
-pkgs = value_for_platform(
-  %w(centos redhat scientific fedora) => {
-    %w(5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8) => %w(php53 php53-devel php53-cli php-pear),
-    'default' => %w(php php-devel php-cli php-pear)
+pkgs = value_for_platform_family(
+  [ "rhel", "fedora" ] => {
+    "default" => %w{ php php-common php-devel php-cli php-pear }
   },
-  [ "debian", "ubuntu" ] => {
+  "debian" => {
     "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
-  },
-  "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  }
 )
+
+include_recipe "yumrepo::atomic" if platform?("centos", "redhat")
 
 pkgs.each do |pkg|
   package pkg do
@@ -39,5 +41,42 @@ template "#{node['php']['conf_dir']}/php.ini" do
   source "php.ini.erb"
   owner "root"
   group "root"
-  mode "0644"
+  mode 00644
+end
+
+if platform_family?("debian")
+  template "#{node['php']['cgi_conf_dir']}/php.ini" do
+    source "php.ini.erb"
+    owner "root"
+    group "root"
+    mode 0644
+  end
+end
+
+[ node["php"]["session_dir"], node["php"]["upload_dir"] ].each do |dir|
+  directory dir do
+    owner "root"
+    group "root"
+    mode 01777
+    action :create
+    recursive true
+  end
+end
+
+if node["php"]["tmpfs"]
+  total_mem = (node.memory.total.to_i / 1024) + (node.memory.swap.total.to_i / 1024)
+  if total_mem < node["php"]["tmpfs_size"].to_i
+    Chef::Log.info('You have specified a much bigger tmpfs session store than you can handle. Add more memory or swap or adjust the tmpfs size!')
+  else
+    [ node["php"]["session_dir"], node["php"]["upload_dir"] ].each do |dir|
+      mount dir do
+        device "tmpfs"
+        fstype "tmpfs"
+        options [ "size=#{node['php']['tmpfs_size']}", "mode=1777", "noatime", "noexec", "nosuid", "nodev" ]
+        dump 0
+        pass 0
+        supports [ :remount => true ]
+      end
+    end
+  end
 end

@@ -195,13 +195,13 @@
 ; php.ini Options  ;
 ;;;;;;;;;;;;;;;;;;;;
 ; Name for user-defined php.ini (.htaccess) files. Default is ".user.ini"
-;user_ini.filename = ".user.ini"
+user_ini.filename = ".user.ini"
 
 ; To disable this feature set this option to empty value
 ;user_ini.filename =
 
 ; TTL for user-defined php.ini files (time-to-live) in seconds. Default is 300 seconds (5 minutes)
-;user_ini.cache_ttl = 300
+user_ini.cache_ttl = 3600
 
 ;;;;;;;;;;;;;;;;;;;;
 ; Language Options ;
@@ -223,7 +223,7 @@ engine = On
 ; Development Value: Off
 ; Production Value: Off
 ; http://php.net/short-open-tag
-short_open_tag = Off
+short_open_tag = <%= node['php']['ini_settings']['short_open_tag'] %>
 
 ; Allow ASP-style <% %> tags.
 ; http://php.net/asp-tags
@@ -376,13 +376,19 @@ safe_mode_protected_env_vars = LD_LIBRARY_PATH
 ; or per-virtualhost web server configuration file. This directive is
 ; *NOT* affected by whether Safe Mode is turned On or Off.
 ; http://php.net/open-basedir
-;open_basedir =
+<% unless node['php']['ini_settings']['open_basedir'].empty? %>
+open_basedir = <%= node['php']['ini_settings']['open_basedir'] %>
+<% end %>
 
 ; This directive allows you to disable certain functions for security reasons.
 ; It receives a comma-delimited list of function names. This directive is
 ; *NOT* affected by whether Safe Mode is turned On or Off.
 ; http://php.net/disable-functions
-disable_functions =
+<% if node['php']['secure_functions'] %>
+disable_functions = dl,posix_kill,posix_mkfifo,posix_setuid,proc_close,proc_open,proc_terminate,shell_exec,system,leak,posix_setpgid,posix_setsid,proc_get_status,proc_nice,show_source,virtual,proc_terminate,inject_code,define_syslog_variables,syslog,posix_uname
+<% else %>
+disable_functions = 
+<% end %>
 
 ; This directive allows you to disable certain classes for security reasons.
 ; It receives a comma-delimited list of class names. This directive is
@@ -393,12 +399,12 @@ disable_classes =
 ; Colors for Syntax Highlighting mode.  Anything that's acceptable in
 ; <span style="color: ???????"> would work.
 ; http://php.net/syntax-highlighting
-;highlight.string  = #DD0000
-;highlight.comment = #FF9900
-;highlight.keyword = #007700
-;highlight.bg      = #FFFFFF
-;highlight.default = #0000BB
-;highlight.html    = #000000
+highlight.string  = #DD0000
+highlight.comment = #FF9900
+highlight.keyword = #007700
+highlight.bg      = #FFFFFF
+highlight.default = #0000BB
+highlight.html    = #000000
 
 ; If enabled, the request will be allowed to complete even if the user aborts
 ; the request. Consider enabling it if executing long requests, which may end up
@@ -411,13 +417,13 @@ disable_classes =
 ; be increased on systems where PHP opens many files to reflect the quantity of
 ; the file operations performed.
 ; http://php.net/realpath-cache-size
-;realpath_cache_size = 16k
+realpath_cache_size = 32k
 
 ; Duration of time, in seconds for which to cache realpath information for a given
 ; file or directory. For systems with rarely changing files, consider increasing this
 ; value.
 ; http://php.net/realpath-cache-ttl
-;realpath_cache_ttl = 120
+realpath_cache_ttl = 300
 
 ;;;;;;;;;;;;;;;;;
 ; Miscellaneous ;
@@ -428,7 +434,7 @@ disable_classes =
 ; threat in any way, but it makes it possible to determine whether you use PHP
 ; on your server or not.
 ; http://php.net/expose-php
-expose_php = On
+expose_php = Off
 
 ;;;;;;;;;;;;;;;;;;;
 ; Resource Limits ;
@@ -437,7 +443,7 @@ expose_php = On
 ; Maximum execution time of each script, in seconds
 ; http://php.net/max-execution-time
 ; Note: This directive is hardcoded to 0 for the CLI SAPI
-max_execution_time = 30
+max_execution_time = <%= node['php']['ini_settings']['max_execution_time'] %>
 
 ; Maximum amount of time each script may spend parsing request data. It's a good
 ; idea to limit this time on productions servers in order to eliminate unexpectedly
@@ -447,7 +453,7 @@ max_execution_time = 30
 ; Development Value: 60 (60 seconds)
 ; Production Value: 60 (60 seconds)
 ; http://php.net/max-input-time
-max_input_time = 60
+max_input_time = <%= node['php']['ini_settings']['max_input_time'] %>
 
 ; Maximum input variable nesting level
 ; http://php.net/max-input-nesting-level
@@ -455,7 +461,7 @@ max_input_time = 60
 
 ; Maximum amount of memory a script may consume (128MB)
 ; http://php.net/memory-limit
-memory_limit = 128M
+memory_limit = <%= node['php']['ini_settings']['memory_limit'] %>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Error handling and logging ;
@@ -511,7 +517,7 @@ memory_limit = 128M
 ; Development Value: E_ALL | E_STRICT
 ; Production Value: E_ALL & ~E_DEPRECATED
 ; http://php.net/error-reporting
-error_reporting = E_ALL & ~E_DEPRECATED
+error_reporting = <%= node['php']['ini_settings']['error_reporting'] %>
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -528,7 +534,7 @@ error_reporting = E_ALL & ~E_DEPRECATED
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-errors
-display_errors = Off
+display_errors = <%= node['php']['ini_settings']['display_errors'] %>
 
 ; The display of errors which occur during PHP's startup sequence are handled
 ; separately from display_errors. PHP's default behavior is to suppress those
@@ -636,6 +642,9 @@ html_errors = Off
 ;error_log = php_errors.log
 ; Log errors to syslog (Event Log on NT, not valid in Windows 95).
 ;error_log = syslog
+<% unless node['php']['ini_settings']['error_log'].empty? %>
+error_log =  <%= node['php']['ini_settings']['error_log'] %>
+<% end %>
 
 ;;;;;;;;;;;;;;;;;
 ; Data Handling ;
@@ -688,7 +697,7 @@ request_order = "GP"
 ; register_globals to be on;  Using form variables as globals can easily lead
 ; to possible security problems, if the code is not very well thought of.
 ; http://php.net/register-globals
-register_globals = Off
+register_globals = <%= node['php']['ini_settings']['register_globals'] %>
 
 ; Determines whether the deprecated long $HTTP_*_VARS type predefined variables
 ; are registered by PHP or not. As they are deprecated, we obviously don't
@@ -698,7 +707,7 @@ register_globals = Off
 ; Development Value: Off
 ; Production Value: Off
 ; http://php.net/register-long-arrays
-register_long_arrays = Off
+register_long_arrays = <%= node['php']['ini_settings']['register_long_arrays'] %>
 
 ; This directive determines whether PHP registers $argv & $argc each time it
 ; runs. $argv contains an array of all the arguments passed to PHP when a script
@@ -725,7 +734,7 @@ auto_globals_jit = On
 
 ; Maximum size of POST data that PHP will accept.
 ; http://php.net/post-max-size
-post_max_size = 8M
+post_max_size = <%= node['php']['ini_settings']['post_max_size'] %>
 
 ; Magic quotes are a preprocessing feature of PHP where PHP will attempt to
 ; escape any character sequences in GET, POST, COOKIE and ENV data which might
@@ -741,7 +750,7 @@ post_max_size = 8M
 ; Development Value: Off
 ; Production Value: Off
 ; http://php.net/magic-quotes-gpc
-magic_quotes_gpc = Off
+magic_quotes_gpc = <%= node['php']['ini_settings']['magic_quotes_gpc'] %>
 
 ; Magic quotes for runtime-generated data, e.g. data from SQL, from exec(), etc.
 ; http://php.net/magic-quotes-runtime
@@ -769,19 +778,20 @@ default_mimetype = "text/html"
 
 ; PHP's default character set is set to empty.
 ; http://php.net/default-charset
-;default_charset = "iso-8859-1"
+default_charset = "utf-8"
 
 ; Always populate the $HTTP_RAW_POST_DATA variable. PHP's default behavior is
 ; to disable this feature.
 ; http://php.net/always-populate-raw-post-data
-;always_populate_raw_post_data = On
+always_populate_raw_post_data = <%= node['php']['ini_settings']['always_populate_raw_post_data'] %>
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Paths and Directories ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; UNIX: "/path1:/path2"
-;include_path = ".:/php/includes"
+include_path = ".:<%= node['php']['pear_dir'] %>"
 ;
 ; Windows: "\path1;\path2"
 ;include_path = ".;c:\php\includes"
@@ -819,7 +829,7 @@ enable_dl = Off
 ; turn it off here AT YOUR OWN RISK
 ; **You CAN safely turn this off for IIS, in fact, you MUST.**
 ; http://php.net/cgi.force-redirect
-;cgi.force_redirect = 1
+cgi.force_redirect = 1
 
 ; if cgi.nph is enabled it will force cgi to always sent Status: 200 with
 ; every request. PHP's default behavior is to disable this feature.
@@ -839,7 +849,7 @@ enable_dl = Off
 ; of zero causes PHP to behave as before.  Default is 1.  You should fix your scripts
 ; to use SCRIPT_FILENAME rather than PATH_TRANSLATED.
 ; http://php.net/cgi.fix-pathinfo
-;cgi.fix_pathinfo=1
+cgi.fix_pathinfo = <%= node['php']['ini_settings']['cgi.fix_pathinfo'] %>
 
 ; FastCGI under IIS (on WINNT based OS) supports the ability to impersonate
 ; security tokens of the calling client.  This allows IIS to define the
@@ -847,7 +857,7 @@ enable_dl = Off
 ; does not currently support this feature (03/17/2002)
 ; Set to 1 if running under IIS.  Default is zero.
 ; http://php.net/fastcgi.impersonate
-;fastcgi.impersonate = 1;
+fastcgi.impersonate = 1;
 
 ; Disable logging through FastCGI connection. PHP's default behavior is to enable
 ; this feature.
@@ -872,11 +882,11 @@ file_uploads = On
 ; Temporary directory for HTTP uploaded files (will use system default if not
 ; specified).
 ; http://php.net/upload-tmp-dir
-;upload_tmp_dir =
+upload_tmp_dir = <%= node['php']['upload_dir'] %>
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
-upload_max_filesize = 2M
+upload_max_filesize = <%= node['php']['ini_settings']['upload_max_filesize'] %>
 
 ; Maximum number of files that can be uploaded via a single request
 max_file_uploads = 20
@@ -989,7 +999,7 @@ default_socket_timeout = 60
 [Date]
 ; Defines the default timezone used by the date functions
 ; http://php.net/date.timezone
-;date.timezone =
+date.timezone = "<%= node['php']['ini_settings']['date.timezone'] %>"
 
 ; http://php.net/date.default-latitude
 ;date.default_latitude = 31.7667
@@ -1471,7 +1481,7 @@ session.save_handler = files
 ; where MODE is the octal representation of the mode. Note that this
 ; does not overwrite the process's umask.
 ; http://php.net/session.save-path
-;session.save_path = "/tmp"
+session.save_path = "<%= node['php']['session_dir'] %>"
 
 ; Whether to use cookies.
 ; http://php.net/session.use-cookies
@@ -1509,8 +1519,11 @@ session.cookie_domain =
 
 ; Whether or not to add the httpOnly flag to the cookie, which makes it inaccessible to browser scripting languages such as JavaScript.
 ; http://php.net/session.cookie-httponly
+<% if node['php']['ini_settings']['session.cookie_httponly'] == '1' %>
+session.cookie_httponly = 1
+<% else %>
 session.cookie_httponly =
-
+<% end %>
 ; Handler used to serialize data.  php is the standard serializer of PHP.
 ; http://php.net/session.serialize-handler
 session.serialize_handler = php
@@ -1592,7 +1605,7 @@ session.entropy_length = 0
 ; Specified here to create the session id.
 ; http://php.net/session.entropy-file
 ; On systems that don't have /dev/urandom /dev/arandom can be used
-; On windows, setting the entropy_length setting will activate the 
+; On windows, setting the entropy_length setting will activate the
 ; Windows random source (using the CryptoAPI)
 ;session.entropy_file = /dev/urandom
 
@@ -1625,7 +1638,7 @@ session.use_trans_sid = 0
 ; the hash extension. A list of available hashes is returned by the hash_algos()
 ; function.
 ; http://php.net/session.hash-function
-session.hash_function = 0
+session.hash_function = 1
 
 ; Define how many bits are stored in each character when converting
 ; the binary hash data to something readable.
@@ -1894,7 +1907,3 @@ ldap.max_links = -1
 ; Local Variables:
 ; tab-width: 4
 ; End:
-
-<% node['php']['directives'].each do |directive, value| -%>
-<%= "#{directive}=\"#{value}\"" %>
-<% end -%>

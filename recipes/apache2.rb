@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: php
-# Recipe:: module_curl
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Cookbook Name:: php
+# Recipe:: apache2
+#
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,12 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when "rhel", "fedora"
-	# cURL shipped with the core package
-when "debian"
-  package "php5-curl" do
-    action :upgrade
-  end
+include_recipe "apache2::mod_php5"
+
+template "#{node['php']['apache_conf_dir']}/php.ini" do
+	source "php.ini.erb"
+	owner "root"
+	group "root"
+	mode 00644
+	only_if { platform?("ubuntu", "debian") }
 end

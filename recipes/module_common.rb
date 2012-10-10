@@ -1,10 +1,8 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
 # Cookbook Name:: php
-# Recipe:: module_ldap
+# Recipe:: module_common
 #
 # Copyright 2009-2011, Opscode, Inc.
 #
@@ -22,10 +20,12 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-ldap" },
-    "debian" => { "default" => "php5-ldap" }
+    [ "rhel", "fedora" ] => { "default" => %w{ php-common php-cli php-mbstring php-gd php-intl php-pspell php-mcrypt php-soap php-sqlite php-xml php-xmlrpc } }, 
+    "debian" => { "default" => %w{ php5-curl php5-json php5-cli php5-gd php5-intl php5-pspell php5-mcrypt php5-mhash php5-sqlite php5-xsl php5-xmlrpc } }
 )
 
-package pkg do
-  action :install
+pkg.each do |ppkg| 
+	package ppkg do
+	  action :install
+	end
 end

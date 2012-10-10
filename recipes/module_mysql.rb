@@ -1,6 +1,8 @@
 #
 # Author::  Joshua Timberman (<joshua@opscode.com>)
 # Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+#
 # Cookbook Name:: php
 # Recipe:: module_mysql
 #
@@ -19,13 +21,11 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform(
-  %w(centos redhat scientific fedora) => {
-    %w(5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8) => "php53-mysql",
-    "default" => "php-mysql"
-  },
-  "default" => "php5-mysql"
+pkg = value_for_platform_family(
+    [ "rhel", "fedora" ] => { "default" => "php-mysql" },
+    "debian" => { "default" => "php5-mysql" }
 )
+
 
 package pkg do
   action :install

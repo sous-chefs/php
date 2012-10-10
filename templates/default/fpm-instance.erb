@@ -1,0 +1,65 @@
+[<%= @name %>]
+user						= <%= @user %>
+group						= <%= @group %>
+catch_workers_output 		= no
+
+<% if @socket %>
+listen						= <%= @socket_path %>
+listen.owner 				= <%= @socket_user || @user %>
+listen.group 				= <%= @socket_group || @group %>
+listen.mode 				= <%= @listen_perms %>
+<% else %>
+listen						= <%= @ip_address %>:<%= @port %>
+listen.allowed_clients 		= <%= @ip_whitelist.join(",") %>
+listen.backlog 				= <%= @backlog %>
+<% end %>
+
+pm 							= dynamic
+pm.max_children 			= <%= @max_children %>
+pm.start_servers 			= <%= @start_servers %>
+pm.min_spare_servers 		= <%= @min_spare_servers %>
+pm.max_spare_servers 		= <%= @max_spare_servers %> 
+pm.max_requests 			= <%= @max_requests %>
+<% unless @status_url.empty? %>
+pm.status_path 				= <%= @status_url %>
+<% end %>
+
+<% unless (@ping_url.empty? || @ping_response.empty?) %>
+ping.path 					= <%= @ping_url %>
+ping.response				= <%= @ping_response %>
+<% end %>
+
+<% unless (@log_filename.empty? || @log_format.empty?) %>
+<% @log_filename = node['php']['fpm_log_dir'] + "/" + @log_filename unless @log_filename.include?("/") %>
+access.log 					= <%= @log_filename %>
+access.format 				= <%= @log_format %>
+<% end %>
+
+<% unless (@slow_filename.empty? || @slow_timeout < 1) %>
+slowlog 					= <%= @slow_filename %>
+request_slowlog_timeout		= <%= @slow_timeout %>
+<% end %>
+
+<% unless @terminate_timeout < 1 %>
+request_terminate_timeout	= <%= @terminate_timeout %>
+<% end %>
+
+<% unless @initial_directory.empty? %>
+chdir						= <%= @initial_directory %>
+<% end %>
+
+<% unless @valid_extensions.empty? %>
+security.limit_extensions 	= <%= @valid_extensions.join(" ") %>
+<% end %>
+
+<% @flag_overrides.each do |key,value| %>
+php_flag[<%= key %>] 		= <%= value %>
+<% end %>
+
+<% @value_overrides.each do |key,value| %>
+php_value[<%= key %>] 		= <%= value %>
+<% end %>
+
+<% @env_overrides.each do |key,value| %>
+env[<%= key %>] 			= <%= value %>
+<% end %>

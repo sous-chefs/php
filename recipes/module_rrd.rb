@@ -1,12 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
 # Cookbook Name:: php
-# Recipe:: module_ldap
+# Recipe:: module_rrd
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,11 +19,18 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-ldap" },
-    "debian" => { "default" => "php5-ldap" }
-)
-
-package pkg do
-  action :install
+case node['platform_family']
+when "rhel", "fedora"
+	%w{ rrdtool rrdtool-devel }.each do |pkg|
+		package pkg do
+			action :install
+		end
+	end
+    php_pear "rrd" do
+      action :install
+    end	
+when "debian"
+	package "php5-rrd" do
+		action :install
+	end
 end

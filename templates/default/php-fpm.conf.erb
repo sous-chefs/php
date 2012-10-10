@@ -1,0 +1,11 @@
+[global]
+pid = <%= node['php']['fpm_pidfile'] %>
+error_log = <%= node['php']['fpm_logfile'] %>
+log_level = notice
+emergency_restart_threshold = 16
+emergency_restart_interval = 1h
+process_control_timeout = 30s
+daemonize = yes
+events.mechanism = epoll
+
+include=<%= node['php']['fpm_pool_dir'] %>/*.conf

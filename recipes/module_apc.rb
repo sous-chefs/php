@@ -1,6 +1,8 @@
 #
 # Author::  Joshua Timberman (<joshua@opscode.com>)
 # Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+#
 # Cookbook Name:: php
 # Recipe:: module_apc
 #
@@ -26,12 +28,20 @@ when "rhel", "fedora"
       action :install
     end
   end
-  php_pear "apc" do
+
+  package "php-pecl-apc" do
     action :install
-    directives(:shm_size => "128M", :enable_cli => 0)
   end
+  
 when "debian"
   package "php-apc" do
     action :install
   end
+end
+
+template "#{node["php"]["ext_conf_dir"]}/apc.ini" do
+  source "apc.ini.erb"
+  owner "root"
+  group "root"
+  mode 00644
 end

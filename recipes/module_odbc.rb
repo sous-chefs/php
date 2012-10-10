@@ -1,12 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
 # Cookbook Name:: php
-# Recipe:: module_ldap
+# Recipe:: module_odbc
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => { "default" => "php-ldap" },
-    "debian" => { "default" => "php5-ldap" }
+    [ "rhel", "fedora" ] => { "default" => "php-odbc" },
+    "debian" => { "default" => "php5-odbc" }
 )
 
 package pkg do
