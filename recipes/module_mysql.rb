@@ -22,8 +22,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-mysql",
-    "debian" => "php5-mysql"
+    [ "rhel", "fedora" ] => "php-mysqlnd",
+    "debian" => "php5-mysqlnd"
 )
 
 
