@@ -286,6 +286,7 @@ License and Author
 * Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)
 
 Original Copyright:: 2011, Opscode, Inc
+
 Modifications Copyright:: 2012, Panagiotis Papadomitsos
 
 Licensed under the Apache License, Version 2.0 (the "License");
