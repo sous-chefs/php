@@ -22,7 +22,7 @@
 action :add do
 	new_resource.updated_by_last_action(false)
 	Chef::Log.info("Creating new PHP-FPM instance for #{new_resource.name}")
-	template "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
+	a = template "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
 		cookbook "php"
 		source "fpm-instance.erb"
 		owner "root"
@@ -68,20 +68,15 @@ action :add do
 		action :nothing
 	end
 
-	ruby_block "fpm_create_#{new_resource.name}" do
-		block do
-			new_resource.updated_by_last_action(true)
-		end
-		action :nothing
-		subscribes :create, "template[#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf]"
-	end
+	new_resource.updated_by_last_action(a.updated_by_last_action?)
+
 end
 
 action :remove do
 	new_resource.updated_by_last_action(false)
 	Chef::Log.info("Removing PHP-FPM instance #{new_resource.name}")
 
-	file "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
+	a = file "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
 		action :delete
 		notifies :restart, "service[php5-fpm]"
 	end
@@ -90,11 +85,7 @@ action :remove do
 		service_name "php-fpm" if platform_family?("rhel", "fedora")
 		action :nothing
 	end
-	ruby_block "fpm_delete_#{new_resource.name}" do
-		block do
-			new_resource.updated_by_last_action(true)
-		end
-		action :nothing
-		subscribes :create, "file[#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf]"
-	end
+
+	new_resource.updated_by_last_action(a.updated_by_last_action?)
+
 end

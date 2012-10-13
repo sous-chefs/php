@@ -1,0 +1,318 @@
+{
+  "name": "php",
+  "description": "Installs/Configures PHP and various modules",
+  "long_description": "chef-php\n========\n\nInstalls and configures PHP 5.3 and the PEAR package management system via OpsCode Chef.  Also includes LWRPs for managing PEAR (and PECL) packages along with PECL channels and PHP-FPM profiles.\n\nYou can clone it and import it to Chef as\n\n    cd cookbooks\n    git clone git://github.com/priestjim/chef-php.git php\n    knife cookbook upload php\n\nRequirements\n============\n\nThis cookbook requires the following cookbooks to be present and installed:\n\n* apache2 (for the Apache mod_php module)\n* chef-yumrepo from https://github.com/priestjim/chef-yumrepo for the Atomic repository in CentOS\n\nTo build PHP from source you will also need:\n\n* build-essential\n* xml\n* mysql\n\nSupported Operating Systems\n===========================\n\nThis cookbook supports the following Linux distributions:\n\n* Ubuntu\n* Debian\n* CentOS\n* RedHat\n\nIt also supports **Chef 10.14** and higher\n\nAttributes\n==========\n\n* `node[\"php\"][\"install_method\"]` = method to install php with, default `package`.\n\nThe file also contains the following - types:\n\n* platform specific locations and settings.\n* source installation settings\n* ini configuration settings\n* fpm-specific settings\n\n---\n\nResource/Provider\n=================\n\nThis cookbook includes LWRPs for managing:\n\n* PEAR channels\n* PEAR/PECL packages\n* PHP-FPM instances\n\n## `php_pear_channel`\n\n[PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages.  This LWRP provides and easy way to manage these channels.\n\n### Actions\n\n- `discover`: Initialize a channel from its server.\n- `add`: Add a channel to the channel list, usually only used to add private channels.  Public channels are usually added using the `:discover` action\n- `update`: Update an existing channel\n- `remove`: Remove a channel from the List\n\n### Parameters\n\n- `channel_name`: name attribute. The name of the channel to discover\n- `channel_xml`: the channel.xml file of the channel you are adding\n\n### Example\n    \n    # discover the horde channel\n    php_pear_channel \"pear.horde.org\" do\n      action :discover\n    end\n    \n    # download xml then add the symfony channel\n    remote_file \"#{Chef::Config['file_cache_path']}/symfony-channel.xml\" do\n      source \"http://pear.symfony-project.com/channel.xml\"\n      mode 0644\n    end\n    php_pear_channel \"symfony\" do\n      channel_xml \"#{Chef::Config['file_cache_path']}/symfony-channel.xml\"\n      action :add\n    end\n    \n    # update the main pear channel\n    php_pear_channel 'pear.php.net' do\n      action :update\n    end\n    \n    # update the main pecl channel\n    php_pear_channel 'pecl.php.net' do\n      action :update\n    end\n    \n\n## `php_pear`\n\n[PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system.  As such this LWRP is clever enough to abstract away the small differences and can be used for managing either.  This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.\n\n### Actions\n\n- `install`: Install a pear package - if version is provided, install that specific version\n- `upgrade`: Upgrade a pear package - if version is provided, upgrade to that specific version\n- `remove`: Remove a pear package\n- `purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself).  With pear packages this behaves the same as `:remove`\n\n### Parameters\n\n- `package_name`: name attribute. The name of the pear package to install\n- `version`: the version of the pear package to install/upgrade.  If no version is given latest is assumed.\n- `preferred_state`: PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state\n- `directives`: extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file\n- `options`: Add additional options to the underlying pear package command\n\n\n### Example\n\n    # upgrade a pear\n    php_pear \"XML_RPC\" do\n      action :upgrade\n    end\n    \n    \n    # install a specific version\n    php_pear \"XML_RPC\" do\n      version \"1.5.4\"\n      action :install\n    end\n    \n    \n    # install the mongodb pecl\n    php_pear \"mongo\" do\n      action :install\n    end\n    \n    \n    # install apc pecl with directives\n    php_pear \"apc\" do\n      action :install\n      directives(:shm_size => 128, :enable_cli => 1)\n    end\n    \n    \n    # install the beta version of Horde_Url \n    # from the horde channel\n    hc = php_pear_channel \"pear.horde.org\" do\n      action :discover\n    end\n    php_pear \"Horde_Url\" do\n      preferred_state \"beta\"\n      channel hc.channel_name\n      action :install\n    end\n    \n    \n    # install the YAML pear from the symfony project\n    sc = php_pear_channel \"pear.symfony-project.com\" do\n      action :discover\n    end\n    php_pear \"YAML\" do\n      channel sc.channel_name\n      action :install\n    end\n\n## `php_fpm`\n\nPHP-FPM is a relatively new extension to PHP that actually embeds a FastCGI process manager right inside the PHP codebase. It runs independently of Apache or NGINX and supports both Apache's `mod_fcgi` and NGINX's `fastcgi` modules. You can easily create farms of PHP application servers using PHP-FPM as the middleware to your web frontend (i.e. NGINX and PHP-FPM work pretty well).\n\n### Actions\n\n* `add`: Adds a PHP-FPM instance and restarts the service\n* `remove`: Removes the PHP-FPM instance profile from the PHP-FPM pool and restarts the PHP-FPM service\n\n### Parameters\n\n* `name`: name attribute. Defines the PHP-FPM's pool name and actual .conf filename\n* `user`: System user the pool runs as.\n* `group`: System group the pool runs as.\n* `socket`: Set to `true` to enable communication via a UNIX socket instead of IP. Only useful if you run PHP-FPM on the same system with the web server or over a shared filesystem (i.e. NFS)\n* `socket_path`: The UNIX socket filename\n* `socket_user`: The UNIX socket file owner\n* `socket_group`: The UNIX socket file group\n* `socket_perms`: The UNIX socket file permissions. Set it to \"0666\" if running the web server under a different user for the web server to be able to write to it.\n* `ip_address`: IF you are not using a UNIX socket, bind the FPM instance to a specific IP address. Use 0.0.0.0 to bind to all interfaces\n* `port`: TCP port to bind to, to accept requests\n* `ip_whitelist`: An array of IP addresses from which we can accept requests. Useful only for IP-based communication\n* `max_children`: Maximum number of concurrent running pool children\n* `start_servers`: Initial number of started pool servers\n* `min_spare_servers`: Minimum number of idling servers. Must be equal to or larger than start_servers.\n* `max_spare_servers`: Maximum number of idling servers\n* `max_requests`: Maximum number of requests a pool child has received after being recycled. Useful for combating memory leaks that can't be fixed in any other way\n* `backlog`: Maximum number of pending requests a pool can have waiting\n* `status_url`: A URL to query the status of the pool\n* `ping_url`: A URL to ping for health monitoring\n* `ping_response`: The response expected from pinging healthy instance\n* `log_filename`: A log filename for pool request logging\n* `log_format`: The format in which the pool will be logging to the request log\n* `slow_filename`: A file for recording long-taking requests\n* `slow_timeout`: The slow request threshold\n* `valid_extensions`: A number of extensions that are considered safe for processing\n* `terminate_timeout`: A timeout after which the pool master process will terminate the child. Must be equal or large to the longest expected maximum execution time\n* `initial_directory`: A directory to change to before start accepting request\n* `flag_overrides`: A hash of PHP flags that will be overridden in the manner of Apache's `php_flag` and `php_admin_flag`\n* `value_overrides`: A hash of PHP values that will be overridden in the manner of Apache's `php_value` and `php_admin_value`\n* `env_overrides`: A hash of environment variables that will be overridden embedded in the pools environment variable set\n\n### Example\n\n    # Define a pool for PHPMyAdmin\n    php_fpm 'phpmyadmin' do\n      action :add\n      user 'phpmyadmin'\n      group 'phpmyadmin'\n      socket true\n      socket_path '/tmp/phpmyadmin.sock'\n      socket_perms \"0666\"\n      start_servers 2\n      min_spare_servers 2\n      max_spare_servers 8\n      max_children 8\n      terminate_timeout (node['php']['ini_settings']['max_execution_time'].to_i + 20)\n      value_overrides({ \n        :error_log => \"#{node['php']['fpm_log_dir']}/phpmyadmin.log\"\n      })\n    end\n\n---\n\nRecipes\n=======\n\n## `default`\n\nInclude the default recipe in a run list, to get `php`.  By default `php` is installed from packages but this can be changed by using the `install_method` attribute.\n\n## `package`\n\nThis recipe installs PHP from packages.\n\n## `source`\n\nThis recipe installs PHP from source.\n\n## `fpm`\n\nThis recipe installs and configures the PHP FastCGI Process Manager but without any pools. To define an application pool please use the php_fpm LWRP.\n\n## `module_*`\n\nThis recipe installs various PHP modules via the appropriate package commands. *module_common* will install a common set of PHP modules needed for most web applications (such as Joomla or Wordpress).\n\n---\n\nUsage\n=====\n\nSimply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` - with in a role:\n\n    name \"php\"\n    description \"Install php from source\"\n    override_attributes(\n      \"php\" => {\n        \"install_method\" => \"source\"\n      }\n    )\n    run_list(\n      \"recipe[php]\"\n    )\n\n---\n\nLicense and Author\n==================\n\n* Author:: Seth Chisamore (<schisamo@opscode.com>)\n* Author:: Joshua Timberman (<joshua@opscode.com>)\n* Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)\n\nOriginal Copyright:: 2011, Opscode, Inc\n\nModifications Copyright:: 2012, Panagiotis Papadomitsos\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
+  "maintainer": "Panagiotis Papadomitsos",
+  "maintainer_email": "pj@ezgr.net",
+  "license": "Apache Public License 2.0",
+  "platforms": {
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "redhat": ">= 0.0.0"
+  },
+  "dependencies": {
+    "build-essential": ">= 0.0.0",
+    "xml": ">= 0.0.0",
+    "yumrepo": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+    "apache2": ">= 0.0.0",
+    "nginx": ">= 0.0.0"
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+    "php/conf_dir": {
+      "display_name": "The PHP configuration directory",
+      "description": "The desired PHP configuration directory for the CLI binary",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/apache_conf_dir": {
+      "display_name": "The PHP Apache configuration directory",
+      "description": "The desired PHP configuration directory for the Apache module",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/cgi_conf_dir": {
+      "display_name": "The PHP CGI configuration directory",
+      "description": "The desired PHP configuration directory for the CGI binary",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/ext_conf_dir": {
+      "display_name": "The PHP configuration include directory",
+      "description": "The desired PHP configuration include directory",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/session_dir": {
+      "display_name": "The PHP session directory",
+      "description": "The desired PHP directory for session storage",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/upload_dir": {
+      "display_name": "The PHP upload directory",
+      "description": "The desired PHP directory for file uploads",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/pear_dir": {
+      "display_name": "The PHP PEAR directory",
+      "description": "The desired PHP PEAR library directory",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/secure_functions": {
+      "display_name": "Enable PHP secure functions",
+      "description": "Disable a set of PHP functions that are considered insecure",
+      "default": "true",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/ini_settings": {
+      "display_name": "Configurable PHP ini settings",
+      "description": "A hash of INI variables that you can set for your PHP installation",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/apc/shm_size": {
+      "display_name": "PHP APC shared memory size",
+      "description": "Sets the PHP APC shared memory size",
+      "default": "128M",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/apc/local_size": {
+      "display_name": "PHP APC local cache size",
+      "description": "Sets the PHP APC local cache size",
+      "default": "128M",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/url": {
+      "display_name": "PHP source download URL",
+      "description": "Set the PHP download URL",
+      "default": "http://us.php.net/distributions",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/version": {
+      "display_name": "PHP source download version",
+      "description": "Set the PHP download version",
+      "default": "5.3.17",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/checksum": {
+      "display_name": "PHP source file SHA-256 checksum",
+      "description": "Set the PHP source file SHA-256 checksum",
+      "default": "ad85e857d404b9e74f1e003deb574e94e3bb939f686e4e9a871d3a6b3f957509",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/prefix_dir": {
+      "display_name": "PHP installation prefix",
+      "description": "Set the PHP installation prefix",
+      "default": "/usr/local",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/configure_options": {
+      "display_name": "PHP source configuration options",
+      "description": "Set an array of the PHP source configuration options",
+      "choice": [
+
+      ],
+      "calculated": false,
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/fpm_conf_dir": {
+      "display_name": "PHP FPM configuration directory",
+      "description": "Set the PHP FPM configuration directory",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/fpm_pool_dir": {
+      "display_name": "PHP FPM instance pool directory",
+      "description": "Set the PHP FPM instance pool directory",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/fpm_log_dir": {
+      "display_name": "PHP FPM pool log directory",
+      "description": "Set the PHP FPM pool log directory",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/fpm_logfile": {
+      "display_name": "PHP FPM log file",
+      "description": "Set the PHP FPM log file",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    },
+    "php/fpm_rotfile": {
+      "display_name": "PHP FPM log rotation file",
+      "description": "Set the PHP FPM log rotation file",
+      "calculated": true,
+      "choice": [
+
+      ],
+      "type": "string",
+      "required": "optional",
+      "recipes": [
+
+      ]
+    }
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.1.1"
+}
