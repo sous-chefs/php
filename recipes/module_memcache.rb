@@ -21,10 +21,10 @@
 
 case node['platform_family']
 when "rhel", "fedora"
-    package "zlib-devel" do
-      action :install
-    end
+  package "zlib-devel" do
+    action :install
   end
+
   php_pear "memcache" do
     action :install
   end
