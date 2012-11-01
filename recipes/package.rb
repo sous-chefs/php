@@ -7,7 +7,7 @@
 #
 # Copyright 2011, Opscode, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -21,11 +21,11 @@
 #
 
 pkgs = value_for_platform_family(
-  [ "rhel", "fedora" ] => %w{ php php-common php-devel php-cli php-pear },
-  "debian" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  [ 'rhel', 'fedora' ] => %w{ php php-common php-devel php-cli php-pear },
+  'debian' => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
 )
 
-include_recipe "yumrepo::atomic" if platform?("centos", "redhat")
+include_recipe 'yumrepo::atomic' if platform?('centos', 'redhat')
 
 pkgs.each do |pkg|
   package pkg do
@@ -34,41 +34,44 @@ pkgs.each do |pkg|
 end
 
 template "#{node['php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
   mode 00644
+  notifies :restart, 'service[php-fpm]' if node.recipes.include?('php::fpm') && platform_family?('rhel', 'fedora')
 end
 
-if platform_family?("debian")
+service 'php-fpm' if node.recipes.include?('php::fpm') && platform_family?('rhel', 'fedora')
+
+if platform_family?('debian')
   template "#{node['php']['cgi_conf_dir']}/php.ini" do
-    source "php.ini.erb"
-    owner "root"
-    group "root"
+    source 'php.ini.erb'
+    owner 'root'
+    group 'root'
     mode 0644
   end
 end
 
-[ node["php"]["session_dir"], node["php"]["upload_dir"] ].each do |dir|
+[ node['php']['session_dir'], node['php']['upload_dir'] ].each do |dir|
   directory dir do
-    owner "root"
-    group "root"
+    owner 'root'
+    group 'root'
     mode 01777
     action :create
     recursive true
   end
 end
 
-if node["php"]["tmpfs"]
+if node['php']['tmpfs']
   total_mem = (node.memory.total.to_i / 1024) + (node.memory.swap.total.to_i / 1024)
-  if total_mem < node["php"]["tmpfs_size"].to_i
+  if total_mem < node['php']['tmpfs_size'].to_i
     Chef::Log.info('You have specified a much bigger tmpfs session store than you can handle. Add more memory or swap or adjust the tmpfs size!')
   else
-    [ node["php"]["session_dir"], node["php"]["upload_dir"] ].each do |dir|
+    [ node['php']['session_dir'], node['php']['upload_dir'] ].each do |dir|
       mount dir do
-        device "tmpfs"
-        fstype "tmpfs"
-        options [ "size=#{node['php']['tmpfs_size']}", "mode=1777", "noatime", "noexec", "nosuid", "nodev" ]
+        device 'tmpfs'
+        fstype 'tmpfs'
+        options [ "size=#{node['php']['tmpfs_size']}", 'mode=1777', 'noatime', 'noexec', 'nosuid', 'nodev' ]
         dump 0
         pass 0
         supports [ :remount => true ]
