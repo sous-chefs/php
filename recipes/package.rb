@@ -74,6 +74,7 @@ if node['php']['tmpfs']
         options [ "size=#{node['php']['tmpfs_size']}", 'mode=1777', 'noatime', 'noexec', 'nosuid', 'nodev' ]
         dump 0
         pass 0
+        action [:enable, :mount]
         supports [ :remount => true ]
       end
     end
