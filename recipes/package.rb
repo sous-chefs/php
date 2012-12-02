@@ -18,16 +18,21 @@
 # limitations under the License.
 #
 
-pkgs = value_for_platform(
-  %w(centos redhat scientific fedora) => {
-    %w(5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8) => %w(php53 php53-devel php53-cli php-pear),
-    'default' => %w(php php-devel php-cli php-pear)
-  },
-  [ "debian", "ubuntu" ] => {
-    "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
-  },
-  "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
-)
+# use attributes if php has the packages key set
+if node["php"].has_key?("packages")
+    pkgs = node["php"]["packages"]
+else
+    pkgs = value_for_platform(
+      %w(centos redhat scientific fedora) => {
+        %w(5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8) => %w(php53 php53-devel php53-cli php-pear),
+        'default' => %w(php php-devel php-cli php-pear)
+      },
+      [ "debian", "ubuntu" ] => {
+        "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+      },
+      "default" => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+    )
+end
 
 pkgs.each do |pkg|
   package pkg do
