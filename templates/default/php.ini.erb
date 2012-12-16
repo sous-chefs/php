@@ -989,7 +989,11 @@ default_socket_timeout = 60
 [Date]
 ; Defines the default timezone used by the date functions
 ; http://php.net/date.timezone
+<%- if node['php']['timezone'] %>
+date.timezone = <%= node['php']['timezone'] %>
+<%- else %>
 ;date.timezone =
+<%- end %>
 
 ; http://php.net/date.default-latitude
 ;date.default_latitude = 31.7667
