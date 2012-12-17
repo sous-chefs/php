@@ -1,3 +1,8 @@
+## v1.1.2:
+
+* [COOK-1803] - use better regexp to match package name
+* [COOK-1926] - support Amazon linux
+
 ## v1.1.0:
 
 * [COOK-543] - php.ini template should be configurable
