@@ -1,3 +1,7 @@
+## v1.1.4:
+
+* [COOK-2106] - `php_pear` cannot find available packages
+
 ## v1.1.2:
 
 * [COOK-1803] - use better regexp to match package name
