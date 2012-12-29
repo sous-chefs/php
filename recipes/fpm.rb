@@ -55,7 +55,7 @@ end
 directory node['php']['fpm_log_dir'] do
   owner "root"
   group "root"
-  mode 01777
+  mode 01733
   action :create
 end
 

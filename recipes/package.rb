@@ -56,7 +56,7 @@ end
   directory dir do
     owner 'root'
     group 'root'
-    mode 01777
+    mode 01733
     action :create
     recursive true
   end
@@ -71,7 +71,7 @@ if node['php']['tmpfs']
       mount dir do
         device 'tmpfs'
         fstype 'tmpfs'
-        options [ "size=#{node['php']['tmpfs_size']}", 'mode=1777', 'noatime', 'noexec', 'nosuid', 'nodev' ]
+        options [ "size=#{node['php']['tmpfs_size']}", 'mode=1733', 'noatime', 'noexec', 'nosuid', 'nodev' ]
         dump 0
         pass 0
         action [:enable, :mount]
