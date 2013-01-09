@@ -1,8 +1,7 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Adam Noon (<adam.ian.noon@gmail.com>)
 # Cookbook Name:: php
-# Recipe:: module_memcache
+# Recipe:: module_memcached
 #
 # Copyright 2009-2011, Opscode, Inc.
 #
