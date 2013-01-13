@@ -1,0 +1,7 @@
+# /etc/cron.d/php5: crontab fragment for php5
+#  This purges session files older than X, where X is defined in seconds
+#  as the largest value of session.gc_maxlifetime from all your php.ini
+#  files, or 24 minutes if not defined.  See <%= @maxlifetime_script %>
+
+# Look for and purge old sessions every 30 minutes
+09,39 *     * * *     root   [ -x <%= @maxlifetime_script %> ] && [ -d <%= node['php']['session_dir'] %> ] && find <%= node['php']['session_dir'] %> -depth -mindepth 1 -maxdepth 1 -type f -cmin +$(<%= @maxlifetime_script %>) ! -execdir fuser -s {} 2>/dev/null \; -delete
