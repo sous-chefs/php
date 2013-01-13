@@ -3,7 +3,7 @@ maintainer_email "pj@ezgr.net"
 license          "Apache Public License 2.0"
 description      "Installs/Configures PHP and various modules"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.1.1"
+version          "1.1.2"
 
 depends "build-essential"
 depends "xml"

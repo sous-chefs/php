@@ -14,7 +14,7 @@
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
+# distributed under the License is distributed on an 'AS IS' BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
@@ -60,6 +60,25 @@ end
     action :create
     recursive true
   end
+end
+
+# Inherited from Debian packages, made universal, session cleanup script
+template '/usr/local/bin/php-maxlifetime' do
+  source 'php-maxlifetime.sh.erb'
+  owner 'root'
+  group 'root'
+  mode 00755
+  only_if { platform_family?('rhel') }
+end
+
+template '/etc/cron.d/php5' do
+  source 'php5.cron.erb'
+  owner 'root'
+  group 'root'
+  variables({
+    :maxlifetime_script => platform_family?('rhel') ? '/usr/local/bin/php-maxlifetime' : '/usr/lib/php5/maxlifetime'  
+  })
+  mode 00644
 end
 
 if node['php']['tmpfs']
