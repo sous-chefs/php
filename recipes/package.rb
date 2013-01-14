@@ -25,7 +25,7 @@ pkgs = value_for_platform_family(
   'debian' => %w{ php5-cgi php5 php5-dev php5-cli php-pear }
 )
 
-include_recipe 'yumrepo::atomic' if platform?('centos', 'redhat')
+include_recipe 'yumrepo::atomic' if platform_family?('rhel')
 
 pkgs.each do |pkg|
   package pkg do
@@ -38,7 +38,7 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner 'root'
   group 'root'
   mode 00644
-  notifies :restart, 'service[php-fpm]' if node.recipes.include?('php::fpm') && platform_family?('rhel', 'fedora')
+  notifies :restart, 'service[php-fpm]' if node['recipes'].include?('php::fpm') && platform_family?('rhel', 'fedora')
 end
 
 service 'php-fpm' if node.recipes.include?('php::fpm') && platform_family?('rhel', 'fedora')
@@ -52,14 +52,20 @@ if platform_family?('debian')
   end
 end
 
-[ node['php']['session_dir'], node['php']['upload_dir'] ].each do |dir|
-  directory dir do
-    owner 'root'
-    group 'root'
-    mode 01733
-    action :create
-    recursive true
-  end
+directory node['php']['upload_dir'] do
+  owner 'root'
+  group 'root'
+  mode 01733
+  recursive true
+  action :create
+end
+
+directory node['php']['save_dir'] do
+  owner 'root'
+  group 'root'
+  mode 01777
+  recursive true
+  action :create
 end
 
 # Inherited from Debian packages, made universal, session cleanup script
