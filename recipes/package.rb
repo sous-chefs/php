@@ -52,7 +52,7 @@ if platform_family?('debian')
   end
 end
 
-directory node['php']['upload_dir'] do
+directory node['php']['session_dir'] do
   owner 'root'
   group 'root'
   mode 01733
@@ -60,7 +60,7 @@ directory node['php']['upload_dir'] do
   action :create
 end
 
-directory node['php']['save_dir'] do
+directory node['php']['upload_dir'] do
   owner 'root'
   group 'root'
   mode 01777
