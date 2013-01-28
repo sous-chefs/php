@@ -1,6 +1,6 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::	Joshua Timberman (<joshua@opscode.com>)
+# Author::	Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
 # Recipe:: default
 #
@@ -10,7 +10,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#		 http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,9 +23,9 @@ include_recipe "php::#{node['php']['install_method']}"
 
 # update the main channels
 php_pear_channel 'pear.php.net' do
-  action :update
+	action :update
 end
 
 php_pear_channel 'pecl.php.net' do
-  action :update
+	action :update
 end

@@ -1,6 +1,6 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::	Joshua Timberman (<joshua@opscode.com>)
+# Author::	Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
 # Recipe:: module_fileinfo
 #
@@ -10,7 +10,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#		 http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,9 +21,9 @@
 
 case node['platform_family']
 when "rhel", "fedora"
-  # enabled by default in php53
+	# enabled by default in php53
 when "debian"
-  package "php5-fileinfo" do
-    action :upgrade
-  end
+	package "php5-fileinfo" do
+		action :upgrade
+	end
 end
