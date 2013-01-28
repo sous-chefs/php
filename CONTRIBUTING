@@ -23,7 +23,7 @@ such in the body of the commit message(s), and update the relevant
 COOK ticket. When writing commit messages, it is helpful for others if
 you indicate the COOK ticket. For example:
 
-    git commit -m '[COOK-1041] Updated pool resource to correctly delete.'
+		git commit -m '[COOK-1041] Updated pool resource to correctly delete.'
 
 In the ticket itself, it is also helpful if you include log output of
 a successful Chef run, but this is not absolutely required.
