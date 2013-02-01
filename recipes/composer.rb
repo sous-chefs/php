@@ -11,8 +11,9 @@ directory node[:php][:composer][:install_dir]
 remote_file File.join(node[:php][:composer][:install_dir], 'composer.phar') do
   source url.join('/')
   mode 0755
+  action :create_if_missing
 end
 
-link File.join(node[:php][:composer][:install_dir], 'composer.phar') do
-  to node[:php][:composer][:exec]
+link node[:php][:composer][:exec] do
+  to File.join(node[:php][:composer][:install_dir], 'composer.phar')
 end
