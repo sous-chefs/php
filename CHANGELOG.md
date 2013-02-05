@@ -1,3 +1,7 @@
+## v1.1.8:
+
+* [COOK-1998] - Enable override of PHP packages in attributes
+
 ## v1.1.6:
 
 * [COOK-2324] - adds Oracle linux support
