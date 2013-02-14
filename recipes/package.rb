@@ -18,6 +18,13 @@
 # limitations under the License.
 #
 
+if(node['php']['install_apache_module'])
+  if(node.platform_family == 'debian')
+    pkgs << "libapache2-mod-php5"
+    node.set['php']['ini_files']['apache2'] = true
+  end
+end
+
 node['php']['packages'].each do |pkg|
   package pkg do
     action :install

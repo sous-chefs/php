@@ -1,5 +1,5 @@
 default['php']['ini_files']['root'] = %w(rhel fedora).include?(node.platform_family)
-default['php']['ini_files']['apache2'] = node.platform_family == 'debian'
+default['php']['ini_files']['apache2'] = false
 default['php']['ini_files']['cli'] = !%w(rhel fedora).include?(node.platform_family)
 default['php']['ini_files']['cgi'] = node.platform_family == 'debian'
 default['php']['ini_overrides']['apache2'] = nil
