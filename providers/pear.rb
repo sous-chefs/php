@@ -34,15 +34,15 @@ action :install do
   # If we specified a version, and it's not the current version, move to the specified version
   if @new_resource.version != nil && @new_resource.version != @current_resource.version
     install_version = @new_resource.version
-  # If it's not installed at all, install it
-  elsif @current_resource.version == nil
-    install_version = candidate_version
   end
 
-  if install_version
+  # If it's not installed at all or an upgrade, install it
+  if install_version || @current_resource.version == nil
     description = "install package #{@new_resource} #{install_version}"
     converge_by(description) do
-       Chef::Log.info("Installing #{@new_resource} version #{install_version}")
+       info_output = "Installing #{@new_resource}"
+       info_output << " version #{install_version}" if install_version and !install_version.empty?
+       Chef::Log.info(info_output)
        status = install_package(@new_resource.package_name, install_version)
     end
   end
@@ -143,7 +143,9 @@ def candidate_version
 end
 
 def install_package(name, version)
-  pear_shell_out("echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
+  command = "echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << "-#{version}" if version and !version.empty?
+  pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
 end
 
