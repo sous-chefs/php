@@ -1,4 +1,4 @@
-<%= node['php']['fpm_logfile'] %> <%= node['php']['fpm_log_dir'] %>/*.log {
+<%= node['php']['fpm_log_dir'] %>/*.log {
 	rotate 4
 	weekly
 	copytruncate
