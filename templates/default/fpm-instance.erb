@@ -7,7 +7,7 @@ catch_workers_output 		= no
 listen						= <%= @socket_path %>
 listen.owner 				= <%= @socket_user || @user %>
 listen.group 				= <%= @socket_group || @group %>
-listen.mode 				= <%= @listen_perms %>
+listen.mode 				= <%= @socket_perms %>
 <% else %>
 listen						= <%= @ip_address %>:<%= @port %>
 listen.allowed_clients 		= <%= @ip_whitelist.join(",") %>
