@@ -24,41 +24,53 @@ default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
 case node["platform_family"]
-when "rhel", "fedora"
-  default['php']['conf_dir']      = '/etc'
-  default['php']['ext_conf_dir']  = '/etc/php.d'
-  default['php']['fpm_user']      = 'nobody'
-  default['php']['fpm_group']     = 'nobody'
-  default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
-  if node['platform_version'].to_f < 6 then
-    default['php']['packages'] = ['php53', 'php53-devel', 'php53-cli', 'php-pear']
+  when "rhel", "fedora"
+    default['php']['conf_dir']      = '/etc'
+    default['php']['ext_conf_dir']  = '/etc/php.d'
+    default['php']['fpm_user']      = 'nobody'
+    default['php']['fpm_group']     = 'nobody'
+    default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
+    if node['platform_version'].to_f < 6 then
+      default['php']['packages'] = ['php53', 'php53-devel', 'php53-cli', 'php-pear']
+    else
+      default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
+    end
+  when "debian"
+    default['php']['conf_dir']      = '/etc/php5/cli'
+    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+    default['php']['fpm_user']      = 'www-data'
+    default['php']['fpm_group']     = 'www-data'
+    default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
+  when "suse"
+    default['php']['conf_dir']      = '/etc/php5/cli'
+    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+    default['php']['fpm_user']      = 'wwwrun'
+    default['php']['fpm_group']     = 'www'
+    default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
   else
-    default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
-  end
-when "debian"
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['fpm_user']      = 'www-data'
-  default['php']['fpm_group']     = 'www-data'
-  default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
-when "suse"
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['fpm_user']      = 'wwwrun'
-  default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
-else
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['fpm_user']      = 'www-data'
-  default['php']['fpm_group']     = 'www-data'
-  default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
+    default['php']['conf_dir']      = '/etc/php5/cli'
+    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+    default['php']['fpm_user']      = 'www-data'
+    default['php']['fpm_group']     = 'www-data'
+    default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
 end
+
+default['php']['build'] = false
+default['php']['git_repo'] = 'https://github.com/php/php-src.git'
+default['php']['git_branch'] = 'master'
+
+default['php_couchbase_module']['lib_git_repo']      = 'git://github.com/couchbase/libcouchbase.git'
+default['php_couchbase_module']['lib_git_branch'] =           'master'
+default['php_couchbase_module']['ext_git_repo'] = 'git://github.com/couchbase/php-ext-couchbase.git'
+default['php_couchbase_module']['ext_git_branch']                    = 'master'
+
 
 default['php']['url'] = 'http://us.php.net/distributions'
 default['php']['version'] = '5.3.10'
 default['php']['checksum'] = 'ee26ff003eaeaefb649735980d9ef1ffad3ea8c2836e6ad520de598da225eaab'
-default['php']['prefix_dir'] = '/usr/local'
+
+#I know how you might feel about this but I implore you to try... (see /etc/profile.d)
+default['php']['prefix_dir'] = '/usr/local/php'
 
 default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-libdir=#{lib_dir}
