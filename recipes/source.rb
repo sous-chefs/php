@@ -51,7 +51,7 @@ bash "build php" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
   tar -zxvf php-#{version}.tar.gz
-  (cd php-#{version} && ./configure #{configure_options})
+  (cd php-#{version} && #{(node['php']['ext_dir']) ? "EXTENSION_DIR=#{node['php']['ext_dir']}" : ''} ./configure #{configure_options})
   (cd php-#{version} && make && make install)
   EOF
   not_if "which php"
@@ -63,6 +63,13 @@ directory node['php']['conf_dir'] do
   mode "0755"
   recursive true
 end
+
+directory node['php']['ext_dir']  do
+  owner "root"
+  group "root"
+  mode "0755"
+  recursive true
+end if node['php']['ext_dir']
 
 directory node['php']['ext_conf_dir'] do
   owner "root"
