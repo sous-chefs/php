@@ -47,6 +47,13 @@ remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
   not_if "which php"
 end
 
+directory node['php']['ext_dir']  do
+  owner "root"
+  group "root"
+  mode "0755"
+  recursive true
+end if node['php']['ext_dir']
+
 bash "build php" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
@@ -63,13 +70,6 @@ directory node['php']['conf_dir'] do
   mode "0755"
   recursive true
 end
-
-directory node['php']['ext_dir']  do
-  owner "root"
-  group "root"
-  mode "0755"
-  recursive true
-end if node['php']['ext_dir']
 
 directory node['php']['ext_conf_dir'] do
   owner "root"
