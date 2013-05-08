@@ -21,7 +21,11 @@
 lib_dir = kernel['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
 default['php']['install_method'] = 'package'
-default['php']['directives'] = {}
+default['php']['directives']     = {}
+default['php']['gd_package']     = 'php5-gd'
+default['php']['ldap_package']   = 'php5-ldap'
+default['php']['mysql_package']  = 'php5-mysql'
+default['php']['pgsql_package']  = 'php5-pgsql'
 
 case node["platform_family"]
 when "rhel", "fedora"
@@ -32,8 +36,16 @@ when "rhel", "fedora"
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   if node['platform_version'].to_f < 6 then
     default['php']['packages'] = ['php53', 'php53-devel', 'php53-cli', 'php-pear']
+    default['php']['gd_package'] = 'php53-gd'
+    default['php']['ldap_package'] = 'php53-ldap'
+    default['php']['mysql_package'] = 'php53-mysql'
+    default['php']['pgsql_package']  = 'php53-pgsql'
   else
     default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
+    default['php']['gd_package'] = 'php-gd'
+    default['php']['ldap_package'] = 'php-ldap'
+    default['php']['mysql_package'] = 'php-mysql'
+    default['php']['pgsql_package']  = 'php-pgsql'
   end
 when "debian"
   default['php']['conf_dir']      = '/etc/php5/cli'
