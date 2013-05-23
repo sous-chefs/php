@@ -18,8 +18,7 @@
 # limitations under the License.
 #
 
-lib_dir = kernel['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-
+lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
@@ -35,6 +34,7 @@ when "rhel", "fedora"
   else
     default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
   end
+  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 when "debian"
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
@@ -47,6 +47,7 @@ when "suse"
   default['php']['fpm_user']      = 'wwwrun'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
+  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
