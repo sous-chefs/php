@@ -1,3 +1,15 @@
+## v1.2.0:
+
+### Improvement
+
+- [COOK-2516]: Better support for SUSE distribution for php cookbook
+- [COOK-3035]: update php::source to install 5.4.15 by default
+
+### Bug
+
+- [COOK-2463]: PHP PEAR Provider Installs Most Recent Version, Without Respect to Preferred State
+- [COOK-2514]: php_pear: does not handle more exotic version strings
+
 ## v1.1.8:
 
 * [COOK-1998] - Enable override of PHP packages in attributes
