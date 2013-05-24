@@ -24,6 +24,7 @@ default['php']['directives'] = {}
 
 case node["platform_family"]
 when "rhel", "fedora"
+  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
   default['php']['fpm_user']      = 'nobody'
@@ -34,7 +35,6 @@ when "rhel", "fedora"
   else
     default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
   end
-  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 when "debian"
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
