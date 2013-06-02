@@ -35,6 +35,8 @@ platforms:
     require_chef_omnibus: true
     customize:
       memory: 1024
+  run_list:
+  - recipe[yum::epel]
 
 suites:
 - name: default
