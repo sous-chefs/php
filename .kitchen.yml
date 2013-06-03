@@ -56,7 +56,6 @@ suites:
   - recipe[php]
   - recipe[php::module_apc]
   - recipe[php::module_curl]
-  - recipe[php::module_fileinfo]
   - recipe[php::module_fpdf]
   - recipe[php::module_gd]
   - recipe[php::module_ldap]
