@@ -1,10 +1,9 @@
 #
 # Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
-# Recipe:: module_mysql
+# Libraries:: helpers
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,14 +18,6 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform(
-  %w(centos redhat scientific fedora amazon) => {
-    el5_range => "php53-mysql",
-    "default" => "php-mysql"
-  },
-  "default" => "php5-mysql"
-)
-
-package pkg do
-  action :install
+def el5_range
+  (0..99).to_a.map{|i| "5.#{i}"}
 end

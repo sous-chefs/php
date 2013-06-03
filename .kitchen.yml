@@ -50,3 +50,18 @@ suites:
   attributes:
     php:
       install_method: source
+
+- name: module-packages
+  run_list:
+  - recipe[php]
+  - recipe[php::module_apc]
+  - recipe[php::module_curl]
+  - recipe[php::module_fileinfo]
+  - recipe[php::module_fpdf]
+  - recipe[php::module_gd]
+  - recipe[php::module_ldap]
+  - recipe[php::module_memcache]
+  - recipe[php::module_mysql]
+  - recipe[php::module_pgsql]
+  - recipe[php::module_sqlite3]
+  attributes: {}
