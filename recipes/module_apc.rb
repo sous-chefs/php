@@ -26,7 +26,7 @@ when "rhel", "fedora"
       action :install
     end
   end
-  php_pear "apc" do
+  php_pear "APC" do
     action :install
     directives(:shm_size => "128M", :enable_cli => 0)
   end
