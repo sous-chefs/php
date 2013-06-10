@@ -1,3 +1,15 @@
+## v1.2.2:
+
+### Bug
+
+- [COOK-3050]: `lib_dir` declared in wrong place for redhat
+- [COOK-3102]: remove fileinfo recipe from php cookbook
+
+### Improvement
+
+- [COOK-3101]: use a method to abstract range of "el 5" versions in
+  php recipes
+
 ## v1.2.0:
 
 ### Improvement
