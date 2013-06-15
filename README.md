@@ -11,7 +11,7 @@ Platform
 --------
 
 * Debian, Ubuntu
-* CentOS, Red Hat, Fedora
+* CentOS, Red Hat, Fedora, Amazon Linux
 
 Cookbooks
 ---------
