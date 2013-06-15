@@ -69,9 +69,7 @@ directory node['php']['ext_conf_dir'] do
   recursive true
 end
 
-template "#{node['php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
+%w(apache2 cli cgi).each do |key|
+  node.set['php']['ini_files'][key]['enabled'] = false
 end
+

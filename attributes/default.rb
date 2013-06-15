@@ -21,6 +21,7 @@
 lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
+default['php']['install_apache_module'] = false
 
 case node["platform_family"]
 when "rhel", "fedora"
@@ -36,7 +37,7 @@ when "rhel", "fedora"
     default['php']['packages'] = ['php', 'php-devel', 'php-cli', 'php-pear']
   end
 when "debian"
-  default['php']['conf_dir']      = '/etc/php5/cli'
+  default['php']['conf_dir']      = '/etc/php5'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
