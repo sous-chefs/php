@@ -44,12 +44,20 @@ suites:
   - recipe[php]
   attributes: {}
 
-- name: source
+- name: source-5.4
   run_list:
   - recipe[php]
   attributes:
     php:
       install_method: source
+
+- name: source-5.3
+  run_list:
+  - recipe[php]
+  attributes:
+    php:
+      install_method: source
+      version: 5.3.23
 
 - name: module-packages
   run_list:
