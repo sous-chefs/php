@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-tmp = "#{Chef::Config['file_cache_path'] || '/tmp'}"
+tmp = Chef::Config['file_cache_path'] || '/tmp'
 ver = node['php']['opcache']['version']
 
 if node['recipes'].include?('php::fpm')

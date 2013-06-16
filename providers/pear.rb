@@ -211,7 +211,7 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     owner 'root'
     group 'root'
     mode '0644'
-    variables(:name => name, :extensions => extensions, :directives => directives)
+    variables(:name => name, :directives => directives)
     action action
   end
 end
