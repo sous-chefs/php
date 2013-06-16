@@ -20,13 +20,13 @@
 #
 
 case node['platform_family']
-when "debian"
+when 'debian'
 	%w{ xmlrpc xsl }.each do |pkg|
   		package "php5-#{pkg}" do
     		action :install
   		end
 	end
-when "rhel", "fedora"
+when 'rhel', 'fedora'
 	%w{ xml xmlrpc }.each do |pkg|
   		package "php-#{pkg}" do
     		action :install

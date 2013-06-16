@@ -22,26 +22,26 @@
 #
 
 case node['platform_family']
-when "rhel", "fedora"
+when 'rhel', 'fedora'
   %w{ httpd-devel pcre pcre-devel }.each do |pkg|
     package pkg do
       action :install
     end
   end
 
-  package "php-pecl-apc" do
+  package 'php-pecl-apc' do
     action :install
   end
   
-when "debian"
-  package "php-apc" do
+when 'debian'
+  package 'php-apc' do
     action :install
   end
 end
 
-template "#{node["php"]["ext_conf_dir"]}/apc.ini" do
-  source "apc.ini.erb"
-  owner "root"
-  group "root"
+template "#{node['php']['ext_conf_dir']}/apc.ini" do
+  source 'apc.ini.erb'
+  owner 'root'
+  group 'root'
   mode 00644
 end

@@ -21,7 +21,7 @@
 
 # mhash is compiled in PHP on CentOS
 
-package "php5-mhash" do
+package 'php5-mhash' do
   action :install
-  only_if { platform_family?("debian") }
+  only_if { platform_family?('debian') }
 end

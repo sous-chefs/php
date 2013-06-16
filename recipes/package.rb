@@ -7,14 +7,14 @@
 #
 # Copyright 2011, Opscode, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the 'License');
+# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an 'AS IS' BASIS,
+# distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
@@ -27,10 +27,11 @@ pkgs = value_for_platform_family(
 
 include_recipe 'yumrepo::atomic' if platform_family?('rhel')
 
+# Run the package installation at compile time
 pkgs.each do |pkg|
   package pkg do
-    action :install
-  end
+    action :nothing
+  end.run_action(:install)
 end
 
 template "#{node['php']['conf_dir']}/php.ini" do
@@ -41,15 +42,14 @@ template "#{node['php']['conf_dir']}/php.ini" do
   notifies :restart, 'service[php-fpm]' if node['recipes'].include?('php::fpm') && platform_family?('rhel', 'fedora')
 end
 
-service 'php-fpm' if node.recipes.include?('php::fpm') && platform_family?('rhel', 'fedora')
+service 'php-fpm' if node['recipes'].include?('php::fpm') && platform_family?('rhel', 'fedora')
 
-if platform_family?('debian')
-  template "#{node['php']['cgi_conf_dir']}/php.ini" do
-    source 'php.ini.erb'
-    owner 'root'
-    group 'root'
-    mode 0644
-  end
+template "#{node['php']['cgi_conf_dir']}/php.ini" do
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  only_if { platform_family?('debian') }
 end
 
 directory node['php']['session_dir'] do
@@ -88,7 +88,7 @@ template '/etc/cron.d/php5' do
 end
 
 if node['php']['tmpfs']
-  total_mem = (node.memory.total.to_i / 1024) + (node.memory.swap.total.to_i / 1024)
+  total_mem = (node['memory']['total'].to_i / 1024) + (node['memory']['swap']['total'].to_i / 1024)
   if total_mem < node['php']['tmpfs_size'].to_i
     Chef::Log.info('You have specified a much bigger tmpfs session store than you can handle. Add more memory or swap or adjust the tmpfs size!')
   else

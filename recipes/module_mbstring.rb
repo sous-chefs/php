@@ -21,7 +21,7 @@
 
 # mbstring is compiled in PHP on Debian
 
-package "php-mbstring" do
+package 'php-mbstring' do
   action :install
-  only_if { platform_family?("rhel", "fedora") }
+  only_if { platform_family?('rhel', 'fedora') }
 end

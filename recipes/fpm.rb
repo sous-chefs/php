@@ -20,8 +20,8 @@
 #
 
 pkgname = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-fpm",
-    "debian" => "php5-fpm"
+    [ 'rhel', 'fedora' ] => 'php-fpm',
+    'debian' => 'php5-fpm'
 )
 
 package pkgname
@@ -32,38 +32,37 @@ file "#{node['php']['fpm_pool_dir']}/www.conf" do
 end
 
 # Ubuntu uses a separate ini for FPM
-if platform?("ubuntu", "debian")
-  template "#{node['php']['fpm_conf_dir']}/php.ini" do
-    source "php.ini.erb"
-    owner "root"
-    group "root"
-    notifies :restart, "service[#{pkgname}]"
-    mode 00644
-  end
+template "#{node['php']['fpm_conf_dir']}/php.ini" do
+  source 'php.ini.erb'
+  owner 'root'
+  group 'root'
+  notifies :restart, "service[#{pkgname}]"
+  mode 00644
+  only_if { platform_family?('debian') }
 end
 
 # The generic server config
 template "#{node['php']['fpm_conf_dir']}/php-fpm.conf" do
-  source "php-fpm.conf.erb"
-  owner "root"
-  group "root"
+  source 'php-fpm.conf.erb'
+  owner 'root'
+  group 'root'
   notifies :restart, "service[#{pkgname}]"
   mode 00644
 end
 
 # For the pool log files
 directory node['php']['fpm_log_dir'] do
-  owner "root"
-  group "root"
+  owner 'root'
+  group 'root'
   mode 01733
   action :create
 end
 
 # Log rotation file
 template node['php']['fpm_rotfile'] do
-  source "php-fpm.logrotate.erb"
-  owner "root"
-  group "root"
+  source 'php-fpm.logrotate.erb'
+  owner 'root'
+  group 'root'
   mode 00644
 end
 

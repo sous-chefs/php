@@ -1,10 +1,10 @@
 #
-# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+# Author:: Panagiotis Papadomitsos (pj@ezgr.net)
 #
 # Cookbook Name:: php
-# Recipe:: module_gd
+# Attribute:: apc
 #
-# Copyright 2009-2012, Panagiotis Papadomitsos
+# Copyright:: 2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,5 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-gd',
-    'debian' => 'php5-gd'
-)
-
-package pkg do
-  action :install
-end
+default['php']['apc']['shm_size'] = '128M'
+default['php']['apc']['local_size'] = '128M'

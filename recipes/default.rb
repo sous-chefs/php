@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-include_recipe "php::#{node['php']['install_method']}"
+include_recipe 'php::package'
 
 # update the main channels
 php_pear_channel 'pear.php.net' do

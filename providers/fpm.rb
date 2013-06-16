@@ -23,10 +23,10 @@ action :add do
 	new_resource.updated_by_last_action(false)
 	Chef::Log.info("Creating new PHP-FPM instance for #{new_resource.name}")
 	a = template "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
-		cookbook "php"
-		source "fpm-instance.erb"
-		owner "root"
-		group "root"
+		cookbook 'php'
+		source 'fpm-instance.erb'
+		owner 'root'
+		group 'root'
 		variables({
 			:name => new_resource.name,
 			:user => new_resource.user,
@@ -59,12 +59,12 @@ action :add do
 			:value_overrides => new_resource.value_overrides,
 			:env_overrides => new_resource.env_overrides
 		})
-		notifies :restart, "service[php5-fpm]"
+		notifies :restart, 'service[php5-fpm]'
 		mode 00644
 	end
 	
-	service "php5-fpm" do
-		service_name "php-fpm" if platform_family?("rhel", "fedora")
+	service 'php5-fpm' do
+		service_name 'php-fpm' if platform_family?('rhel', 'fedora')
 		action :nothing
 	end
 
@@ -78,11 +78,11 @@ action :remove do
 
 	a = file "#{node['php']['fpm_pool_dir']}/#{new_resource.name}.conf" do
 		action :delete
-		notifies :restart, "service[php5-fpm]"
+		notifies :restart, 'service[php5-fpm]'
 	end
 	
-	service "php5-fpm" do
-		service_name "php-fpm" if platform_family?("rhel", "fedora")
+	service 'php5-fpm' do
+		service_name 'php-fpm' if platform_family?('rhel', 'fedora')
 		action :nothing
 	end
 

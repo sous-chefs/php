@@ -19,12 +19,12 @@
 # limitations under the License.
 #
 
-include_recipe "apache2::mod_php5"
+include_recipe 'apache2::mod_php5'
 
 template "#{node['php']['apache_conf_dir']}/php.ini" do
-	source "php.ini.erb"
-	owner "root"
-	group "root"
+	source 'php.ini.erb'
+	owner 'root'
+	group 'root'
 	mode 00644
-	only_if { platform?("ubuntu", "debian") }
+	only_if { platform_family?('debian') }
 end

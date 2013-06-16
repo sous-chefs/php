@@ -22,18 +22,17 @@
 
 lib_dir = kernel['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
-default['php']['install_method'] = 'package'
 default['php']['directives'] = {} 
 
-case node["platform_family"]
-when "rhel", "fedora"
+case node['platform_family']
+when 'rhel', 'fedora'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   default['php']['pear_dir']      = '/usr/share/pear'
   default['php']['session_dir']   = '/var/lib/php/session5'  
   default['php']['upload_dir']    = '/var/lib/php/uploads'
-when "debian"
+when 'debian'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['apache_conf_dir'] = '/etc/php5/apache2'
   default['php']['cgi_conf_dir']  = '/etc/php5/cgi'  
@@ -76,49 +75,5 @@ default['php']['ini_settings'] = {
   'session.cookie_httponly' => '0'
 }
 
-default['php']['apc']['shm_size'] = "128M"
-default['php']['apc']['local_size'] = "128M"
-
 default['php']['tmpfs'] = true
 default['php']['tmpfs_size'] = '128M'
-
-default['php']['url'] = 'http://us.php.net/distributions'
-default['php']['version'] = '5.3.17'
-default['php']['checksum'] = 'ad85e857d404b9e74f1e003deb574e94e3bb939f686e4e9a871d3a6b3f957509'
-default['php']['prefix_dir'] = '/usr/local'
-
-default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
-                                          --with-libdir=#{lib_dir}
-                                          --with-config-file-path=#{php['conf_dir']}
-                                          --with-config-file-scan-dir=#{php['ext_conf_dir']}
-                                          --with-pear
-                                          --enable-fpm
-                                          --with-zlib
-                                          --with-openssl
-                                          --with-kerberos
-                                          --with-bz2
-                                          --with-curl
-                                          --enable-ftp
-                                          --enable-zip
-                                          --enable-exif
-                                          --with-gd
-                                          --enable-gd-native-ttf
-                                          --with-gettext
-                                          --with-gmp
-                                          --with-mhash
-                                          --with-iconv
-                                          --with-imap
-                                          --with-imap-ssl
-                                          --enable-sockets
-                                          --enable-soap
-                                          --with-xmlrpc
-                                          --with-libevent-dir
-                                          --with-mcrypt
-                                          --enable-mbstring
-                                          --with-t1lib
-                                          --with-mysql
-                                          --with-mysqli=/usr/bin/mysql_config
-                                          --with-mysql-sock
-                                          --with-sqlite3
-                                          --with-pdo-mysql
-                                          --with-pdo-sqlite}

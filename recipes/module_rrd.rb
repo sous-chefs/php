@@ -20,17 +20,17 @@
 #
 
 case node['platform_family']
-when "rhel", "fedora"
+when 'rhel', 'fedora'
 	%w{ rrdtool rrdtool-devel }.each do |pkg|
 		package pkg do
 			action :install
 		end
 	end
-    php_pear "rrd" do
+    php_pear 'rrd' do
       action :install
     end	
-when "debian"
-	package "php5-rrd" do
+when 'debian'
+	package 'php5-rrd' do
 		action :install
 	end
 end

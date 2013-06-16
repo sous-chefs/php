@@ -22,8 +22,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-pgsql",
-    "debian" => "php5-pgsql"
+    [ 'rhel', 'fedora' ] => 'php-pgsql',
+    'debian' => 'php5-pgsql'
 )
 
 package pkg do

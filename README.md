@@ -28,26 +28,22 @@ Supported Operating Systems
 
 This cookbook supports the following Linux distributions:
 
-* Ubuntu
-* Debian
-* CentOS
-* RedHat
+* Ubuntu >= 12.04
+* Debian >= 6.0
+* CentOS >= 6.0
+* RedHat >= 6.0
 
 It also supports **Chef 10.14** and higher
 
 Attributes
 ==========
 
-* `node["php"]["install_method"]` = method to install php with, default `package`.
-
-The file also contains the following - types:
+The file contains the following attribute types:
 
 * platform specific locations and settings.
 * source installation settings
 * ini configuration settings
 * fpm-specific settings
-
----
 
 Resource/Provider
 =================
@@ -240,15 +236,11 @@ Recipes
 
 ## `default`
 
-Include the default recipe in a run list, to get `php`.  By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
+Include the default recipe in a run list, to get `php`.
 
 ## `package`
 
 This recipe installs PHP from packages.
-
-## `source`
-
-This recipe installs PHP from source.
 
 ## `fpm`
 
@@ -257,8 +249,6 @@ This recipe installs and configures the PHP FastCGI Process Manager but without 
 ## `module_*`
 
 This recipe installs various PHP modules via the appropriate package commands. *module_common* will install a common set of PHP modules needed for most web applications (such as Joomla or Wordpress).
-
----
 
 Usage
 =====
@@ -281,13 +271,13 @@ Simply include the `php` recipe where ever you would like php installed.  To ins
 License and Author
 ==================
 
+* Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)
 * Author:: Seth Chisamore (<schisamo@opscode.com>)
 * Author:: Joshua Timberman (<joshua@opscode.com>)
-* Author:: Panagiotis Papadomitsos (<pj@ezgr.net>)
-
-Original Copyright:: 2011, Opscode, Inc
 
 Modifications Copyright:: 2012, Panagiotis Papadomitsos
+
+Original Copyright:: 2011, Opscode, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

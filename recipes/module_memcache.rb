@@ -20,16 +20,16 @@
 #
 
 case node['platform_family']
-when "rhel", "fedora"
-  package "zlib-devel" do
+when 'rhel', 'fedora'
+  package 'zlib-devel' do
     action :install
   end
 
-  php_pear "memcache" do
+  php_pear 'memcache' do
     action :install
   end
-when "debian"
-  package "php5-memcache" do
+when 'debian'
+  package 'php5-memcache' do
     action :install
   end
 end

@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of php.
 
+## v1.2.0
+
+* Added ZendOptimizer+ opcache support
+* Dropped source support
+* Dropped older distro support
+* Major code refactoring
+* Added Vagrantfile
+
 ## v1.1.1:
 
 Synced with upstream. More specifically:

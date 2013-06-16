@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-snmp",
-    "debian" => "php5-snmp"
+    [ 'rhel', 'fedora' ] => 'php-snmp',
+    'debian' => 'php5-snmp'
 )
 
 package pkg do

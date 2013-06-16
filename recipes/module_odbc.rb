@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-odbc",
-    "debian" => "php5-odbc"
+    [ 'rhel', 'fedora' ] => 'php-odbc',
+    'debian' => 'php5-odbc'
 )
 
 package pkg do

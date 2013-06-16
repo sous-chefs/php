@@ -19,15 +19,15 @@
 # limitations under the License.
 #
 
-case node["platform_family"]
-when "rhel", "fedora"
+case node['platform_family']
+when 'rhel', 'fedora'
   default['php']['fpm_conf_dir']  = '/etc'
   default['php']['fpm_pool_dir']  = '/etc/php-fpm.d'
   default['php']['fpm_log_dir']   = '/var/log/php-fpm'
   default['php']['fpm_pidfile']   = '/var/run/php-fpm/php-fpm.pid'
   default['php']['fpm_logfile']   = '/var/log/php-fpm/fpm-master.log'
   default['php']['fpm_rotfile']   = '/etc/logrotate.d/php-fpm'
-when "debian"
+when 'debian'
   default['php']['fpm_conf_dir']  = '/etc/php5/fpm'
   default['php']['fpm_pool_dir']  = '/etc/php5/fpm/pool.d'
   default['php']['fpm_log_dir']   = '/var/log/php5-fpm'

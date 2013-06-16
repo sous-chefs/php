@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-imap",
-    "debian" => "php5-imap"
+    [ 'rhel', 'fedora' ] => 'php-imap',
+    'debian' => 'php5-imap'
 )
 
 package pkg do

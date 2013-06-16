@@ -20,8 +20,8 @@
 #
 
 pkg = value_for_platform_family(
-    [ "rhel", "fedora" ] => "php-pspell",
-    "debian" => "php5-pspell"
+    [ 'rhel', 'fedora' ] => 'php-pspell',
+    'debian' => 'php5-pspell'
 )
 
 package pkg do
