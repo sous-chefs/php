@@ -21,5 +21,5 @@
 
 default['php']['apc']['shm_size'] = '128M'
 default['php']['apc']['local_size'] = '128M'
-default['php']['apc']['apc_ttl'] = '7200'
+default['php']['apc']['ttl'] = '7200'
 default['php']['apc']['user_ttl'] = '7200'
