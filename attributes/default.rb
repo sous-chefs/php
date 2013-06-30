@@ -21,6 +21,7 @@
 lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
+default['php']['timezone'] = nil
 
 case node["platform_family"]
 when "rhel", "fedora"

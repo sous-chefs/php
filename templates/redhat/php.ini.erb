@@ -636,7 +636,11 @@ default_socket_timeout = 60
 
 [Date]
 ; Defines the default timezone used by the date functions
+<%- if node['php']['timezone'] %>
+date.timezone = <%= node['php']['timezone'] %>
+<%- else %>
 ;date.timezone =
+<%- end %>
 
 [Syslog]
 ; Whether or not to define the various syslog variables (e.g. $LOG_PID,
