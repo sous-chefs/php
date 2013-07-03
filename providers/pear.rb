@@ -131,6 +131,7 @@ def current_installed_version
 end
 
 def candidate_version
+  @candidate_version = @new_resource.version
   @candidate_version ||= begin
     candidate_version_cmd = "#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
     p = shell_out(candidate_version_cmd)
