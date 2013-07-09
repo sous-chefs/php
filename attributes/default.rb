@@ -22,7 +22,7 @@
 
 lib_dir = kernel['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
-default['php']['directives'] = {} 
+default['php']['directives'] = {}
 
 case node['platform_family']
 when 'rhel', 'fedora'
@@ -30,27 +30,27 @@ when 'rhel', 'fedora'
   default['php']['ext_conf_dir']  = '/etc/php.d'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   default['php']['pear_dir']      = '/usr/share/pear'
-  default['php']['session_dir']   = '/var/lib/php/session5'  
+  default['php']['session_dir']   = '/var/lib/php/session5'
   default['php']['upload_dir']    = '/var/lib/php/uploads'
 when 'debian'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['apache_conf_dir'] = '/etc/php5/apache2'
-  default['php']['cgi_conf_dir']  = '/etc/php5/cgi'  
+  default['php']['cgi_conf_dir']  = '/etc/php5/cgi'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['pear_dir']      = '/usr/share/php'
-  default['php']['session_dir']   = '/var/lib/php5/session5'  
+  default['php']['session_dir']   = '/var/lib/php5/session5'
   default['php']['upload_dir']    = '/var/lib/php5/uploads'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['apache_conf_dir'] = '/etc/php5/apache2'
-  default['php']['cgi_conf_dir']  = '/etc/php5/cgi'  
+  default['php']['cgi_conf_dir']  = '/etc/php5/cgi'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['pear_dir']      = '/usr/share/php'
-  default['php']['session_dir']   = '/var/lib/php5/session5'  
-  default['php']['upload_dir']    = '/var/lib/php5/uploads'  
+  default['php']['session_dir']   = '/var/lib/php5/session5'
+  default['php']['upload_dir']    = '/var/lib/php5/uploads'
 end
 
-default['php']['secure_functions'] = true
+default['php']['secure_functions']['disable_functions'] = 'dl,posix_kill,posix_mkfifo,posix_setuid,proc_close,proc_open,proc_terminate,shell_exec,system,leak,posix_setpgid,posix_setsid,proc_get_status,proc_nice,show_source,virtual,proc_terminate,inject_code,define_syslog_variables,syslog,posix_uname'
 
 # PHP.ini Settings
 default['php']['ini_settings'] = {
