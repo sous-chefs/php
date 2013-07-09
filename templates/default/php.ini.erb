@@ -384,11 +384,8 @@ open_basedir = <%= node['php']['ini_settings']['open_basedir'] %>
 ; It receives a comma-delimited list of function names. This directive is
 ; *NOT* affected by whether Safe Mode is turned On or Off.
 ; http://php.net/disable-functions
-<% if node['php']['secure_functions'] %>
-disable_functions = dl,posix_kill,posix_mkfifo,posix_setuid,proc_close,proc_open,proc_terminate,shell_exec,system,leak,posix_setpgid,posix_setsid,proc_get_status,proc_nice,show_source,virtual,proc_terminate,inject_code,define_syslog_variables,syslog,posix_uname
-<% else %>
-disable_functions = 
-<% end %>
+
+disable_functions = <%= node['php']['secure_functions']['disable_functions'] %>
 
 ; This directive allows you to disable certain classes for security reasons.
 ; It receives a comma-delimited list of class names. This directive is
