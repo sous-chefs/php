@@ -33,38 +33,46 @@ if platform_family?('rhel')
   %w{ httpd-devel pcre pcre-devel }.each { |pkg| package pkg }
 end
 
-git "#{tmp}/php-opcache-#{ver}" do
-  repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
-  reference "v#{ver}"
-  action :checkout
-end
+if ?File.exists?("/var/lib/php5/.zend-opcode-installed"){
+  git "#{tmp}/php-opcache-#{ver}" do
+    repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
+    reference "v#{ver}"
+    action :checkout
+  end
 
-execute 'php-opcache-phpize' do
-  command 'phpize'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/configure"
-  action :run
-end
+  execute 'php-opcache-phpize' do
+    command 'phpize'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/configure"
+    action :run
+  end
 
-execute 'php-opcache-configure' do
-  command './configure --enable-opcache'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/config.h"
-  action :run
-end
+  execute 'php-opcache-configure' do
+    command './configure --enable-opcache'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/config.h"
+    action :run
+  end
 
-execute 'php-opcache-build' do
-  command "make -j#{node['cpu']['total']}"
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/modules/opcache.so"
-  action :run
-  notifies :run, 'execute[php-opcache-install]', :immediately
-end
+  execute 'php-opcache-build' do
+    command "make -j#{node['cpu']['total']}"
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/modules/opcache.so"
+    action :run
+    notifies :run, 'execute[php-opcache-install]', :immediately
+  end
 
-execute 'php-opcache-install' do
-  command 'make install'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  action :nothing
+  execute 'php-opcache-install' do
+    command 'make install'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    action :nothing
+  end
+
+  file "/var/lib/php5/.zend-opcode-installed" do
+    owner "root"
+    group "root"
+    action :create
+  end
 end
 
 # We install the PHP packages at compile time in order to have the php-config executable available for query
