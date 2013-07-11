@@ -92,4 +92,3 @@ template "#{node['php']['ext_conf_dir']}/aa-opcache.ini" do
     notifies :restart, svc
   end
 end
-
