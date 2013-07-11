@@ -33,7 +33,7 @@ if platform_family?('rhel')
   %w{ httpd-devel pcre pcre-devel }.each { |pkg| package pkg }
 end
 
-if ?File.exists?("/var/lib/php5/.zend-opcode-installed"){
+if !File.exists?("/var/lib/php5/.zend-opcode-installed"){
   git "#{tmp}/php-opcache-#{ver}" do
     repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
     reference "v#{ver}"
