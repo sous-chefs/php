@@ -21,6 +21,7 @@
 
 tmp = Chef::Config['file_cache_path'] || '/tmp'
 ver = node['php']['opcache']['version']
+lib = node['php']['session_dir'].split("/")[0..-2].join("/")
 
 if node['recipes'].include?('php::fpm')
   svc = value_for_platform_family(
@@ -33,7 +34,7 @@ if platform_family?('rhel')
   %w{ httpd-devel pcre pcre-devel }.each { |pkg| package pkg }
 end
 
-if !File.exists?("/var/lib/php5/.zend-opcode-installed")
+if !File.exists?("#{lib}/.zend-opcode-installed")
   git "#{tmp}/php-opcache-#{ver}" do
     repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
     reference "v#{ver}"
@@ -68,10 +69,10 @@ if !File.exists?("/var/lib/php5/.zend-opcode-installed")
     action :nothing
   end
 
-  file "/var/lib/php5/.zend-opcode-installed" do
-    owner "root"
-    group "root"
-    action :create
+  file "#{lib}/.zend-opcode-installed" do
+    owner 'root'
+    group 'root'
+    action :create_if_missing
   end
 end
 
