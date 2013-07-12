@@ -21,7 +21,10 @@
 
 tmp = Chef::Config['file_cache_path'] || '/tmp'
 ver = node['php']['opcache']['version']
-lib = node['php']['session_dir'].split("/")[0..-2].join("/")
+lib = value_for_platform_family(
+  [ 'rhel', 'fedora' ] => '/var/lib/php',
+  'debian' => '/var/lib/php5'
+)
 
 if node['recipes'].include?('php::fpm')
   svc = value_for_platform_family(
@@ -34,7 +37,10 @@ if platform_family?('rhel')
   %w{ httpd-devel pcre pcre-devel }.each { |pkg| package pkg }
 end
 
-if !File.exists?("#{lib}/.zend-opcode-installed")
+if ((Chef::Config[:solo] && !File.exists?("#{lib}/.zend-opcache-#{ver}-installed")) ||
+    (!node['php']['opcache'].attribute?('version_installed')) ||
+    (node['php']['opcache'].attribute?('version_installed') && node['php']['opcache']['version_installed'] != ver))
+
   git "#{tmp}/php-opcache-#{ver}" do
     repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
     reference "v#{ver}"
@@ -69,11 +75,16 @@ if !File.exists?("#{lib}/.zend-opcode-installed")
     action :nothing
   end
 
-  file "#{lib}/.zend-opcode-installed" do
-    owner 'root'
-    group 'root'
-    action :create_if_missing
+  if Chef::Config[:solo]
+    file "#{lib}/.zend-opcache-#{ver}-installed" do
+      owner 'root'
+      group 'root'
+      action :create_if_missing
+    end
+  else
+    node.set['php']['opcache']['version_installed'] = ver
   end
+
 end
 
 # We install the PHP packages at compile time in order to have the php-config executable available for query
@@ -81,7 +92,7 @@ ext_dir = `php-config --extension-dir`.chomp
 ext_dir.empty? && raise('Could not execute php-config to locate the PHP extension dir. Please install the PHP development libraries')
 Chef::Log.info("Discovered PHP extension dir to be #{ext_dir}")
 
-template "#{node['php']['ext_conf_dir']}/aa-opcache.ini" do
+template "#{node['php']['ext_conf_dir']}/00-opcache.ini" do
   source 'opcache.ini.erb'
   owner 'root'
   group 'root'
