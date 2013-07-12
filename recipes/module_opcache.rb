@@ -21,6 +21,7 @@
 
 tmp = Chef::Config['file_cache_path'] || '/tmp'
 ver = node['php']['opcache']['version']
+lib = node['php']['session_dir'].split("/")[0..-2].join("/")
 
 if node['recipes'].include?('php::fpm')
   svc = value_for_platform_family(
@@ -33,38 +34,46 @@ if platform_family?('rhel')
   %w{ httpd-devel pcre pcre-devel }.each { |pkg| package pkg }
 end
 
-git "#{tmp}/php-opcache-#{ver}" do
-  repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
-  reference "v#{ver}"
-  action :checkout
-end
+if !File.exists?("#{lib}/.zend-opcode-installed")
+  git "#{tmp}/php-opcache-#{ver}" do
+    repository 'git://github.com/zendtech/ZendOptimizerPlus.git'
+    reference "v#{ver}"
+    action :checkout
+  end
 
-execute 'php-opcache-phpize' do
-  command 'phpize'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/configure"
-  action :run
-end
+  execute 'php-opcache-phpize' do
+    command 'phpize'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/configure"
+    action :run
+  end
 
-execute 'php-opcache-configure' do
-  command './configure --enable-opcache'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/config.h"
-  action :run
-end
+  execute 'php-opcache-configure' do
+    command './configure --enable-opcache'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/config.h"
+    action :run
+  end
 
-execute 'php-opcache-build' do
-  command "make -j#{node['cpu']['total']}"
-  cwd "#{tmp}/php-opcache-#{ver}"
-  creates "#{tmp}/php-opcache-#{ver}/modules/opcache.so"
-  action :run
-  notifies :run, 'execute[php-opcache-install]', :immediately
-end
+  execute 'php-opcache-build' do
+    command "make -j#{node['cpu']['total']}"
+    cwd "#{tmp}/php-opcache-#{ver}"
+    creates "#{tmp}/php-opcache-#{ver}/modules/opcache.so"
+    action :run
+    notifies :run, 'execute[php-opcache-install]', :immediately
+  end
 
-execute 'php-opcache-install' do
-  command 'make install'
-  cwd "#{tmp}/php-opcache-#{ver}"
-  action :nothing
+  execute 'php-opcache-install' do
+    command 'make install'
+    cwd "#{tmp}/php-opcache-#{ver}"
+    action :nothing
+  end
+
+  file "#{lib}/.zend-opcode-installed" do
+    owner 'root'
+    group 'root'
+    action :create_if_missing
+  end
 end
 
 # We install the PHP packages at compile time in order to have the php-config executable available for query
@@ -84,4 +93,3 @@ template "#{node['php']['ext_conf_dir']}/aa-opcache.ini" do
     notifies :restart, svc
   end
 end
-
