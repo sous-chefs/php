@@ -12,3 +12,4 @@ Gemfile.lock
 .kitchen
 bin
 .kitchen.local.yml
+.kitchen/
