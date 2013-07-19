@@ -22,6 +22,10 @@ lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
+default['php']['pear'] = 'pear'
+default['php']['pecl'] = 'pecl'
+
+
 case node["platform_family"]
 when "rhel", "fedora"
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
@@ -48,7 +52,17 @@ when "suse"
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-else
+  when "windows"
+  default['php']['windows']['msi_name']      = 'PHP 5.3.27'
+  default['php']['windows']['msi_source']    = 'http://windows.php.net/downloads/releases/php-5.3.27-win32-VC9-x86.msi'
+  default['php']['conf_dir']      = 'C:/php'
+  default['php']['ext_conf_dir']  = 'C:/php'
+  default['php']['fpm_user']      = 'www-data'
+  default['php']['fpm_group']     = 'www-data'
+  default['php']['packages']      = ['cgi', 'ScriptExecutable', 'PEAR']
+  default['php']['pear']          = 'pear.bat'
+  default['php']['pear']          = 'pecl.bat'
+  else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['fpm_user']      = 'www-data'
