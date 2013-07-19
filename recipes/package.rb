@@ -27,6 +27,11 @@ pkgs = value_for_platform_family(
 
 include_recipe 'yumrepo::atomic' if platform_family?('rhel')
 
+# Make sure the Apt cache is updated
+if platform_family?('debian')
+  resources(:execute => 'apt-get update').run_action(:run)
+end
+
 # Run the package installation at compile time
 pkgs.each do |pkg|
   package pkg do
@@ -82,7 +87,7 @@ template '/etc/cron.d/php5' do
   owner 'root'
   group 'root'
   variables({
-    :maxlifetime_script => platform_family?('rhel') ? '/usr/local/bin/php-maxlifetime' : '/usr/lib/php5/maxlifetime'  
+    :maxlifetime_script => platform_family?('rhel') ? '/usr/local/bin/php-maxlifetime' : '/usr/lib/php5/maxlifetime'
   })
   mode 00644
 end
