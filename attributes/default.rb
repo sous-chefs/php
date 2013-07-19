@@ -24,6 +24,7 @@ default['php']['directives'] = {}
 
 default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
+default['php']['composer']['dir'] = File.expand_path("~/.composer")
 
 
 case node["platform_family"]
@@ -55,8 +56,8 @@ when "suse"
   when "windows"
   default['php']['windows']['msi_name']      = 'PHP 5.3.27'
   default['php']['windows']['msi_source']    = 'http://windows.php.net/downloads/releases/php-5.3.27-win32-VC9-x86.msi'
-  default['php']['conf_dir']      = 'C:/php'
-  default['php']['ext_conf_dir']  = 'C:/php'
+  default['php']['conf_dir']      = 'C:/PHP'
+  default['php']['ext_conf_dir']  = 'C:/PHP'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = ['cgi', 'ScriptExecutable', 'PEAR']
