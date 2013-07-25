@@ -22,8 +22,8 @@
 if platform?("windows")
   install_dir = File.expand_path(node['php']['conf_dir']).gsub('/', '\\')
   windows_package node['php']['windows']['msi_name'] do
-    # source node['php']['windows']['msi_source']
-    source "C:/chef/cache/php-5.3.27-win32-VC9-x86.msi"
+    source node['php']['windows']['msi_source']
+    # source "C:/chef/cache/php-5.3.27-win32-VC9-x86.msi"
     installer_type :msi
 
     options %W[
@@ -47,9 +47,8 @@ if platform?("windows")
     creates "#{node['php']['conf_dir']}/pear.bat"
   end
 
-  windows_path node['php']['conf_dir'] do
-    action :add
-  end
+  ENV['PATH'] += ";#{install_dir}"
+  windows_path install_dir
 
 else
   node['php']['packages'].each do |pkg|

@@ -8,6 +8,8 @@ version           "1.2.3"
 depends "build-essential"
 depends "xml"
 depends "mysql"
+depends "git"
+depends "windows"
 
 %w{ debian ubuntu centos redhat fedora scientific amazon }.each do |os|
   supports os
