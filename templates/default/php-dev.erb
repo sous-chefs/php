@@ -1,0 +1,2 @@
+#!/bin/bash
+php <%= @parameters.map { |setting, value| "-d\"#{setting}=#{value}\"" }.flatten.join " " %> "$@"

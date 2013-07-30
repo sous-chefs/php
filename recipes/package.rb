@@ -30,3 +30,11 @@ template "#{node['php']['conf_dir']}/php.ini" do
   group "root"
   mode "0644"
 end
+
+template "/etc/php5/apache2/php.ini" do
+  source "php.ini.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  only_if { File.directory?("/etc/php5/apache2") }
+end
