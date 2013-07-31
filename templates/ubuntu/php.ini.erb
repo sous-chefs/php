@@ -259,7 +259,7 @@ y2k_compliance = On
 ; Development Value: 4096
 ; Production Value: 4096
 ; http://php.net/output-buffering
-output_buffering = 4096
+output_buffering = On
 
 ; You can redirect all of the output of your scripts to a function.  For
 ; example, if you set output_handler to "mb_output_handler", character
@@ -1852,6 +1852,6 @@ ldap.max_links = -1
 ; tab-width: 4
 ; End:
 
-<% @directives.sort_by { |key, val| key }.each do |directive, value| -%>
+<% node['php']['directives'].each do |directive, value| -%>
 <%= "#{directive}=\"#{value}\"" %>
 <% end -%>
