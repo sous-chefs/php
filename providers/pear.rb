@@ -143,14 +143,14 @@ def candidate_version
 end
 
 def install_package(name, version)
-  command = "echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command = "echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version and !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
 end
 
 def upgrade_package(name, version)
-  pear_shell_out("echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} upgrade -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
+  pear_shell_out("echo \"\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} upgrade -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
   manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
 end
 

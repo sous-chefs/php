@@ -29,6 +29,7 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner "root"
   group "root"
   mode "0644"
+  variables(:directives => node['php']['directives'])
 end
 
 template "/etc/php5/apache2/php.ini" do
