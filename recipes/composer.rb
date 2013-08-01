@@ -21,45 +21,48 @@
 include_recipe "php"
 include_recipe "git"
 
-bin_dir = "#{node['php']['composer']['dir']}/bin"
-directory bin_dir do
+execute "install_composer" do
+  action :run
+  cwd Chef::Config[:file_cache_path]
+  command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
+end
+
+# Ensure that composer is on the PATH
+if platform? 'windows'
+  php_dir = node['php']['conf_dir']
+  execute "move composer.phar #{php_dir.gsub('/', '\\')}\\composer.phar" do
+    cwd Chef::Config[:file_cache_path]
+  end
+  
+  template "#{php_dir}/#{node['php']['composer']['bin']}" do
+    source "composer.bat.erb"
+  end
+else
+  execute "mv composer.phar /usr/local/bin/#{node['php']['composer']['bin']}" do
+    cwd Chef::Config[:file_cache_path]
+  end
+end
+
+# Ensure that packages installed by composer on the PATH, but ONLY DURING THE CHEF RUN!
+if platform? 'windows'
+  ENV['PATH'] += ";#{node['php']['composer']['dir'].gsub('/', '\\')}\\bin"
+else
+  ENV['PATH'] += ":#{node['php']['composer']['dir']}/bin"
+end
+
+directory node['php']['composer']['dir'] do
   action :create
   recursive true
 end
 
-execute "install_composer" do
-  action :run
-  cwd bin_dir
-  command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
-end
-
-composer_dir = node["php"]["composer"]["dir"].gsub("/", "\\")
-ENV["COMPOSER_HOME"] = composer_dir
-env "COMPOSER_HOME" do
-  value composer_dir
-end
-
-if platform? "windows"
-
-  execute "create_composer_executable" do
-    action :run
-    cwd bin_dir
-    command %{echo @php "%~dp0composer.phar" %*>composer.bat}
-  end
-
-  ENV["PATH"] += ";#{composer_dir}\\bin"
-  windows_path "#{composer_dir}\\bin"
-  
-end
-
-comp = "bin\\#{node['php']['composer']['bin']}"
+bin = node['php']['composer']['bin']
 execute "configure_composer" do
   action :run
   cwd node['php']['composer']['dir']
   command [
-           "#{comp} init --stability dev --no-interaction",
-           "#{comp} config bin-dir bin",
-           "#{comp} config vendor-dir vendor"
+           "#{bin} init --stability dev --no-interaction",
+           "#{bin} config bin-dir bin",
+           "#{bin} config vendor-dir vendor"
           ].join(" && ")
 end
 
