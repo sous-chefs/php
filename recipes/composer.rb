@@ -25,6 +25,7 @@ execute "install_composer" do
   action :run
   cwd Chef::Config[:file_cache_path]
   command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
+  not_if { system node['php']['composer']['bin'] }
 end
 
 # Ensure that composer is on the PATH
