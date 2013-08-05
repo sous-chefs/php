@@ -33,6 +33,7 @@ if platform? 'windows'
   php_dir = node['php']['conf_dir']
   execute "move composer.phar #{php_dir.gsub('/', '\\')}\\composer.phar" do
     cwd Chef::Config[:file_cache_path]
+    not_if { system node['php']['composer']['bin'] }
   end
   
   template "#{php_dir}/#{node['php']['composer']['bin']}" do
@@ -41,6 +42,7 @@ if platform? 'windows'
 else
   execute "mv composer.phar /usr/local/bin/#{node['php']['composer']['bin']}" do
     cwd Chef::Config[:file_cache_path]
+    not_if { system node['php']['composer']['bin'] }
   end
 end
 
