@@ -25,7 +25,7 @@ execute "install_composer" do
   action :run
   cwd Chef::Config[:file_cache_path]
   command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
-  not_if { system node['php']['composer']['bin'] }
+  not_if { system "#{node['php']['composer']['bin']} --version" }
 end
 
 # Ensure that composer is on the PATH
@@ -33,7 +33,7 @@ if platform? 'windows'
   php_dir = node['php']['conf_dir']
   execute "move composer.phar #{php_dir.gsub('/', '\\')}\\composer.phar" do
     cwd Chef::Config[:file_cache_path]
-    not_if { system node['php']['composer']['bin'] }
+    not_if { system "#{node['php']['composer']['bin']} --version" }
   end
   
   template "#{php_dir}/#{node['php']['composer']['bin']}" do
@@ -42,7 +42,7 @@ if platform? 'windows'
 else
   execute "mv composer.phar /usr/local/bin/#{node['php']['composer']['bin']}" do
     cwd Chef::Config[:file_cache_path]
-    not_if { system node['php']['composer']['bin'] }
+    not_if { system "#{node['php']['composer']['bin']} --version" }
   end
 end
 
