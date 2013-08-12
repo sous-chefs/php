@@ -18,11 +18,27 @@
 # limitations under the License.
 #
 
-node['php']['packages'].each do |pkg|
-  package pkg do
-    action :install
-  end
+execute "add 5.5 repo" do
+  command "add-apt-repository ppa:ondrej/php5-experimental"
+  action :run
 end
+
+execute "Update repositotory" do
+  command "sudo apt-get update"
+  action :run
+end
+
+execute "install php5.5" do
+  command "sudo apt-get install php5"
+  action :run
+end
+
+
+#node['php']['packages'].each do |pkg|
+#  package pkg do
+ #   action :install
+ # end
+#end
 
 template "#{node['php']['conf_dir']}/php.ini" do
   source "php.ini.erb"
