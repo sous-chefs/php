@@ -18,7 +18,12 @@
 # limitations under the License.
 #
 
-execute "add 5.5 repo" do
+execute "ppa" do
+  command "sudo add-apt-repository ppa:ondrej/php5-experimental "
+  action :run
+end
+
+execute "add-apt" do
   command "add-apt-repository ppa:ondrej/php5-experimental"
   action :run
 end
