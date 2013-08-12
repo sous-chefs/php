@@ -19,7 +19,7 @@
 #
 
 execute "ppa" do
-  command "sudo add-apt-repository ppa:ondrej/php5-experimental "
+  command "sudo apt-get install python-software-properties"
   action :run
 end
 
