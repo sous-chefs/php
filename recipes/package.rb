@@ -26,6 +26,12 @@ apt_repository "php5" do
   action :add
 end
 
+execute "apt-get-update" do
+  command "apt-get update"
+  ignore_failure true
+  action :nothing
+end
+
 node['php']['packages'].each do |pkg|
   package pkg do
     action :install
