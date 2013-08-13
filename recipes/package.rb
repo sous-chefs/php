@@ -22,7 +22,7 @@ apt_repository "php5" do
   uri "http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu"
   deb_src true
   distribution "precise"
-  components "main"
+  components ["main"]
   keyserver "http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C"
   action :add
 end
