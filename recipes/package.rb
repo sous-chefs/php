@@ -17,17 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-apt_repository "php5" do
-  uri "http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu"
-  deb_src true
-  distribution "precise"
-  components ["main"]
-  keyserver "keyserver.ubuntu.com"
-  key "E5267A6C"
-  action :add
-end
-
 node['php']['packages'].each do |pkg|
   package pkg do
     action :install

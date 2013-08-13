@@ -41,6 +41,12 @@ when "debian"
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = ['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear']
+  default['php']['repository']['uri'] = 'http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu'
+  default['php']['repository']['deb_src'] = true
+  default['php']['repository']['distribution'] = 'precise'
+  default['php']['repository']['components'] = ['main']
+  default['php']['repository']['keyserver'] = 'keyserver.ubuntu.com'
+  default['php']['repository']['key'] = 'E5267A6C'
 when "suse"
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
