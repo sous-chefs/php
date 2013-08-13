@@ -24,7 +24,7 @@ default['php']['directives'] = {}
 
 default['php']['repository']['uri'] = 'http://packages.dotdeb.org'
 default['php']['repository']['deb_src'] = true
-default['php']['repository']['distribution'] = 'wheezy'
+default['php']['repository']['distribution'] = 'wheezy-php55'
 default['php']['repository']['components'] = ['all']
 default['php']['repository']['keyserver'] = 'http://www.dotdeb.org/dotdeb.gpg'
 default['php']['repository']['key'] = ''
