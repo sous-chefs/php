@@ -23,6 +23,8 @@ apt_repository "php5" do
   deb_src true
   distribution "precise"
   components ["main"]
+  keyserver "keyserver.ubuntu.com"
+  key "E5267A6C"
   action :add
 end
 
