@@ -28,7 +28,7 @@ end
 
 node['php']['packages'].each do |pkg|
   package pkg do
-    options ["--force-yes"]
+    options "--force-yes"
     action :install
   end
 end
