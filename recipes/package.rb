@@ -33,7 +33,7 @@ execute "apt-get-update" do
 end
 
 node['php']['packages'].each do |pkg|
-  package pkg do
+  apt_package pkg do
     action :install
   end
 end
