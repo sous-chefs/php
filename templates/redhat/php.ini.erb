@@ -1221,5 +1221,5 @@ soap.wsdl_cache_ttl=86400
 ; End:
 
 <% node['php']['directives'].each do |directive, value| -%>
-<%= "#{directive}=#{value}" %>
+<%= "#{directive}=\"#{value}\"" %>
 <% end -%>
