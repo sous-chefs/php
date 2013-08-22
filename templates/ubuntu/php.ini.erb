@@ -99,7 +99,7 @@
 ;   Development Value: Off
 ;   Production Value: Off
 
-display_errors=<%= node['php']['options']['display_errors'] %>
+; display_errors
 ;   Default Value: On
 ;   Development Value: On
 ;   Production Value: Off
@@ -109,7 +109,7 @@ display_errors=<%= node['php']['options']['display_errors'] %>
 ;   Development Value: On
 ;   Production Value: Off
 
-error_reporting=<%= node['php']['options']['error_reporting'] %>
+; error_reporting
 ;   Default Value: E_ALL & ~E_NOTICE
 ;   Development Value: E_ALL | E_STRICT
 ;   Production Value: E_ALL & ~E_DEPRECATED
@@ -514,7 +514,7 @@ memory_limit = -1
 ; Development Value: E_ALL | E_STRICT
 ; Production Value: E_ALL & ~E_DEPRECATED
 ; http://php.net/error-reporting
-; error_reporting = E_ALL & ~E_DEPRECATED
+error_reporting = <%= node['php']['options']['error_reporting'] %>
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -531,7 +531,7 @@ memory_limit = -1
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-errors
-; display_errors = Off
+display_errors = <%= node['php']['options']['display_errors'] %>
 
 ; The display of errors which occur during PHP's startup sequence are handled
 ; separately from display_errors. PHP's default behavior is to suppress those
@@ -542,7 +542,7 @@ memory_limit = -1
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-startup-errors
-; display_startup_errors = Off
+display_startup_errors = Off
 
 ; Besides displaying errors, PHP can also log errors to locations such as a
 ; server-specific log, STDERR, or a location specified by the error_log
