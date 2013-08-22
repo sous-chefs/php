@@ -28,8 +28,8 @@ default['php']['repository']['components'] = ['main']
 default['php']['repository']['keyserver'] = 'keyserver.ubuntu.com'
 default['php']['repository']['key'] = 'E5267A6C'
 
-default['php']['options']['display_errors'] = 'off'
-default['php']['options']['error_reporting'] = ''
+default['php']['options']['display_errors'] = 'on'
+default['php']['options']['error_reporting'] = 'E_ALL | E_DEPRECATED | E_STRICT'
 
 case node["platform_family"]
 when "rhel", "fedora"

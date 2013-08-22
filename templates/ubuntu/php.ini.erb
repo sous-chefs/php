@@ -99,7 +99,7 @@
 ;   Development Value: Off
 ;   Production Value: Off
 
-; display_errors
+display_errors=<%= node['php']['options']['display_errors'] %>
 ;   Default Value: On
 ;   Development Value: On
 ;   Production Value: Off
@@ -109,7 +109,7 @@
 ;   Development Value: On
 ;   Production Value: Off
 
-; error_reporting
+error_reporting<%= node['php']['options']['error_reporting'] %>
 ;   Default Value: E_ALL & ~E_NOTICE
 ;   Development Value: E_ALL | E_STRICT
 ;   Production Value: E_ALL & ~E_DEPRECATED
