@@ -36,5 +36,5 @@ template "/etc/php5/fpm/php.ini" do
   owner "root"
   group "root"
   mode "0644"
-  variables(:directives => node['php']['directives'])
+  only_if { File.directory?("/etc/php5/fpm") }
 end

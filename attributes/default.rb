@@ -28,6 +28,9 @@ default['php']['repository']['components'] = ['main']
 default['php']['repository']['keyserver'] = 'keyserver.ubuntu.com'
 default['php']['repository']['key'] = 'E5267A6C'
 
+default['php']['options']['display_errors'] = 'off'
+default['php']['options']['error_reporting'] = ''
+
 case node["platform_family"]
 when "rhel", "fedora"
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
