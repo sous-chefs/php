@@ -30,11 +30,3 @@ template "#{node['php']['conf_dir']}/php.ini" do
   mode "0644"
   variables(:directives => node['php']['directives'])
 end
-
-template "/etc/php5/fpm/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  only_if { File.directory?("/etc/php5/fpm") }
-end
