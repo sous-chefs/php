@@ -53,7 +53,7 @@ when "suse"
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['fpm_user']      = 'wwwrun'
   default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
+  default['php']['packages']      = ['php5-pear']
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
