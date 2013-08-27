@@ -8,7 +8,6 @@ if node['php']['repository']['uri'].to_s != ''
     deb_src node['php']['repository']['deb_src']
     distribution node['php']['repository']['distribution']
     components node['php']['repository']['components']
-    keyserver node['php']['repository']['keyserver']
     key node['php']['repository']['key']
     action :add
   end

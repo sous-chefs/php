@@ -26,8 +26,7 @@ default['php']['repository']['uri'] = 'http://packages.dotdeb.org'
 default['php']['repository']['deb_src'] = true
 default['php']['repository']['distribution'] = 'wheezy-php55'
 default['php']['repository']['components'] = ['all']
-default['php']['repository']['keyserver'] = 'http://www.dotdeb.org/dotdeb.gpg'
-default['php']['repository']['key'] = ''
+default['php']['repository']['key'] = 'http://www.dotdeb.org/dotdeb.gpg'
 
 case node["platform_family"]
 when "rhel", "fedora"
