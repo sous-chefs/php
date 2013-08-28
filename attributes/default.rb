@@ -66,7 +66,7 @@ when "windows"
   # These extensions are installed by default by the GUI MSI
   default['php']['packages']      = %w{cgi ScriptExecutable PEAR ext_php_bz2 ext_php_curl ext_php_exif ext_php_gd2 ext_php_gettext ext_php_gmp ext_php_imap ext_php_mbstring ext_php_mysql ext_php_mysqli ext_php_openssl ext_php_pdo_mysql ext_php_pdo_odbc ext_php_pdo_sqlite ext_php_pgsql ext_php_soap ext_php_sockets ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc}
   default['php']['pear']          = 'pear.bat'
-  default['php']['pear']          = 'pecl.bat'
+  default['php']['pecl']          = 'pecl.bat'
   default['php']['composer']['bin'] = "composer.bat"
 else
   default['php']['conf_dir']      = '/etc/php5/cli'

@@ -24,6 +24,8 @@ include_recipe "git"
 execute "install_composer" do
   action :run
   cwd Chef::Config[:file_cache_path]
+  # This line is provided in the Composer docs as a cross-platform method of installation
+  # It is actually executing a line of PHP code
   command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
   not_if { system "#{node['php']['composer']['bin']} --version" }
 end
