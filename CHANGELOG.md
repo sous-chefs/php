@@ -3,6 +3,15 @@ php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
 
+v1.2.4
+------
+### Improvement
+- **[COOK-3047](https://tickets.opscode.com/browse/COOK-3047)** - Sort directives in `php.ini`
+- **[COOK-2928](https://tickets.opscode.com/browse/COOK-2928)** - Abstract `php.ini` directives into variables
+
+### Bug
+- **[COOK-2378](https://tickets.opscode.com/browse/COOK-2378)** - Fix `php_pear` for libevent
+
 v1.2.2
 ------
 ### Bug
