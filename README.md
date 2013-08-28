@@ -62,12 +62,12 @@ This cookbook includes LWRPs for managing:
 - channel_xml: the channel.xml file of the channel you are adding
 
 # Example
-    
+
     # discover the horde channel
     php_pear_channel "pear.horde.org" do
       action :discover
     end
-    
+
     # download xml then add the symfony channel
     remote_file "#{Chef::Config[:file_cache_path]}/symfony-channel.xml" do
       source "http://pear.symfony-project.com/channel.xml"
@@ -77,17 +77,17 @@ This cookbook includes LWRPs for managing:
       channel_xml "#{Chef::Config[:file_cache_path]}/symfony-channel.xml"
       action :add
     end
-    
+
     # update the main pear channel
     php_pear_channel 'pear.php.net' do
       action :update
     end
-    
+
     # update the main pecl channel
     php_pear_channel 'pecl.php.net' do
       action :update
     end
-    
+
 
 `php_pear`
 ----------
@@ -117,15 +117,15 @@ This cookbook includes LWRPs for managing:
     php_pear "XML_RPC" do
       action :upgrade
     end
-    
-    
+
+
     # install a specific version
     php_pear "XML_RPC" do
       version "1.5.4"
       action :install
     end
-    
-    
+
+
     # install the mongodb pecl
     php_pear "mongo" do
       action :install
@@ -137,16 +137,16 @@ This cookbook includes LWRPs for managing:
       zend_extensions ['xdebug.so']
       action :install
     end
-    
-    
+
+
     # install apc pecl with directives
     php_pear "apc" do
       action :install
       directives(:shm_size => 128, :enable_cli => 1)
     end
-    
-    
-    # install the beta version of Horde_Url 
+
+
+    # install the beta version of Horde_Url
     # from the horde channel
     hc = php_pear_channel "pear.horde.org" do
       action :discover
@@ -156,8 +156,8 @@ This cookbook includes LWRPs for managing:
       channel hc.channel_name
       action :install
     end
-    
-    
+
+
     # install the YAML pear from the symfony project
     sc = php_pear_channel "pear.symfony-project.com" do
       action :discover
@@ -166,7 +166,7 @@ This cookbook includes LWRPs for managing:
       channel sc.channel_name
       action :install
     end
-    
+
 ---
 Recipes
 =======
@@ -209,7 +209,7 @@ The installation of the php modules in these recipes can now be accomplished by 
     package "php5-memcache" do
       action :install
     end
-    
+
     # using pear LWRP
     php_pear "memcache" do
       action :install
