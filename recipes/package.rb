@@ -28,13 +28,9 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner "root"
   group "root"
   mode "0644"
-  variables(:directives => node['php']['directives'])
-end
-
-template "/etc/php5/apache2/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  only_if { File.directory?("/etc/php5/apache2") }
+  variables(
+    :directives => node['php']['directives'],
+    :error_reporting => node['php']['options']['error_reporting'],
+    :display_errors => node['php']['options']['display_errors']
+  )
 end

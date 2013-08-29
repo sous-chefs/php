@@ -28,6 +28,9 @@ default['php']['repository']['distribution'] = 'wheezy-php55'
 default['php']['repository']['components'] = ['all']
 default['php']['repository']['key'] = 'http://www.dotdeb.org/dotdeb.gpg'
 
+default['php']['options']['display_errors'] = 'off'
+default['php']['options']['error_reporting'] = 'E_ALL & ~E_NOTICE'
+
 case node["platform_family"]
 when "rhel", "fedora"
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
