@@ -21,6 +21,13 @@
 lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
+default['php']['bin'] = "php"
+
+default['php']['pear'] = 'pear'
+default['php']['pecl'] = 'pecl'
+default['php']['composer']['dir'] = File.expand_path("~/.composer")
+default['php']['composer']['bin'] = "composer.phar"
+
 
 case node["platform_family"]
 when "rhel", "fedora"
@@ -48,6 +55,19 @@ when "suse"
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = ['apache2-mod_php5', 'php5-pear']
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
+when "windows"
+  default['php']['windows']['msi_name']      = 'PHP 5.3.27'
+  default['php']['windows']['msi_source']    = 'http://windows.php.net/downloads/releases/php-5.3.27-win32-VC9-x86.msi'
+  default['php']['bin']           = 'php.exe'
+  default['php']['conf_dir']      = 'C:/PHP'
+  default['php']['ext_conf_dir']  = 'C:/PHP'
+  default['php']['fpm_user']      = 'www-data'
+  default['php']['fpm_group']     = 'www-data'
+  # These extensions are installed by default by the GUI MSI
+  default['php']['packages']      = %w{cgi ScriptExecutable PEAR ext_php_bz2 ext_php_curl ext_php_exif ext_php_gd2 ext_php_gettext ext_php_gmp ext_php_imap ext_php_mbstring ext_php_mysql ext_php_mysqli ext_php_openssl ext_php_pdo_mysql ext_php_pdo_odbc ext_php_pdo_sqlite ext_php_pgsql ext_php_soap ext_php_sockets ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc}
+  default['php']['pear']          = 'pear.bat'
+  default['php']['pecl']          = 'pecl.bat'
+  default['php']['composer']['bin'] = "composer.bat"
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
