@@ -29,7 +29,6 @@ template "#{node['php']['conf_dir']}/php.ini" do
   group "root"
   mode "0644"
   variables(
-    :directives => node['php']['directives'],
     :error_reporting => node['php']['options']['error_reporting'],
     :display_errors => node['php']['options']['display_errors']
   )
