@@ -22,11 +22,21 @@ lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
-default['php']['repository']['uri'] = 'http://packages.dotdeb.org'
-default['php']['repository']['deb_src'] = true
-default['php']['repository']['distribution'] = 'wheezy-php55'
-default['php']['repository']['components'] = ['all']
-default['php']['repository']['key'] = 'http://www.dotdeb.org/dotdeb.gpg'
+case node["platform"]
+when "debian"
+  default['php']['repository']['uri'] = 'http://packages.dotdeb.org'
+  default['php']['repository']['deb_src'] = true
+  default['php']['repository']['distribution'] = 'wheezy-php55'
+  default['php']['repository']['components'] = ['all']
+  default['php']['repository']['key'] = 'http://www.dotdeb.org/dotdeb.gpg'
+when "ubuntu"
+  default['php']['repository']['uri'] = 'http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu/'
+  default['php']['repository']['deb_src'] = true
+  default['php']['repository']['distribution'] = 'precise'
+  default['php']['repository']['components'] = ['main']
+  default['php']['repository']['keyserver'] = 'keyserver.ubuntu.com'
+  default['php']['repository']['key'] = 'E5267A6C'
+end
 
 default['php']['options']['display_errors'] = 'off'
 default['php']['options']['error_reporting'] = 'E_ALL & ~E_NOTICE'
