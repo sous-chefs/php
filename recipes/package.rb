@@ -17,7 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 node['php']['packages'].each do |pkg|
   package pkg do
     action :install
@@ -29,5 +28,8 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner "root"
   group "root"
   mode "0644"
-  variables(:directives => node['php']['directives'])
+  variables(
+    :error_reporting => node['php']['options']['error_reporting'],
+    :display_errors => node['php']['options']['display_errors']
+  )
 end
