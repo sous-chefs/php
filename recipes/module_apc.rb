@@ -31,7 +31,7 @@ when "rhel", "fedora"
     directives(:shm_size => "128M", :enable_cli => 0)
   end
 when "debian"
-  package "php-apc" do
+  package "php5-apc" do
     action :install
   end
 end
