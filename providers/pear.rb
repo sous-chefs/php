@@ -250,12 +250,14 @@ def pecl?
   @pecl ||= begin
     # search as a pear first since most 3rd party channels will report pears as pecls!
     search_cmd = "pear -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-    if shell_out(search_cmd).stdout.split("\n").find { |line| line =~ /^#{@new_resource.package_name}\s+#{haz_ver(@new_resource, "version")}/ }
+    search_name_pattern = Regexp.new("^#{@new_resource.package_name}\s+#{haz_ver(@new_resource, "version")}", Regexp::IGNORECASE) 
+    if shell_out(search_cmd).stdout.split("\n").find { |line| line =~ search_name_pattern }
       false
     else
       # fall back and search as a pecl
+      search_name_pattern = Regexp.new("^#{@new_resource.package_name}\s+#{haz_ver(@new_resource, "version")}", Regexp::IGNORECASE) 
       search_cmd = "pecl -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-      if shell_out(search_cmd).stdout.split("\n").find { |line| line =~ /^#{@new_resource.package_name}\s+#{haz_ver(@new_resource, "version")}/ }
+      if shell_out(search_cmd).stdout.split("\n").find { |line| line =~ search_name_pattern }
         true
       else
         raise "Package #{@new_resource.package_name} not found in either PEAR or PECL."
