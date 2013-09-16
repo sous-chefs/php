@@ -45,11 +45,23 @@ remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
   not_if "which php"
 end
 
+if node['php']['ext_dir']
+  directory node['php']['ext_dir'] do
+    owner "root"
+    group "root"
+    mode "0755"
+    recursive true
+  end
+  ext_dir_prefix = "EXTENSION_DIR=#{node['php']['ext_dir']}"
+else
+  ext_dir_prefix = ""
+end
+
 bash "build php" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
   tar -zxvf php-#{version}.tar.gz
-  (cd php-#{version} && ./configure #{configure_options})
+  (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
   (cd php-#{version} && make && make install)
   EOF
   not_if "which php"
