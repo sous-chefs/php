@@ -81,10 +81,4 @@ directory node['php']['ext_conf_dir'] do
   recursive true
 end
 
-template "#{node['php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  variables(:directives => node['php']['directives'])
-end
+include_recipe "php::ini"

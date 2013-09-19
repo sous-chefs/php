@@ -22,6 +22,9 @@ lib_dir = 'lib'
 default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 
+default['php']['ini']['template'] = "php.ini.erb"
+default['php']['ini']['cookbook'] = "php"
+
 case node["platform_family"]
 when "rhel", "fedora"
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'

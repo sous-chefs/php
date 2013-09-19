@@ -17,17 +17,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe "php::ini"
 
 node['php']['packages'].each do |pkg|
   package pkg do
     action :install
   end
-end
-
-template "#{node['php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  variables(:directives => node['php']['directives'])
 end
