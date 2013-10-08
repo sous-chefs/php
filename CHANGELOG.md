@@ -3,6 +3,15 @@ php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
 
+v1.2.6
+------
+### Bug
+- **[COOK-3628](https://tickets.opscode.com/browse/COOK-3628)** - Fix PHP download URL
+- **[COOK-3568](https://tickets.opscode.com/browse/COOK-3568)** - Fix Test Kitchen tests
+- **[COOK-3402](https://tickets.opscode.com/browse/COOK-3402)** - When the `ext_dir` setting is present, configure php properly for the source recipe
+- **[COOK-2926](https://tickets.opscode.com/browse/COOK-2926)** - Fix pear package detection when installing specific version
+
+
 v1.2.4
 ------
 ### Improvement
