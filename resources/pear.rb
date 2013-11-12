@@ -21,6 +21,14 @@
 default_action :install
 actions :install, :upgrade, :remove, :purge
 
+state_attrs :channel,
+            :directives,
+            :options,
+            :package_name,
+            :preferred_state,
+            :version,
+            :zend_extensions
+
 attribute :package_name, :kind_of => String, :name_attribute => true
 attribute :version, :default => nil
 attribute :channel, :kind_of => String
