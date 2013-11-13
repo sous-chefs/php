@@ -846,8 +846,11 @@ cgi.force_redirect = 1
 ; of zero causes PHP to behave as before.  Default is 1.  You should fix your scripts
 ; to use SCRIPT_FILENAME rather than PATH_TRANSLATED.
 ; http://php.net/cgi.fix-pathinfo
+<% if node['php']['ini_settings']['cgi.fix_pathinfo'] then %>
 cgi.fix_pathinfo = <%= node['php']['ini_settings']['cgi.fix_pathinfo'] %>
-
+<% else %>
+;cgi.fix_pathinfo =
+<% end %>
 ; FastCGI under IIS (on WINNT based OS) supports the ability to impersonate
 ; security tokens of the calling client.  This allows IIS to define the
 ; security context that the request runs under.  mod_fastcgi under Apache
