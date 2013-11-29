@@ -5,7 +5,7 @@ extension = apc.so
 apc.enabled = 1
 
 apc.cache_by_default = 1
-apc.coredump_unmap = 1
+apc.coredump_unmap = <%= node['php']['apc']['coredump_unmap'] %>
 apc.enable_cli = 0
 apc.file_update_protection = 2
 apc.gc_ttl = 3600
