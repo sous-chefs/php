@@ -20,6 +20,7 @@
 
 node['php']['packages'].each do |pkg|
   package pkg do
+    package_name pkg
     action :install
   end
 end
