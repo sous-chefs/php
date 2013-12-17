@@ -20,10 +20,12 @@
 #
 
 if platform?("windows")
+
+  include_recipe 'iis::mod_cgi'
+
   install_dir = File.expand_path(node['php']['conf_dir']).gsub('/', '\\')
   windows_package node['php']['windows']['msi_name'] do
     source node['php']['windows']['msi_source']
-    # source "C:/chef/cache/php-5.3.27-win32-VC9-x86.msi"
     installer_type :msi
 
     options %W[
@@ -33,6 +35,8 @@ if platform?("windows")
     ].join(" ")
   end
 
+  # WARNING: This is not the out-of-the-box go-pear.phar. It's been modified to patch this bug:
+  # http://pear.php.net/bugs/bug.php?id=16644
   cookbook_file "#{node['php']['conf_dir']}/PEAR/go-pear.phar" do
     source "go-pear.phar"
   end

@@ -1,9 +1,10 @@
 #
 # Author::  Lucas Hansen (<lucash@opscode.com>)
+# Author::  Julian C. Dunn (<jdunn@getchef.com>)
 # Cookbook Name:: php
 # Recipe:: composer
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,55 +20,25 @@
 #
 
 include_recipe "php"
-include_recipe "git"
 
-execute "install_composer" do
-  action :run
-  cwd Chef::Config[:file_cache_path]
-  # This line is provided in the Composer docs as a cross-platform method of installation
-  # It is actually executing a line of PHP code
-  command %{#{node['php']['bin']} -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));"}
-  not_if { system "#{node['php']['composer']['bin']} --version" }
-end
+if platform?('windows')
 
-# Ensure that composer is on the PATH
-if platform? 'windows'
-  php_dir = node['php']['conf_dir']
-  execute "move composer.phar #{php_dir.gsub('/', '\\')}\\composer.phar" do
-    cwd Chef::Config[:file_cache_path]
-    not_if { system "#{node['php']['composer']['bin']} --version" }
+  windows_package "Composer - Php Dependency Manager" do
+    source node['php']['composer']['package']
+    options %W[
+          /VERYSILENT
+    ].join(' ')
   end
-  
-  template "#{php_dir}/#{node['php']['composer']['bin']}" do
-    source "composer.bat.erb"
-  end
+
+  install_dir = "#{node['php']['composer']['dir']).gsub('/', '\\')}\\bin"
+
+  ENV['PATH'] += ";#{install_dir}"
+  windows_path install_dir
+
 else
-  execute "mv composer.phar /usr/local/bin/#{node['php']['composer']['bin']}" do
-    cwd Chef::Config[:file_cache_path]
-    not_if { system "#{node['php']['composer']['bin']} --version" }
+
+  remote_file "#{node['php']['conf_dir']}/composer.phar" do
+    source node['php']['composer']['package']
   end
-end
 
-# Ensure that packages installed by composer on the PATH, but ONLY DURING THE CHEF RUN!
-if platform? 'windows'
-  ENV['PATH'] += ";#{node['php']['composer']['dir'].gsub('/', '\\')}\\bin"
-else
-  ENV['PATH'] += ":#{node['php']['composer']['dir']}/bin"
 end
-
-directory node['php']['composer']['dir'] do
-  action :create
-  recursive true
-end
-
-bin = node['php']['composer']['bin']
-execute "configure_composer" do
-  action :run
-  cwd node['php']['composer']['dir']
-  command [
-           "#{bin} init --stability dev --no-interaction",
-           "#{bin} config bin-dir bin",
-           "#{bin} config vendor-dir vendor"
-          ].join(" && ")
-end
-
