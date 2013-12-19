@@ -25,9 +25,6 @@ default['php']['bin'] = "php"
 
 default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
-default['php']['composer']['package'] = 'https://getcomposer.org/download/1.0.0-alpha7/composer.phar'
-default['php']['composer']['dir'] = nil
-default['php']['composer']['bin'] = 'composer.phar'
 
 case node["platform_family"]
 when "rhel", "fedora"
@@ -65,9 +62,6 @@ when "windows"
   default['php']['packages']      = %w{cgi ScriptExecutable PEAR iis4FastCGI ext_php_bz2 ext_php_curl ext_php_exif ext_php_gd2 ext_php_gettext ext_php_gmp ext_php_imap ext_php_mbstring ext_php_mysql ext_php_mysqli ext_php_openssl ext_php_pdo_mysql ext_php_pdo_odbc ext_php_pdo_sqlite ext_php_pgsql ext_php_soap ext_php_sockets ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc}
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
-  default['php']['composer']['package'] = 'https://getcomposer.org/Composer-Setup.exe'
-  default['php']['composer']['dir'] = 'C:\ProgramData\ComposerSetup'
-  default['php']['composer']['bin'] = 'composer.bat'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
