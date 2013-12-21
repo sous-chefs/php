@@ -3,6 +3,13 @@ php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
 
+v1.3.0
+------
+### Bug
+- **[COOK-3479](https://tickets.opscode.com/browse/COOK-3479)** - Added Windows support to PHP
+- **[COOK-2909](https://tickets.opscode.com/browse/COOK-2909)** - Warnings about Chef::Exceptions::ShellCommandFailed is deprecated
+
+
 v1.2.6
 ------
 ### Bug
