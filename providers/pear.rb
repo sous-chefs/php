@@ -103,10 +103,10 @@ end
 def load_current_resource
   @current_resource = Chef::Resource::PhpPear.new(@new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
-  @bin = 'pear'
+  @bin = node['php']['pear']
   if pecl?
     Chef::Log.debug("#{@new_resource} smells like a pecl...installing package in Pecl mode.")
-    @bin = 'pecl'
+    @bin = node['php']['pecl']
   end
   Chef::Log.debug("#{@current_resource}: Installed version: #{current_installed_version} Candidate version: #{candidate_version}")
 
@@ -184,7 +184,9 @@ end
 
 def get_extension_dir()
   @extension_dir ||= begin
-    p = shell_out("php-config --extension-dir")
+    # Consider using "pecl config-get ext_dir". It is more cross-platform.
+    # p = shell_out("php-config --extension-dir")
+    p = shell_out("#{node['php']['pecl']} config-get ext_dir")
     p.stdout.strip
   end
 end
@@ -249,12 +251,12 @@ end
 def pecl?
   @pecl ||= begin
     # search as a pear first since most 3rd party channels will report pears as pecls!
-    search_cmd = "pear -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+    search_cmd = "#{node['php']['pear']} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
     unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
       false
     else
       # fall back and search as a pecl
-      search_cmd = "pecl -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+      search_cmd = "#{node['php']['pecl']} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
       unless grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
         true
       else
