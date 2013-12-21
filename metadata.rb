@@ -8,8 +8,10 @@ version           "1.2.7"
 depends "build-essential"
 depends "xml"
 depends "mysql"
+depends "windows"
+depends "iis"
 
-%w{ debian ubuntu centos redhat fedora scientific amazon }.each do |os|
+%w{ debian ubuntu centos redhat fedora scientific amazon windows }.each do |os|
   supports os
 end
 
