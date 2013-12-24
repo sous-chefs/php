@@ -8,6 +8,11 @@ v1.2.5
 
 - **[COOK-3639](https://tickets.opscode.com/browse/COOK-3639)** - Allow a user supplied template for php.ini
 
+v1.3.2
+------
+Fixing style cops. Updating test harness
+
+
 v1.3.0
 ------
 ### Bug
