@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-if platform?("windows")
+if platform?('windows')
 
   include_recipe 'iis::mod_cgi'
 
@@ -32,22 +32,22 @@ if platform?("windows")
           /quiet
           INSTALLDIR="#{install_dir}"
           ADDLOCAL=#{node['php']['packages'].join(',')}
-    ].join(" ")
+    ].join(' ')
   end
 
   # WARNING: This is not the out-of-the-box go-pear.phar. It's been modified to patch this bug:
   # http://pear.php.net/bugs/bug.php?id=16644
   cookbook_file "#{node['php']['conf_dir']}/PEAR/go-pear.phar" do
-    source "go-pear.phar"
+    source 'go-pear.phar'
   end
 
   template "#{node['php']['conf_dir']}/pear-options" do
-    source "pear-options.erb"
+    source 'pear-options.erb'
   end
 
-  execute "install-pear" do
+  execute 'install-pear' do
     cwd node['php']['conf_dir']
-    command "go-pear.bat < pear-options"
+    command 'go-pear.bat < pear-options'
     creates "#{node['php']['conf_dir']}/pear.bat"
   end
 
@@ -63,11 +63,11 @@ else
 end
 
 template "#{node['php']['conf_dir']}/php.ini" do
-  source "php.ini.erb"
-  unless platform?("windows")
-    owner "root"
-    group "root"
-    mode "0644"
+  source 'php.ini.erb'
+  unless platform?('windows')
+    owner 'root'
+    group 'root'
+    mode '0644'
   end
   variables(:directives => node['php']['directives'])
 end

@@ -59,8 +59,8 @@ action :update do
     if update_needed
       description = "update pear channel #{@new_resource}"
       converge_by(description) do
-         Chef::Log.info("Updating pear channel #{@new_resource}")
-         shell_out!("#{node['php']['pear']} channel-update #{@new_resource.channel_name}")
+        Chef::Log.info("Updating pear channel #{@new_resource}")
+        shell_out!("#{node['php']['pear']} channel-update #{@new_resource.channel_name}")
       end
     end
   end
@@ -82,6 +82,7 @@ def load_current_resource
 end
 
 private
+
 def exists?
   begin
     shell_out!("#{node['php']['pear']} channel-info #{@current_resource.channel_name}")
