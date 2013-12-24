@@ -3,6 +3,11 @@ php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
 
+v1.3.2
+------
+Fixing style cops. Updating test harness
+
+
 v1.3.0
 ------
 ### Bug
