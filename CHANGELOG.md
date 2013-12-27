@@ -2,12 +2,6 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
-v1.2.5
-------
-### Improvement
-
-- **[COOK-3639](https://tickets.opscode.com/browse/COOK-3639)** - Allow a user supplied template for php.ini
-
 v1.3.4
 ------
 Adding platform_family check to include_recipe in source.rb
