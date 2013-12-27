@@ -3,6 +3,11 @@ php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
 
+v1.3.4
+------
+Adding platform_family check to include_recipe in source.rb
+
+
 v1.3.2
 ------
 Fixing style cops. Updating test harness
