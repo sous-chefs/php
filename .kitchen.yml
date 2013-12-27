@@ -55,6 +55,16 @@ platforms:
   run_list:
   - recipe[apt]
 
+- name: ubuntu-1304
+  driver_plugin: digitalocean
+  driver_config:
+    image_id: 350076
+    flavor_id: 63
+    region_id: 4
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+  run_list:
+  - recipe[apt]
+
 suites:
   - name: default
     run_list:
