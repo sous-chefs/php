@@ -2,6 +2,11 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.3.10
+-------
+Fixing my stove
+
+
 v1.3.8
 ------
 Version bump to ensure artifact sanity
