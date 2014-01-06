@@ -26,6 +26,7 @@ pkgs = value_for_platform_family(
 )
 
 include_recipe 'yumrepo::atomic' if platform_family?('rhel')
+include_recipe 'apt' if platform_family?('debian')
 
 # Make sure the Apt cache is updated
 if platform_family?('debian')
