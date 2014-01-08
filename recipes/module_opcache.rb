@@ -101,6 +101,6 @@ template "#{node['php']['ext_conf_dir']}/00-opcache.ini" do
     :ext_dir => ext_dir
   })
   if node['recipes'].include?('php::fpm')
-    notifies :restart, svc
+    notifies :restart, "service[#{svc}]"
   end
 end
