@@ -258,13 +258,13 @@ def pecl?
   @pecl ||= begin
               # search as a pear first since most 3rd party channels will report pears as pecls!
               search_cmd = "#{node['php']['pear']} -d"
-              search_cmd << " preferred_state=#{can_haz(@new_resource, preferred_state)}"
+              search_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
               search_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
 
               if grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
                 # fall back and search as a pecl
                 search_cmd = "#{node['php']['pecl']} -d"
-                search_cmd << " preferred_state=#{can_haz(@new_resource, preferred_state)}"
+                search_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
                 search_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
               else
                 false
