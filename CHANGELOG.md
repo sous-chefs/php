@@ -2,6 +2,11 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.3.12 (2014-01-28)
+--------------------
+Fix github issue 'Cannot find a resource for preferred_state'
+
+
 v1.3.10
 -------
 Fixing my stove
