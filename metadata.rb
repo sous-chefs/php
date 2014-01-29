@@ -3,7 +3,7 @@ maintainer        'Opscode, Inc.'
 maintainer_email  'cookbooks@opscode.com'
 license           'Apache 2.0'
 description       'Installs and maintains php and php modules'
-version           '1.3.12'
+version           '1.3.13'
 
 depends 'build-essential'
 depends 'xml'
