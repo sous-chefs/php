@@ -1,12 +1,9 @@
-#
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+# Author:: Panagiotis Papadomitsos (pj@ezgr.net)
 #
 # Cookbook Name:: php
-# Recipe:: module_mysql
+# Attribute:: versions
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,12 +18,9 @@
 # limitations under the License.
 #
 
+# Select the PHP repository you want to use from DotDeb
+# It's either squeeze-php54 or wheezy-php55
+default['php']['dotdeb_distribution'] = 'squeeze-php54'
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => "php-#{node['php']['mysql_module_edition']}",
-    'debian' => "php5-#{node['php']['mysql_module_edition']}"
-)
-
-package pkg do
-  action :install
-end
+# It's either mysql or mysqlnd
+default['php']['mysql_module_edition'] = 'mysqlnd'

@@ -71,12 +71,12 @@ This cookbook includes LWRPs for managing:
 - `channel_xml`: the channel.xml file of the channel you are adding
 
 ### Example
-    
+
     # discover the horde channel
     php_pear_channel "pear.horde.org" do
       action :discover
     end
-    
+
     # download xml then add the symfony channel
     remote_file "#{Chef::Config['file_cache_path']}/symfony-channel.xml" do
       source "http://pear.symfony-project.com/channel.xml"
@@ -86,17 +86,17 @@ This cookbook includes LWRPs for managing:
       channel_xml "#{Chef::Config['file_cache_path']}/symfony-channel.xml"
       action :add
     end
-    
+
     # update the main pear channel
     php_pear_channel 'pear.php.net' do
       action :update
     end
-    
+
     # update the main pecl channel
     php_pear_channel 'pecl.php.net' do
       action :update
     end
-    
+
 
 ## `php_pear`
 
@@ -124,29 +124,29 @@ This cookbook includes LWRPs for managing:
     php_pear "XML_RPC" do
       action :upgrade
     end
-    
-    
+
+
     # install a specific version
     php_pear "XML_RPC" do
       version "1.5.4"
       action :install
     end
-    
-    
+
+
     # install the mongodb pecl
     php_pear "mongo" do
       action :install
     end
-    
-    
+
+
     # install apc pecl with directives
     php_pear "apc" do
       action :install
       directives(:shm_size => 128, :enable_cli => 1)
     end
-    
-    
-    # install the beta version of Horde_Url 
+
+
+    # install the beta version of Horde_Url
     # from the horde channel
     hc = php_pear_channel "pear.horde.org" do
       action :discover
@@ -156,8 +156,8 @@ This cookbook includes LWRPs for managing:
       channel hc.channel_name
       action :install
     end
-    
-    
+
+
     # install the YAML pear from the symfony project
     sc = php_pear_channel "pear.symfony-project.com" do
       action :discover
@@ -224,7 +224,7 @@ PHP-FPM is a relatively new extension to PHP that actually embeds a FastCGI proc
       max_spare_servers 8
       max_children 8
       terminate_timeout (node['php']['ini_settings']['max_execution_time'].to_i + 20)
-      value_overrides({ 
+      value_overrides({
         :error_log => "#{node['php']['fpm_log_dir']}/phpmyadmin.log"
       })
     end
@@ -237,6 +237,11 @@ Recipes
 ## `default`
 
 Include the default recipe in a run list, to get `php`.
+
+## `dotdeb`
+
+Include the `dotdeb` recipe in a run list to install the PHP distributed by the DotDeb
+repository instead of the official Ubuntu/Debian one.
 
 ## `package`
 

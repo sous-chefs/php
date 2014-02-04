@@ -9,6 +9,7 @@ This file is used to list changes made in each version of php.
 * Dropped older distro support
 * Major code refactoring
 * Added Vagrantfile
+* Added DotDeb repository support and PHP versioning
 
 ## v1.1.1:
 
