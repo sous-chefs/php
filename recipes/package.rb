@@ -18,7 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "php::ini"
 
 if platform?('windows')
 
@@ -63,12 +62,4 @@ else
   end
 end
 
-template "#{node['php']['conf_dir']}/php.ini" do
-  source 'php.ini.erb'
-  unless platform?('windows')
-    owner 'root'
-    group 'root'
-    mode '0644'
-  end
-  variables(:directives => node['php']['directives'])
-end
+include_recipe "php::ini"

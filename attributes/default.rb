@@ -26,12 +26,8 @@ default['php']['bin'] = 'php'
 default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
 
-default['php']['ini']['template'] = "php.ini.erb"
-default['php']['ini']['cookbook'] = "php"
-
 case node['platform_family']
 when 'rhel', 'fedora'
-
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
@@ -124,3 +120,6 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                          --with-sqlite3
                                          --with-pdo-mysql
                                          --with-pdo-sqlite}
+
+default['php']['ini']['template'] = "php.ini.erb"
+default['php']['ini']['cookbook'] = "php"
