@@ -62,12 +62,4 @@ else
   end
 end
 
-template "#{node['php']['conf_dir']}/php.ini" do
-  source 'php.ini.erb'
-  unless platform?('windows')
-    owner 'root'
-    group 'root'
-    mode '0644'
-  end
-  variables(:directives => node['php']['directives'])
-end
+include_recipe "php::ini"
