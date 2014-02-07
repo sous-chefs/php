@@ -26,16 +26,12 @@ default['php']['bin'] = 'php'
 default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
 
-<<<<<<< HEAD
 default['php']['ini']['template'] = "php.ini.erb"
 default['php']['ini']['cookbook'] = "php"
 
-case node["platform_family"]
-when "rhel", "fedora"
-=======
 case node['platform_family']
 when 'rhel', 'fedora'
->>>>>>> Fixing style for rubocop. Updating test harness
+
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
