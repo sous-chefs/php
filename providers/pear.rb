@@ -266,14 +266,13 @@ def pecl?
                 search_cmd = "#{node['php']['pecl']} -d"
                 search_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
                 search_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+                if grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
+                  fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
+                else
+                  true
+                end
               else
                 false
-              end
-
-              if grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
-                fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
-              else
-                true
               end
             end
 end
