@@ -255,27 +255,21 @@ def grep_for_version(stdout, package)
 end
 
 def pecl?
-  @pecl ||= begin
-              # search as a pear first since most 3rd party channels will report pears as pecls!
-              search_cmd = "#{node['php']['pear']} -d"
-              search_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-              search_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+  @pecl ||=
+    begin
+      # search as a pear first since most 3rd party channels will report pears as pecls!
+      search_args = String.new
+      search_args << " -d preferred_state=#{can_haz(@new_resource, "preferred_state")}"
+      search_args << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
 
-              if grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
-                # fall back and search as a pecl
-                search_cmd = "#{node['php']['pecl']} -d"
-                search_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-                search_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-              else
-                false
-              end
-
-              if grep_for_version(shell_out(search_cmd).stdout, @new_resource.package_name).nil?
-                fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
-              else
-                true
-              end
-            end
+      if    grep_for_version(shell_out(node['php']['pear'] + search_args).stdout, @new_resource.package_name)
+        false
+      elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, @new_resource.package_name)
+        true
+      else
+        fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
+      end
+    end
 end
 
 # TODO: remove when provider is moved into Chef core
