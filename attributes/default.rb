@@ -78,7 +78,7 @@ else
   default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
 end
 
-default['php']['url'] = 'http://php.net/distributions'
+default['php']['url'] = 'http://museum.php.net/php5/'
 default['php']['version'] = '5.4.15'
 default['php']['checksum'] = '94e92973c996cf8deabafe0ba19b23d48a79d6e64592a5bf4ea63036eec77c3c'
 default['php']['prefix_dir'] = '/usr/local'
