@@ -1,10 +1,9 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Christo De Lange (<opscode@dldinternet.com>)
 # Cookbook Name:: php
-# Recipe:: default
+# Recipe:: ini
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,15 +18,13 @@
 # limitations under the License.
 #
 
-include_recipe "php::#{node['php']['install_method']}"
-
-# update the main channels
-php_pear_channel 'pear.php.net' do
-  action :update
+template "#{node['php']['conf_dir']}/php.ini" do
+	source node['php']['ini']['template']
+	cookbook node['php']['ini']['cookbook']
+	unless platform?('windows')
+		owner 'root'
+		group 'root'
+		mode '0644'
+	end
+	variables(:directives => node['php']['directives'])
 end
-
-php_pear_channel 'pecl.php.net' do
-  action :update
-end
-
-include_recipe "php::ini"
