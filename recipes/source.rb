@@ -43,7 +43,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
   source "#{node['php']['url']}/php-#{version}.tar.gz/from/this/mirror"
   checksum node['php']['checksum']
   mode '0644'
-  not_if 'which php'
+  not_if "which #{node['php']['bin']}"
 end
 
 if node['php']['ext_dir']
@@ -65,7 +65,7 @@ bash 'build php' do
   (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
   (cd php-#{version} && make && make install)
   EOF
-  not_if 'which php'
+  not_if "which #{node['php']['bin']}"
 end
 
 directory node['php']['conf_dir'] do
