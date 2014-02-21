@@ -2,6 +2,12 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.3.14 (2014-02-21)
+--------------------
+### Bug
+- **[COOK-4186](https://tickets.opscode.com/browse/COOK-4186)** - Upgrade_package concatenates an empty version string when version is not set or is empty.
+
+
 v1.3.12 (2014-01-28)
 --------------------
 Fix github issue 'Cannot find a resource for preferred_state'
