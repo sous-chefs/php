@@ -155,7 +155,8 @@ def upgrade_package(name, version)
   command = "echo \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
   command << " upgrade -a#{expand_options(@new_resource.options)}"
-  command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}"
+  command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
