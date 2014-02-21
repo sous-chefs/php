@@ -78,9 +78,9 @@ else
   default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
 end
 
-default['php']['url'] = 'http://php.net/distributions'
-default['php']['version'] = '5.4.15'
-default['php']['checksum'] = '94e92973c996cf8deabafe0ba19b23d48a79d6e64592a5bf4ea63036eec77c3c'
+default['php']['url'] = 'http://us1.php.net/get'
+default['php']['version'] = '5.5.9'
+default['php']['checksum'] = '378de162efdaeeb725ed38d7fe956c9f0b9084ff'
 default['php']['prefix_dir'] = '/usr/local'
 
 default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
