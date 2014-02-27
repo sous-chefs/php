@@ -120,3 +120,6 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                          --with-sqlite3
                                          --with-pdo-mysql
                                          --with-pdo-sqlite}
+
+default['php']['ini']['template'] = "php.ini.erb"
+default['php']['ini']['cookbook'] = "php"
