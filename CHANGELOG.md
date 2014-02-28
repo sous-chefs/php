@@ -2,6 +2,11 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.4.2 (2014-02-27)
+-------------------
+[COOK-4300] - Simplified and fixed pear/pecl logic. [Fixes #56 / #57]
+
+
 v1.4.0 (2014-02-27)
 -------------------
 [COOK-3639] - Allow users to specify php.ini source template
