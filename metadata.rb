@@ -3,7 +3,7 @@ maintainer        'Opscode, Inc.'
 maintainer_email  'cookbooks@opscode.com'
 license           'Apache 2.0'
 description       'Installs and maintains php and php modules'
-version           '1.4.5'
+version           '1.4.6'
 
 depends 'build-essential'
 depends 'xml'
@@ -12,7 +12,7 @@ depends 'yum-epel'
 depends 'windows'
 depends 'iis'
 
-%w{ debian ubuntu centos redhat fedora scientific amazon windows }.each do |os|
+%w{ debian ubuntu centos redhat fedora scientific amazon windows oracle }.each do |os|
   supports os
 end
 
