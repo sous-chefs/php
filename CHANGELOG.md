@@ -2,6 +2,11 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.4.4 (2014-03-12)
+-------------------
+- [COOK-4393] - Fix convergence bug in source install
+
+
 v1.4.2 (2014-02-27)
 -------------------
 [COOK-4300] - Simplified and fixed pear/pecl logic. [Fixes #56 / #57]
