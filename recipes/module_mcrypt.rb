@@ -25,6 +25,13 @@ when 'debian'
     action :upgrade
   end
 
+  directory node['php']['ext_conf_dir'] do
+    owner 'root'
+    group 'root'
+    mode 0755
+    action :create
+  end
+  
   cookbook_file 'mcrypt.ini' do
     action :create
     path "#{node['php']['ext_conf_dir']}/mcrypt.ini"
