@@ -6,6 +6,7 @@ description       'Installs and maintains php and php modules'
 version           '1.4.5'
 
 depends 'build-essential'
+depends 'apt'
 depends 'xml'
 depends 'mysql'
 depends 'yum-epel'
