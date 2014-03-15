@@ -17,7 +17,12 @@ platforms:
   - name: ubuntu-12.04
     run_list:
      - recipe[apt::default]
-
+  - name: ubuntu-13.04
+    run_list:
+     - recipe[apt::default]
+  - name: ubuntu-13.10
+    run_list:
+     - recipe[apt::default]
 suites:
   - name: default
     run_list:
@@ -25,4 +30,4 @@ suites:
   - name: apt-ondrej-repo
     excludes: ["centos-5.10", "centos-6.5", "fedora-19"]
     run_list:
-      - recipe[php::apt_ondrej_php_package]
+      - recipe[php::apt_ondrej_ppa]
