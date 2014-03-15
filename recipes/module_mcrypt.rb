@@ -51,7 +51,7 @@ when 'debian'
   ].each do |conf_dir|
     link "#{conf_dir}/conf.d/20-mcrypt.ini" do
       to "/etc/php5/mods-available/mcrypt.ini"
-      only_if { ::File.exists? '/etc/php5/mods-available/mcrypt.ini' && ::File.exists? "#{conf_dir}/conf.d" }
+      only_if { ::File.exists?('/etc/php5/mods-available/mcrypt.ini') && ::File.exists?("#{conf_dir}/conf.d") }
     end
   end
 else
