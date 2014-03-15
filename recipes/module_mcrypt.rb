@@ -46,11 +46,12 @@ when 'debian'
   end
 
   [ node['php']['conf_dir'],
-    '/etc/php5/cgi'
+    '/etc/php5/cgi',
+    '/etc/php5/apache2'
   ].each do |conf_dir|
     link "#{conf_dir}/conf.d/20-mcrypt.ini" do
       to "/etc/php5/mods-available/mcrypt.ini"
-      only_if { ::File.exists? '/etc/php5/mods-available/mcrypt.ini' }
+      only_if { ::File.exists? '/etc/php5/mods-available/mcrypt.ini' && ::File.exists? "#{conf_dir}/conf.d" }
     end
   end
 else
