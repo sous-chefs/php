@@ -25,6 +25,14 @@ when 'debian'
     action :upgrade
   end
 
+  cookbook_file 'mcrypt.ini' do
+    action :create
+    path "#{node['php']['ext_conf_dir']}/mcrypt.ini"
+    owner 'root'
+    group 'root'
+    mode 0644
+  end
+
   link '/etc/php5/mods-available/mcrypt.ini' do
     to "#{node['php']['ext_conf_dir']}/mcrypt.ini"
     only_if { ::File.exists? '/etc/php5/mods-available' }
