@@ -2,6 +2,12 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.4.6 (2014-03-19)
+-------------------
+- [COOK-4436] - Test this cookbook, not yum. Also test Fedora 20.
+- [COOK-4427] - Add oracle as supported operating system
+
+
 v1.4.4 (2014-03-12)
 -------------------
 - [COOK-4393] - Fix convergence bug in source install
