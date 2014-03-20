@@ -5,6 +5,6 @@ describe package('php5') do
 end
 
 describe command('php --version') do
-  it { should return_stdout /PHP 5\.[3-5]\.[0-9]+/ }
+  it { should return_stdout /PHP 5\.[4-5]\.[0-9]+/ }
 end
 
