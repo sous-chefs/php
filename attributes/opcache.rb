@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-default['php']['opcache']['version'] = '7.0.2'
+default['php']['opcache']['version'] = '7.0.3'
 
 default['php']['opcache']['options'] = {
   'enable_cli'              => 0,
