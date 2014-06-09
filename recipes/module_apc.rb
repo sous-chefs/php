@@ -30,9 +30,10 @@ when 'rhel', 'fedora'
   end
 
   package 'php-pecl-apc' do
+    package_name 'php5-apc' if node['recipes'].include?('php::dotdeb')
     action :install
   end
-  
+
 when 'debian'
   package 'php-apc' do
     action :install
