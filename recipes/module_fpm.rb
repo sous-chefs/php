@@ -26,3 +26,7 @@ when 'debian'
     action :install
   end
 end
+
+service 'php-fpm' do
+  action :enable :start
+end
