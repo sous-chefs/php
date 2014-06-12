@@ -18,7 +18,7 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  package php-fpm do
+  package 'php-fpm' do
     action :install
   end
 when 'debian'
