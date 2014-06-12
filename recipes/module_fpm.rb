@@ -28,5 +28,5 @@ when 'debian'
 end
 
 service 'php-fpm' do
-  action :enable, :start
+  action [ :enable, :start ]
 end
