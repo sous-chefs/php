@@ -28,7 +28,14 @@ when 'debian'
   package 'php5-fpm' do
     action :install
   end
+<<<<<<< HEAD
   service 'php5-fpm' do
     action :enable :start
   end
+=======
+end
+
+service 'php-fpm' do
+  action [ :enable, :start ]
+>>>>>>> adc5a84895c00fe3cc6b25ed38e996ac1cc3f9a6
 end
