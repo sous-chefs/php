@@ -21,12 +21,14 @@ when 'rhel', 'fedora'
   package 'php-fpm' do
     action :install
   end
+  service 'php-fpm' do
+    action :enable :start
+  end
 when 'debian'
   package 'php5-fpm' do
     action :install
   end
-end
-
-service 'php-fpm' do
-  action :enable :start
+  service 'php5-fpm' do
+    action :enable :start
+  end
 end
