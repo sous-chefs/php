@@ -1,7 +1,7 @@
 #
 # Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
-# Recipe:: package
+# Recipe:: source
 #
 # Copyright 2011, Opscode, Inc.
 #
@@ -34,6 +34,14 @@ pkgs = value_for_platform_family(
 pkgs.each do |pkg|
   package pkg do
     action :install
+  end
+end
+
+if  node['platform_family'].eql? 'debian' and
+  node['kernel']['machine'].eql? 'x86_64' and
+  node['platform_version'].eql? '14.04'
+  link '/usr/include/gmp.h' do
+    to '/usr/include/x86_64-linux-gnu/gmp.h'
   end
 end
 
