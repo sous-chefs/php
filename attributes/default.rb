@@ -41,7 +41,11 @@ when 'rhel', 'fedora'
   end
 when 'debian'
   default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+  if node['platform_version'].to_f <= 14.04
+    default['php']['ext_conf_dir']  = '/etc/php5/cli/conf.d'
+  else
+    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+  end
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
