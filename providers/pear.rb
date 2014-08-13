@@ -224,6 +224,12 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     end
   ]
 
+  directory "#{node['php']['ext_conf_dir']}" do
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
+
   template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
     source 'extension.ini.erb'
     cookbook 'php'
