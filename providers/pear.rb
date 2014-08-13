@@ -228,6 +228,7 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     owner 'root'
     group 'root'
     mode '0644'
+    recursive true
   end
 
   template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
