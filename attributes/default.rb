@@ -68,6 +68,7 @@ when 'windows'
                                         ext_php_pgsql ext_php_soap ext_php_sockets
                                         ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc
                                       }
+  default['php']['package_options'] = "" # Use this to customise your yum or apt command                                     
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
 else
