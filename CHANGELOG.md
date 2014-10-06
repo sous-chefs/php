@@ -2,6 +2,10 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.5.0 (2014-10-06)
+-------------------
+- Adding package_options attribute, utilizing in package resource
+
 v1.4.6 (2014-03-19)
 -------------------
 - [COOK-4436] - Test this cookbook, not yum. Also test Fedora 20.
