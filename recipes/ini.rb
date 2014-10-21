@@ -26,5 +26,8 @@ template "#{node['php']['conf_dir']}/php.ini" do
 		group 'root'
 		mode '0644'
 	end
-	variables(:directives => node['php']['directives'])
+	variables({
+    :directives => node['php']['directives'],
+    :post_max_size => node['php']['post_max_size']
+  })
 end
