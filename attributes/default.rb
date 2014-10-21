@@ -68,7 +68,7 @@ when 'windows'
                                         ext_php_pgsql ext_php_soap ext_php_sockets
                                         ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc
                                       }
-  default['php']['package_options'] = "" # Use this to customise your yum or apt command                                     
+  default['php']['package_options'] = "" # Use this to customise your yum or apt command
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
 else
@@ -83,6 +83,8 @@ default['php']['url'] = 'http://us1.php.net/get'
 default['php']['version'] = '5.5.9'
 default['php']['checksum'] = '378de162efdaeeb725ed38d7fe956c9f0b9084ff'
 default['php']['prefix_dir'] = '/usr/local'
+
+default['php']['post_max_size'] = '8M'
 
 default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                          --with-libdir=#{lib_dir}
