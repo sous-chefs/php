@@ -35,12 +35,17 @@ remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
   action 'create_if_missing'
 end
 
-bash 're-build php' do
+bash 'un-pack php' do
   cwd Chef::Config[:file_cache_path]
+  code "tar -zxf php-#{version}.tar.gz"
+  creates "#{node['php']['url']}/php-#{version}"
+end
+
+bash 're-build php' do
+  cwd "#{Chef::Config[:file_cache_path]}/php-#{version}"
   code <<-EOF
-  tar -zxf php-#{version}.tar.gz
-  (cd php-#{version} && make clean)
-  (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
-  (cd php-#{version} && make && make install)
+  (make clean)
+  (#{ext_dir_prefix} ./configure #{configure_options})
+  (make && make install)
   EOF
 end
