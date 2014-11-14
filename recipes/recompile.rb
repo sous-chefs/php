@@ -24,7 +24,7 @@ ext_dir_prefix = node['php']['ext_dir'] ? "EXTENSION_DIR=#{node['php']['ext_dir'
 
 node['php']['src_deps'].each do |pkg|
   package pkg do
-    action :install
+    action 'install'
   end
 end
 
@@ -32,15 +32,15 @@ remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
   source "#{node['php']['url']}/php-#{version}.tar.gz/from/this/mirror"
   checksum node['php']['checksum']
   mode '0644'
-  not_if { ::File.directory?("#{Chef::Config[:file_cache_path]}/php-#{version}") }
+  action 'create_if_missing'
 end
 
 bash 're-build php' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
+  tar -zxf php-#{version}.tar.gz
   (cd php-#{version} && make clean)
   (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
   (cd php-#{version} && make && make install)
   EOF
-  only_if { ::File.directory?("#{Chef::Config[:file_cache_path]}/php-#{version}") }
 end
