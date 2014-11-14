@@ -42,4 +42,5 @@ bash 're-build php' do
   (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
   (cd php-#{version} && make && make install)
   EOF
+  only_if { ::File.directory?("#{Chef::Config[:file_cache_path]}/php-#{version}") }
 end
