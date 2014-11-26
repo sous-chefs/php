@@ -12,7 +12,7 @@ depends 'yum-epel'
 depends 'windows'
 depends 'iis'
 
-%w{ debian ubuntu centos redhat fedora scientific amazon windows oracle }.each do |os|
+%w(debian ubuntu centos redhat fedora scientific amazon windows oracle).each do |os|
   supports os
 end
 

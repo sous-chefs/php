@@ -84,10 +84,8 @@ end
 private
 
 def exists?
-  begin
-    shell_out!("#{node['php']['pear']} channel-info #{@current_resource.channel_name}")
-    true
-  rescue Mixlib::ShellOut::ShellCommandFailed
-    false
-  end
+  shell_out!("#{node['php']['pear']} channel-info #{@current_resource.channel_name}")
+  true
+rescue Mixlib::ShellOut::ShellCommandFailed
+  false
 end

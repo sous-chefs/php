@@ -21,7 +21,7 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  %w{ zlib-devel }.each do |pkg|
+  %w(zlib-devel).each do |pkg|
     package pkg do
       action :install
     end
