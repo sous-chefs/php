@@ -133,7 +133,7 @@ def candidate_version
                            candidate_version_cmd = "#{@bin} -d "
                            candidate_version_cmd << "preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
                            candidate_version_cmd << " search#{expand_channel(can_haz(@new_resource, 'channel'))}"
-                           candidate_version_cmd << "#{@new_resource.package_name}"
+                           candidate_version_cmd << @new_resource.package_name
                            p = shell_out(candidate_version_cmd)
                            response = nil
                            response = grep_for_version(p.stdout, @new_resource.package_name) if p.stdout =~ /\.?Matched packages/i
