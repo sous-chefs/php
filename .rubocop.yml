@@ -1,20 +1,16 @@
+AllCops:
+  Exclude:
+    - vendor/**
+
 AlignParameters:
   Enabled: false
-
 Encoding:
   Enabled: false
-
-LineLength:
-  Max: 200
-
 HashSyntax:
-  EnforcedStyle: hash_rockets
-
-RedundantBegin:
   Enabled: false
-
-UselessAssignment:
+LineLength:
   Enabled: false
-
 MethodLength:
+  Max: 30
+SingleSpaceBeforeFirstArg:
   Enabled: false
