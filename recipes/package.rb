@@ -1,6 +1,6 @@
 #
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Author::  Lucas Hansen (<lucash@opscode.com>)
+# Author::  Seth Chisamore (<schisamo@getchef.com>)
+# Author::  Lucas Hansen (<lucash@getchef.com>)
 # Cookbook Name:: php
 # Recipe:: package
 #
