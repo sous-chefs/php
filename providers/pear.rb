@@ -119,8 +119,8 @@ def current_installed_version
   @current_installed_version ||= begin
                                    v = nil
                                    version_check_cmd = "#{@bin} -d "
-                                   version_check_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-                                   version_check_cmd << " list#{expand_channel(can_haz(@new_resource, "channel"))}"
+                                   version_check_cmd << " preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
+                                   version_check_cmd << " list#{expand_channel(can_haz(@new_resource, 'channel'))}"
                                    p = shell_out(version_check_cmd)
                                    response = nil
                                    response = grep_for_version(p.stdout, @new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
@@ -131,8 +131,8 @@ end
 def candidate_version
   @candidate_version ||= begin
                            candidate_version_cmd = "#{@bin} -d "
-                           candidate_version_cmd << "preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-                           candidate_version_cmd << " search#{expand_channel(can_haz(@new_resource, "channel"))}"
+                           candidate_version_cmd << "preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
+                           candidate_version_cmd << " search#{expand_channel(can_haz(@new_resource, 'channel'))}"
                            candidate_version_cmd << "#{@new_resource.package_name}"
                            p = shell_out(candidate_version_cmd)
                            response = nil
@@ -143,9 +143,9 @@ end
 
 def install_package(name, version)
   command = "echo \"\r\" | #{@bin} -d"
-  command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
+  command << " preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
   command << " install -a#{expand_options(@new_resource.options)}"
-  command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
@@ -154,9 +154,9 @@ end
 
 def upgrade_package(name, version)
   command = "echo \"\r\" | #{@bin} -d"
-  command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
+  command << " preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
   command << " upgrade -a#{expand_options(@new_resource.options)}"
-  command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
@@ -166,7 +166,7 @@ end
 def remove_package(name, version)
   command = "#{@bin} uninstall"
   command << " #{expand_options(@new_resource.options)}"
-  command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
+  command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   disable_package(name)
@@ -231,12 +231,12 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
   files = get_extension_files(name)
 
   extensions = Hash[
-    files.map do |filepath|
-      rel_file = filepath.clone
-      rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
-      zend = zend_extensions.include?(rel_file)
-      [(zend ? filepath : rel_file) , zend]
-    end
+               files.map do |filepath|
+                 rel_file = filepath.clone
+                 rel_file.slice! ext_prefix if rel_file.start_with? ext_prefix
+                 zend = zend_extensions.include?(rel_file)
+                 [(zend ? filepath : rel_file), zend]
+               end
   ]
 
   template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
@@ -274,9 +274,9 @@ def pecl?
   @pecl ||=
     begin
       # search as a pear first since most 3rd party channels will report pears as pecls!
-      search_args = String.new
-      search_args << " -d preferred_state=#{can_haz(@new_resource, "preferred_state")}"
-      search_args << " search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
+      search_args = ''
+      search_args << " -d preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
+      search_args << " search#{expand_channel(can_haz(@new_resource, 'channel'))} #{@new_resource.package_name}"
 
       if    grep_for_version(shell_out(node['php']['pear'] + search_args).stdout, @new_resource.package_name)
         false

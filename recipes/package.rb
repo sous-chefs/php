@@ -28,11 +28,11 @@ if platform?('windows')
     source node['php']['windows']['msi_source']
     installer_type :msi
 
-    options %W[
-          /quiet
-          INSTALLDIR="#{install_dir}"
-          ADDLOCAL=#{node['php']['packages'].join(',')}
-    ].join(' ')
+    options %W(
+      /quiet
+      INSTALLDIR="#{install_dir}"
+      ADDLOCAL=#{node['php']['packages'].join(',')}
+    ).join(' ')
   end
 
   # WARNING: This is not the out-of-the-box go-pear.phar. It's been modified to patch this bug:
@@ -63,4 +63,4 @@ else
   end
 end
 
-include_recipe "php::ini"
+include_recipe 'php::ini'
