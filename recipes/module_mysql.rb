@@ -19,14 +19,6 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform(
-  %w(centos redhat scientific fedora amazon oracle) => {
-    el5_range => 'php53-mysql',
-    'default' => 'php-mysql'
-  },
-  'default' => 'php5-mysql'
-)
-
-package pkg do
+package node['php']['mysql']['package'] do
   action :install
 end
