@@ -170,7 +170,7 @@ def remove_package(name, version)
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   disable_package(name)
-  manage_pecl_ini(name, :delete) if pecl?
+  manage_pecl_ini(name, :delete, nil, nil) if pecl?
 end
 
 def enable_package(name)
