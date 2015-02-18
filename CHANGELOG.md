@@ -30,7 +30,7 @@ v1.4.0 (2014-02-27)
 v1.3.14 (2014-02-21)
 --------------------
 ### Bug
-- **[COOK-4186](https://tickets.chef.io/browse/COOK-4186)** - Upgrade_package concatenates an empty version string when version is not set or is empty.
+- **[COOK-4186](https://tickets.opscode.com/browse/COOK-4186)** - Upgrade_package concatenates an empty version string when version is not set or is empty.
 
 
 v1.3.12 (2014-01-28)
@@ -66,27 +66,27 @@ Fixing style cops. Updating test harness
 v1.3.0
 ------
 ### Bug
-- **[COOK-3479](https://tickets.chef.io/browse/COOK-3479)** - Added Windows support to PHP
-- **[COOK-2909](https://tickets.chef.io/browse/COOK-2909)** - Warnings about Chef::Exceptions::ShellCommandFailed is deprecated
+- **[COOK-3479](https://tickets.opscode.com/browse/COOK-3479)** - Added Windows support to PHP
+- **[COOK-2909](https://tickets.opscode.com/browse/COOK-2909)** - Warnings about Chef::Exceptions::ShellCommandFailed is deprecated
 
 
 v1.2.6
 ------
 ### Bug
-- **[COOK-3628](https://tickets.chef.io/browse/COOK-3628)** - Fix PHP download URL
-- **[COOK-3568](https://tickets.chef.io/browse/COOK-3568)** - Fix Test Kitchen tests
-- **[COOK-3402](https://tickets.chef.io/browse/COOK-3402)** - When the `ext_dir` setting is present, configure php properly for the source recipe
-- **[COOK-2926](https://tickets.chef.io/browse/COOK-2926)** - Fix pear package detection when installing specific version
+- **[COOK-3628](https://tickets.opscode.com/browse/COOK-3628)** - Fix PHP download URL
+- **[COOK-3568](https://tickets.opscode.com/browse/COOK-3568)** - Fix Test Kitchen tests
+- **[COOK-3402](https://tickets.opscode.com/browse/COOK-3402)** - When the `ext_dir` setting is present, configure php properly for the source recipe
+- **[COOK-2926](https://tickets.opscode.com/browse/COOK-2926)** - Fix pear package detection when installing specific version
 
 
 v1.2.4
 ------
 ### Improvement
-- **[COOK-3047](https://tickets.chef.io/browse/COOK-3047)** - Sort directives in `php.ini`
-- **[COOK-2928](https://tickets.chef.io/browse/COOK-2928)** - Abstract `php.ini` directives into variables
+- **[COOK-3047](https://tickets.opscode.com/browse/COOK-3047)** - Sort directives in `php.ini`
+- **[COOK-2928](https://tickets.opscode.com/browse/COOK-2928)** - Abstract `php.ini` directives into variables
 
 ### Bug
-- **[COOK-2378](https://tickets.chef.io/browse/COOK-2378)** - Fix `php_pear` for libevent
+- **[COOK-2378](https://tickets.opscode.com/browse/COOK-2378)** - Fix `php_pear` for libevent
 
 v1.2.2
 ------

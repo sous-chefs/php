@@ -1,4 +1,4 @@
-site 'https://supermarket.chef.io'
+site :opscode
 metadata
 
 group :integration do

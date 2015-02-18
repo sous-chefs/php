@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@chef.io>)
-# Author::  Seth Chisamore (<schisamo@chef.io>)
+# Author::  Joshua Timberman (<joshua@opscode.com>)
+# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
 # Recipe:: module_pgsql
 #
-# Copyright 2009-2011, Chef Software, Inc.
+# Copyright 2009-2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

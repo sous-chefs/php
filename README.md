@@ -217,7 +217,7 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 1. Clone this repository from GitHub:
 
-        $ git clone git@github.com:chef-cookbooks/php.git
+        $ git clone git@github.com:opscode-cookbooks/php.git
 
 2. Create a git branch
 
@@ -244,9 +244,9 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@chef.io>)
-- Author:: Joshua Timberman (<joshua@chef.io>)
-- Author:: Julian C. Dunn (<jdunn@chef.io>)
+- Author:: Seth Chisamore (<schisamo@opscode.com>)
+- Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Julian C. Dunn (<jdunn@getchef.com>)
 
 ```text
 Copyright:: 2013, Chef Software, Inc.
