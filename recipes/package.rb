@@ -1,10 +1,10 @@
 #
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Author::  Lucas Hansen (<lucash@opscode.com>)
+# Author::  Seth Chisamore (<schisamo@chef.io>)
+# Author::  Lucas Hansen (<lucash@chef.io>)
 # Cookbook Name:: php
 # Recipe:: package
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
