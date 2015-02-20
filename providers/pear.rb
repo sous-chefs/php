@@ -117,7 +117,6 @@ end
 
 def current_installed_version
   @current_installed_version ||= begin
-                                   v = nil
                                    version_check_cmd = "#{@bin} -d "
                                    version_check_cmd << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
                                    version_check_cmd << " list#{expand_channel(can_haz(@new_resource, "channel"))}"
@@ -142,7 +141,7 @@ def candidate_version
 end
 
 def install_package(name, version)
-  command = "echo \"\r\" | #{@bin} -d"
+  command = "printf \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
   command << " install -a#{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
@@ -152,7 +151,7 @@ def install_package(name, version)
 end
 
 def upgrade_package(name, version)
-  command = "echo \"\r\" | #{@bin} -d"
+  command = "printf \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
   command << " upgrade -a#{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
