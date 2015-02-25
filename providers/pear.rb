@@ -44,6 +44,7 @@ action :install do
       status = install_package(@new_resource.package_name, install_version)
     end
   end
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :upgrade do
@@ -55,6 +56,7 @@ action :upgrade do
       status = upgrade_package(@new_resource.package_name, candidate_version)
     end
   end
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :remove do
@@ -66,6 +68,7 @@ action :remove do
     end
   else
   end
+  manage_pecl_ini(name, :delete) if pecl?
 end
 
 action :purge do
@@ -76,6 +79,7 @@ action :purge do
       purge_package(@current_resource.package_name, @new_resource.version)
     end
   end
+  manage_pecl_ini(name, :delete) if pecl?
 end
 
 def removing_package?
@@ -148,7 +152,6 @@ def install_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 def upgrade_package(name, version)
@@ -158,7 +161,6 @@ def upgrade_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 def remove_package(name, version)
@@ -167,7 +169,6 @@ def remove_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :delete) if pecl?
 end
 
 def pear_shell_out(command)
