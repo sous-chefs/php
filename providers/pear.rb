@@ -41,7 +41,7 @@ action :install do
       info_output = "Installing #{@new_resource}"
       info_output << " version #{install_version}" if install_version && !install_version.empty?
       Chef::Log.info(info_output)
-      status = install_package(@new_resource.package_name, install_version)
+      status = install_package(@new_resource.package_name, install_version, new_resource.shell_timeout)
     end
   end
 end
@@ -52,7 +52,7 @@ action :upgrade do
     description = "upgrade package #{@new_resource} version from #{orig_version} to #{candidate_version}"
     converge_by(description) do
       Chef::Log.info("Upgrading #{@new_resource} version from #{orig_version} to #{candidate_version}")
-      status = upgrade_package(@new_resource.package_name, candidate_version)
+      status = upgrade_package(@new_resource.package_name, candidate_version, new_resource.shell_timeout)
     end
   end
 end
@@ -62,7 +62,7 @@ action :remove do
     description = "remove package #{@new_resource}"
     converge_by(description) do
       Chef::Log.info("Removing #{@new_resource}")
-      remove_package(@current_resource.package_name, @new_resource.version)
+      remove_package(@current_resource.package_name, @new_resource.version, new_resource.shell_timeout)
     end
   else
   end
@@ -73,7 +73,7 @@ action :purge do
     description = "purge package #{@new_resource}"
     converge_by(description) do
       Chef::Log.info("Purging #{@new_resource}")
-      purge_package(@current_resource.package_name, @new_resource.version)
+      purge_package(@current_resource.package_name, @new_resource.version, new_resource.shell_timeout)
     end
   end
 end
@@ -141,44 +141,44 @@ def candidate_version
                          end
 end
 
-def install_package(name, version)
+def install_package(name, version, shell_timeout)
   command = "echo \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
   command << " install -a#{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
-  pear_shell_out(command)
+  pear_shell_out(command, shell_timeout)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
-def upgrade_package(name, version)
+def upgrade_package(name, version, shell_timeout)
   command = "echo \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, "preferred_state")}"
   command << " upgrade -a#{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
-  pear_shell_out(command)
+  pear_shell_out(command, shell_timeout)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
-def remove_package(name, version)
+def remove_package(name, version, shell_timeout)
   command = "#{@bin} uninstall"
   command << " #{expand_options(@new_resource.options)}"
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
-  pear_shell_out(command)
+  pear_shell_out(command, shell_timeout)
   manage_pecl_ini(name, :delete) if pecl?
 end
 
-def pear_shell_out(command)
-  p = shell_out!(command)
+def pear_shell_out(command, shell_timeout)
+  p = shell_out!(command, :timeout => shell_timeout)
   # pear/pecl commands return a 0 on failures...we'll grep for it
   p.invalid! if p.stdout.split('\n').last =~ /^ERROR:.+/i
   p
 end
 
-def purge_package(name, version)
-  remove_package(name, version)
+def purge_package(name, version, shell_timeout)
+  remove_package(name, version, shell_timeout)
 end
 
 def expand_channel(channel)
