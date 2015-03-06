@@ -21,6 +21,7 @@
 template "#{node['php']['conf_dir']}/php.ini" do
 	source node['php']['ini']['template']
 	cookbook node['php']['ini']['cookbook']
+	manage_symlink_source node['php']['ini']['manage_symlink_source']
 	unless platform?('windows')
 		owner 'root'
 		group 'root'
