@@ -167,7 +167,7 @@ def remove_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :delete) if pecl?
+  manage_pecl_ini(name, :delete, {}, {}) if pecl?
 end
 
 def pear_shell_out(command)
