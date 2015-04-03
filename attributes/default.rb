@@ -68,9 +68,11 @@ when 'windows'
                                         ext_php_pgsql ext_php_soap ext_php_sockets
                                         ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc
                                       }
-  default['php']['package_options'] = "" # Use this to customise your yum or apt command                                     
+  default['php']['package_options'] = "" # Use this to customise your yum or apt command
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
+when 'freebsd'
+  default['php']['packages']      = %w( php5 )
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
