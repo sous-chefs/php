@@ -76,7 +76,7 @@ when 'freebsd'
   default['php']['ext_conf_dir']  = '/usr/local/etc/php'
   default['php']['fpm_user']      = 'www'
   default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = %w( php5 )
+  default['php']['packages']      = %w( php5 pear )
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
