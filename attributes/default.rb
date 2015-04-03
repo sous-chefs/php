@@ -72,6 +72,10 @@ when 'windows'
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
 when 'freebsd'
+  default['php']['conf_dir']      = '/usr/local/etc'
+  default['php']['ext_conf_dir']  = '/usr/local/etc/php'
+  default['php']['fpm_user']      = 'www'
+  default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w( php5 )
 else
   default['php']['conf_dir']      = '/etc/php5/cli'

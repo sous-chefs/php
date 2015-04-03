@@ -23,7 +23,11 @@ template "#{node['php']['conf_dir']}/php.ini" do
 	cookbook node['php']['ini']['cookbook']
 	unless platform?('windows')
 		owner 'root'
-		group 'root'
+		if platform?('freebsd')
+			group 'wheel'
+		else
+			group 'root'
+		end
 		mode '0644'
 	end
 	variables(:directives => node['php']['directives'])
