@@ -5,8 +5,10 @@ provisioner:
   name: chef_zero
 
 platforms:
+  - name: ubuntu-14.04
   - name: centos-5.10
   - name: centos-6.5
+  - name: centos-7.0
   - name: fedora-19
   - name: fedora-20
 
@@ -14,3 +16,12 @@ suites:
   - name: default
     run_list:
       - recipe[php::default]
+  - name: fpm_test
+    run_list:
+      - recipe[php::default]
+      - recipe[fpm_test]
+    excludes:
+      - centos-5.10
+      - centos-6.5
+      - fedora-19
+      - fedora-20
