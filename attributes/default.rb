@@ -71,6 +71,12 @@ when 'windows'
   default['php']['package_options'] = "" # Use this to customise your yum or apt command                                     
   default['php']['pear']          = 'pear.bat'
   default['php']['pecl']          = 'pecl.bat'
+when 'freebsd'
+  default['php']['conf_dir']      = '/usr/local/etc'
+  default['php']['ext_conf_dir']  = '/usr/local/etc/php'
+  default['php']['fpm_user']      = 'www-data'
+  default['php']['fpm_group']     = 'www-data'
+  default['php']['packages']      = %w{ lang/php56 lang/php56-extensions devel/pear }
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
