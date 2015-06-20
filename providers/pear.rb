@@ -192,8 +192,9 @@ end
 def get_extension_dir
   @extension_dir ||= begin
                        # Consider using "pecl config-get ext_dir". It is more cross-platform.
-                       # p = shell_out("php-config --extension-dir")
-                       p = shell_out("#{node['php']['pecl']} config-get ext_dir")
+                       p = shell_out("php-config --extension-dir")
+                       # pecl conf-get ext_dir is not inline with pecl list-files xdebug. See http://pear.php.net/bugs/bug.php?id=18666
+                       # p = shell_out("#{node['php']['pecl']} config-get ext_dir")
                        p.stdout.strip
                      end
 end
