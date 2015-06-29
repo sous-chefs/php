@@ -1,5 +1,7 @@
 php Cookbook
 ============
+
+[![Join the chat at https://gitter.im/opscode-cookbooks/php](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opscode-cookbooks/php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Installs and configures PHP 5.3 and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages along with PECL channels.
 
 Requirements
