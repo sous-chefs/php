@@ -22,7 +22,11 @@ configure_options = node['php']['configure_options'].join(' ')
 
 include_recipe 'build-essential'
 include_recipe 'xml'
-include_recipe 'mysql::client' if configure_options =~ /mysql/
+if configure_options =~ /mysql/
+  mysql_client 'default' do
+      action :create
+  end
+end
 include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
 
 pkgs = value_for_platform_family(
