@@ -64,7 +64,6 @@ action :remove do
       Chef::Log.info("Removing #{@new_resource}")
       remove_package(@current_resource.package_name, @new_resource.version)
     end
-  else
   end
 end
 
@@ -175,13 +174,13 @@ end
 
 def enable_package(name)
   execute "/usr/sbin/php5enmod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5enmod') }
   end
 end
 
 def disable_package(name)
   execute "/usr/sbin/php5dismod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5dismod') }
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5dismod') }
   end
 end
 

@@ -50,14 +50,14 @@ when 'rhel', 'fedora'
 when 'debian'
   default['php']['conf_dir']      = '/etc/php5/cli'
   case node['platform']
-    when 'ubuntu'
-      if node['platform_version'].to_f >= 12.10
-        default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
-      else
-        default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-      end
+  when 'ubuntu'
+    if node['platform_version'].to_f >= 12.10
+      default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
     else
       default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+    end
+  else
+    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   end
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['php']['fpm_package']   = 'php5-fpm'

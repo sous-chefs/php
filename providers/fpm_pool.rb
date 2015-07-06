@@ -26,10 +26,9 @@ def install_fpm_package
   # Install the FPM pacakge for this platform, if it's available
   # Fail the run if it's an unsupported OS (FPM pacakge name not populated)
   # also, this is skipped for source
-  if node['php']['install_method'] == 'source'
-    return
-  end
-  if node['php']['fpm_package'] == nil
+  return if node['php']['install_method'] == 'source'
+
+  if node['php']['fpm_package'].nil?
     raise 'PHP-FPM package not found (you probably have an unsupported distro)'
   else
     file node['php']['fpm_default_conf'] do
@@ -50,8 +49,8 @@ end
 
 action :install do
   # Ensure the FPM pacakge is installed, and the service is registered
-  install_fpm_package()
-  register_fpm_service()
+  install_fpm_package
+  register_fpm_service
   # I wanted to have this as a function in itself, but doing this seems to
   # break testing suites?
   t = template "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
@@ -77,7 +76,7 @@ end
 
 action :uninstall do
   # Ensure the FPM pacakge is installed, and the service is registered
-  register_fpm_service()
+  register_fpm_service
   # Delete the FPM pool.
   f = file "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}" do
     action :delete

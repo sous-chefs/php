@@ -4,10 +4,10 @@ describe 'php::default' do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   context 'on freebsd' do
-    let(:chef_run) {
+    let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.0')
         .converge(described_recipe)
-    }
+    end
 
     it 'installs php' do
       expect(chef_run).to install_package('php56')
@@ -30,5 +30,4 @@ describe 'php::default' do
       )
     end
   end
-
 end

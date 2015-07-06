@@ -24,7 +24,7 @@ pkg = value_for_platform(
     el5_range => 'php53-gd',
     'default' => 'php-gd'
   },
-  'freebsd' => { 
+  'freebsd' => {
     'default' => 'php56-gd'
   },
   'default' => 'php5-gd'
