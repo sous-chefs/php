@@ -2,6 +2,15 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.6.0 (2015-7-6)
+-----------------
+- Added ChefSpec matchers
+- Added basic PHP-FPM Support (Pre-Release)
+- Added support for FreeBSD
+- Updated cookbook to use MySQL 6.0 cookbook
+- Update cookbook to use php5enmod on supported platforms
+- Allow users to override php-mysql package
+
 v1.5.0 (2014-10-06)
 -------------------
 - Adding package_options attribute, utilizing in package resource
