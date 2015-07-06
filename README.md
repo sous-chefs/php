@@ -249,12 +249,12 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@opscode.com>)
-- Author:: Joshua Timberman (<joshua@opscode.com>)
+- Author:: Seth Chisamore (<schisamo@getchef.com>)
+- Author:: Joshua Timberman (<joshua@getchef.com>)
 - Author:: Julian C. Dunn (<jdunn@getchef.com>)
 
 ```text
-Copyright:: 2013, Chef Software, Inc.
+Copyright:: 2013-2014, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

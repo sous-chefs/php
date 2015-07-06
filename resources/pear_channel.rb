@@ -1,9 +1,9 @@
 #
-# Author:: Seth Chisamore <schisamo@opscode.com>
+# Author:: Seth Chisamore <schisamo@getchef.com>
 # Cookbook Name:: php
 # Resource:: pear_channel
 #
-# Copyright:: 2011, Opscode, Inc <legal@opscode.com>
+# Copyright:: 2011-2014, Chef Software, Inc <legal@getchef.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

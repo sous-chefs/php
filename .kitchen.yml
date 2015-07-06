@@ -7,8 +7,24 @@ provisioner:
 platforms:
   - name: centos-5.10
   - name: centos-6.5
+  - name: centos-7.0
+  - name: debian-6.0.10
+    run_list:
+    - recipe[apt]
+  - name: debian-7.7
+    run_list:
+    - recipe[apt]
   - name: fedora-19
   - name: fedora-20
+  - name: ubuntu-10.04
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-12.04
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-14.04
+    run_list:
+      - recipe[apt]
 
 suites:
   - name: default
