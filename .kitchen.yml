@@ -9,6 +9,7 @@ platforms:
   - name: centos-6.5
   - name: fedora-19
   - name: fedora-20
+  - name: freebsd-10.1
 
 suites:
   - name: default
