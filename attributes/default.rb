@@ -38,6 +38,14 @@ when 'rhel', 'fedora'
     default['php']['packages'] = %w{ php53 php53-devel php53-cli php-pear }
   else
     default['php']['packages'] = %w{ php php-devel php-cli php-pear }
+    default['php']['fpm_package']   = 'php-fpm'
+    default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
+    default['php']['fpm_default_conf']   = '/etc/php-fpm.d/www.conf'
+    default['php']['fpm_service']   = 'php-fpm'
+    if node['php']['install_method'] == 'package'
+      default['php']['fpm_user']      = 'apache'
+      default['php']['fpm_group']     = 'apache'
+    end
   end
 when 'debian'
   default['php']['conf_dir']      = '/etc/php5/cli'
@@ -51,9 +59,13 @@ when 'debian'
     else
       default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   end
+  default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  default['php']['fpm_package']   = 'php5-fpm'
+  default['php']['fpm_pooldir']   = '/etc/php5/fpm/pool.d'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
-  default['php']['packages']      = %w{ php5-cgi php5 php5-dev php5-cli php-pear }
+  default['php']['fpm_service']   = 'php5-fpm'
+  default['php']['fpm_default_conf']   = '/etc/php5/fpm/pool.d/www.conf'
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'

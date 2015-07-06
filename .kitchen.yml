@@ -5,10 +5,23 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-5.10
-  - name: centos-6.5
-  - name: fedora-19
+  - name: centos-5.11
+  - name: centos-6.6
+  - name: centos-7.1
+  - name: debian-6.0.10
+    run_list:
+    - recipe[apt]
+  - name: debian-7.8
+    run_list:
+    - recipe[apt]
   - name: fedora-20
+  - name: fedora-21
+  - name: ubuntu-12.04
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-14.04
+    run_list:
+      - recipe[apt]
   - name: freebsd-10.1
     driver:
       ssh:
@@ -18,3 +31,14 @@ suites:
   - name: default
     run_list:
       - recipe[php::default]
+  - name: fpm_test
+    run_list:
+      - recipe[php::default]
+      - recipe[fpm_test]
+    excludes:
+      - debian-6.0.10
+      - centos-5.11
+      - centos-6.6
+      - fedora-20
+      - fedora-21
+      - freebsd-10.1
