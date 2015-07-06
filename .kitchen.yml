@@ -10,6 +10,9 @@ platforms:
   - name: fedora-19
   - name: fedora-20
   - name: freebsd-10.1
+    driver:
+      ssh:
+        shell: '"/bin/sh"'
 
 suites:
   - name: default
