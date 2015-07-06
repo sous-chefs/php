@@ -149,6 +149,7 @@ def install_package(name, version)
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  enable_package(name)
 end
 
 def upgrade_package(name, version)
@@ -159,6 +160,7 @@ def upgrade_package(name, version)
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  enable_package(name)
 end
 
 def remove_package(name, version)
@@ -167,7 +169,20 @@ def remove_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :delete) if pecl?
+  disable_package(name)
+  manage_pecl_ini(name, :delete, nil, nil) if pecl?
+end
+
+def enable_package(name)
+  execute "/usr/sbin/php5enmod #{name}" do
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
+  end
+end
+
+def disable_package(name)
+  execute "/usr/sbin/php5dismod #{name}" do
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5dismod') }
+  end
 end
 
 def pear_shell_out(command)
