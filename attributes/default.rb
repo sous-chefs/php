@@ -36,8 +36,10 @@ when 'rhel', 'fedora'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   if node['platform_version'].to_f < 6
     default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
+    default['php']['mysql']['package'] = 'php53-mysql'
   else
     default['php']['packages'] = %w(php php-devel php-cli php-pear)
+    default['php']['mysql']['package'] = 'php-mysql'
     default['php']['fpm_package']   = 'php-fpm'
     default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
     default['php']['fpm_default_conf']   = '/etc/php-fpm.d/www.conf'
@@ -60,6 +62,7 @@ when 'debian'
     default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   end
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
+  default['php']['mysql']['package'] = 'php5-mysql'
   default['php']['fpm_package']   = 'php5-fpm'
   default['php']['fpm_pooldir']   = '/etc/php5/fpm/pool.d'
   default['php']['fpm_user']      = 'www-data'
@@ -72,6 +75,7 @@ when 'suse'
   default['php']['fpm_user']      = 'wwwrun'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w(apache2-mod_php5 php5-pear)
+  default['php']['mysql']['package'] = 'php5-mysql'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 when 'windows'
   default['php']['windows']['msi_name']      = 'PHP 5.3.28'
@@ -98,12 +102,14 @@ when 'freebsd'
   default['php']['fpm_user']      = 'www'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w( php56 pear )
+  default['php']['mysql']['package'] = 'php56-mysqli'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
+  default['php']['mysql']['package'] = 'php5-mysql'
 end
 
 default['php']['url'] = 'http://us1.php.net/get'
