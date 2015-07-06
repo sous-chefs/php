@@ -22,8 +22,12 @@ configure_options = node['php']['configure_options'].join(' ')
 
 include_recipe 'build-essential'
 include_recipe 'xml'
-include_recipe 'mysql::client' if configure_options =~ /mysql/
 include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
+
+mysql_client 'default' do
+  action :create
+  only_if { configure_options =~ /mysql/ }
+end
 
 pkgs = value_for_platform_family(
   %w{ rhel fedora } => %w{ bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel mhash-devel },
