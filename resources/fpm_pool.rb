@@ -31,3 +31,4 @@ attribute :start_servers, :kind_of => Integer, :default => 2
 attribute :min_spare_servers, :kind_of => Integer, :default => 1
 attribute :max_spare_servers, :kind_of => Integer, :default => 3
 attribute :chdir, :kind_of => String, :default => '/'
+attribute :additional_config, :kind_of => Hash, :default => {}

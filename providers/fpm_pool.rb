@@ -67,7 +67,8 @@ action :install do
       :fpm_pool_start_servres => new_resource.start_servers,
       :fpm_pool_min_spare_servers => new_resource.min_spare_servers,
       :fpm_pool_max_spare_servers => new_resource.max_spare_servers,
-      :fpm_pool_chdir => new_resource.chdir
+      :fpm_pool_chdir => new_resource.chdir,
+      :fpm_pool_additional_config => new_resource.additional_config
     })
     notifies :restart, "service[#{node['php']['fpm_package']}]"
   end
