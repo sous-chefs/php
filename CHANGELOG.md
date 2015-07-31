@@ -2,6 +2,13 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.7.0 (2015-7-31)
+------------------
+- Allow additional PHP FPM config
+- Add recipe to recompile PHP from source
+- Move source dependencies to attributes file
+- Misc bug fixes
+
 v1.6.0 (2015-7-6)
 -----------------
 - Added ChefSpec matchers
