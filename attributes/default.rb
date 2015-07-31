@@ -34,6 +34,7 @@ when 'rhel', 'fedora'
   default['php']['fpm_user']      = 'nobody'
   default['php']['fpm_group']     = 'nobody'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
+  default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel mhash-devel)
   if node['platform_version'].to_f < 6
     default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
     default['php']['mysql']['package'] = 'php53-mysql'
@@ -61,6 +62,7 @@ when 'debian'
   else
     default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   end
+  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
   default['php']['fpm_package']   = 'php5-fpm'
@@ -72,6 +74,7 @@ when 'debian'
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['fpm_user']      = 'wwwrun'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w(apache2-mod_php5 php5-pear)
@@ -99,6 +102,7 @@ when 'windows'
 when 'freebsd'
   default['php']['conf_dir']      = '/usr/local/etc'
   default['php']['ext_conf_dir']  = '/usr/local/etc/php'
+  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['fpm_user']      = 'www'
   default['php']['fpm_group']     = 'www'
   default['php']['packages']      = %w( php56 pear )
@@ -106,6 +110,7 @@ when 'freebsd'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
