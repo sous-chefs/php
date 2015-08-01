@@ -94,6 +94,7 @@ end
 - package_name: name attribute. The name of the pear package to install
 - version: the version of the pear package to install/upgrade.  If no version is given latest is assumed.
 - preferred_state: PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state
+- channel: the channel from which to install/upgrade the package.
 - directives: extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file
 - zend_extensions: extension filenames which should be loaded with zend_extension.
 - options: Add additional options to the underlying pear package command
