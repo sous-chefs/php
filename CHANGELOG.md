@@ -4,6 +4,7 @@ This file is used to list changes made in each version of the php cookbook.
 
 v1.7.0 (2015-7-31)
 ------------------
+- NOTICE - This version changes the way the ['php']['directives'] is placed into configuration files. Quotes are no longer automatically placed around these aditional directives. Please take care when rolling out this version.
 - Allow additional PHP FPM config
 - Add recipe to recompile PHP from source
 - Move source dependencies to attributes file
