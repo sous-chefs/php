@@ -240,7 +240,7 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
   directory "#{node['php']['ext_conf_dir']}" do
     owner 'root'
     group 'root'
-    mode '0644'
+    mode '0755'
     recursive true
   end
 
