@@ -2,6 +2,10 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.7.1 (2015-8-17)
+------------------
+- Correct permissions on ext_conf_dir folder (644 -> 755)
+
 v1.7.0 (2015-7-31)
 ------------------
 - NOTICE - This version changes the way the ['php']['directives'] is placed into configuration files. Quotes are no longer automatically placed around these aditional directives. Please take care when rolling out this version.
