@@ -64,7 +64,7 @@ action :install do
       :fpm_pool_listen => new_resource.listen,
       :fpm_pool_manager => new_resource.process_manager,
       :fpm_pool_max_children => new_resource.max_children,
-      :fpm_pool_start_servres => new_resource.start_servers,
+      :fpm_pool_start_servers => new_resource.start_servers,
       :fpm_pool_min_spare_servers => new_resource.min_spare_servers,
       :fpm_pool_max_spare_servers => new_resource.max_spare_servers,
       :fpm_pool_chdir => new_resource.chdir,
