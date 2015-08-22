@@ -21,6 +21,9 @@
 default_action :discover
 actions :discover, :add, :update, :remove
 
+state_attrs :channel_name,
+            :channel_xml
+
 attribute :channel_name, :kind_of => String, :name_attribute => true
 attribute :channel_xml, :kind_of => String
 
