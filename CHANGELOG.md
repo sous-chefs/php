@@ -2,6 +2,10 @@ php Cookbook CHANGELOG
 ======================
 This file is used to list changes made in each version of the php cookbook.
 
+v1.7.2 (2015-8-24)
+------------------
+- Correct spelling in fpm_pool_start_servers (was servres)
+
 v1.7.1 (2015-8-17)
 ------------------
 - Correct permissions on ext_conf_dir folder (644 -> 755)
