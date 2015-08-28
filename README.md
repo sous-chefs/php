@@ -18,6 +18,8 @@ Requirements
 - build-essential
 - xml
 - mysql
+- iis
+- windows
 
 These cookbooks are only used when building PHP from source.
 
