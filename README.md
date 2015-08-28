@@ -21,8 +21,6 @@ Requirements
 - iis
 - windows
 
-These cookbooks are only used when building PHP from source.
-
 
 Attributes
 ----------
