@@ -11,7 +11,8 @@ Requirements
 ------------
 ### Platforms
 - Debian, Ubuntu
-- CentOS, Red Hat, Fedora, Amazon Linux
+- CentOS, Red Hat, Oracle, Scientific, Amazon Linux
+- Fedora
 - Microsoft Windows
 
 ### Cookbooks
