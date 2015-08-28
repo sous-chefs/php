@@ -286,12 +286,12 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@getchef.com>)
-- Author:: Joshua Timberman (<joshua@getchef.com>)
-- Author:: Julian C. Dunn (<jdunn@getchef.com>)
+- Author:: Seth Chisamore (<schisamo@chef.io>)
+- Author:: Joshua Timberman (<joshua@chef.io>)
+- Author:: Julian C. Dunn (<jdunn@chef.io>)
 
 ```text
-Copyright:: 2013-2014, Chef Software, Inc.
+Copyright:: 2013-2015, Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
