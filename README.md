@@ -5,7 +5,7 @@ php Cookbook
 [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
 [![Build Status](https://travis-ci.org/opscode-cookbooks/php.svg?branch=master)](https://travis-ci.org/opscode-cookbooks/php)
 
-Installs and configures PHP 5.3 and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
+Installs and configures PHP and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
 
 Requirements
 ------------
