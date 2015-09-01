@@ -6,15 +6,14 @@ provisioner:
 
 platforms:
   - name: centos-5.11
-  - name: centos-6.6
+  - name: centos-6.7
   - name: centos-7.1
-  - name: debian-6.0.10
-    run_list:
-    - recipe[apt]
   - name: debian-7.8
     run_list:
     - recipe[apt]
-  - name: fedora-20
+  - name: debian-8.1
+    run_list:
+      - recipe[apt]
   - name: fedora-21
   - name: ubuntu-12.04
     run_list:
@@ -36,9 +35,7 @@ suites:
       - recipe[php::default]
       - recipe[fpm_test]
     excludes:
-      - debian-6.0.10
       - centos-5.11
-      - centos-6.6
-      - fedora-20
+      - centos-6.7
       - fedora-21
       - freebsd-10.1
