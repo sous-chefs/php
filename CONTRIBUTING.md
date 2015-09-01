@@ -14,7 +14,7 @@ on the Chef Docs site.
 * [Become a contributor](https://supermarket.chef.io/become-a-contributor) by
 signing our Contributor License Agreement (CLA).
 * Create a [pull request for your change on
-GitHub](https://github.com/opscode-cookbooks/aws/pulls).
+GitHub](https://github.com/opscode-cookbooks/php/pulls).
 
 We try to regularly review contributions and will get back to you if we have
 any suggestions or concerns.
@@ -52,7 +52,7 @@ fill out our
 
 ## Ticket Tracker (GitHub Issues)
 
-The [ticket tracker](https://github.com/opscode-cookbooks/fail2ban/issues) is
+The [ticket tracker](https://github.com/opscode-cookbooks/php/issues) is
 the most important documentation for the code base. It provides significant
 historical information, such as:
 
