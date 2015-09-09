@@ -4,8 +4,8 @@ maintainer_email  'cookbooks@chef.io'
 license           'Apache 2.0'
 description       'Installs and maintains php and php modules'
 version           '1.7.2'
-source_url        'https://github.com/opscode-cookbooks/php' if respond_to?(:source_url)
-issues_url        'https://github.com/opscode-cookbooks/php/issues' if respond_to?(:issues_url)
+source_url        'https://github.com/chef-cookbooks/php' if respond_to?(:source_url)
+issues_url        'https://github.com/chef-cookbooks/php/issues' if respond_to?(:issues_url)
 
 depends 'build-essential'
 depends 'xml'
@@ -14,7 +14,7 @@ depends 'yum-epel'
 depends 'windows'
 depends 'iis'
 
-%w(debian ubuntu centos redhat fedora scientific amazon windows oracle).each do |os|
+%w(amazon centos debian fedora oracle redhat scientific suse ubuntu).each do |os|
   supports os
 end
 
