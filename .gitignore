@@ -43,3 +43,4 @@ vendor/
 #vagrant stuff
 .vagrant/
 .vagrant.d/
+.kitchen/
