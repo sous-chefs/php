@@ -1,9 +1,8 @@
 php Cookbook
 ============
-
-[![Join the chat at https://gitter.im/opscode-cookbooks/php](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opscode-cookbooks/php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/chef-cookbooks/php.svg?branch=master)](http://travis-ci.org/chef-cookbooks/php)
 [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
-[![Build Status](https://travis-ci.org/opscode-cookbooks/php.svg?branch=master)](https://travis-ci.org/opscode-cookbooks/php)
+
 
 Installs and configures PHP and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
 
