@@ -1,7 +1,7 @@
 language: ruby
 bundler_args: --without kitchen_vagrant --without development
 rvm:
-- 2.1.0
+- 2.1
 before_install:
 - echo -n $DO_KEY_CHUNK_{0..30} >> ~/.ssh/id_do.base64
 - cat ~/.ssh/id_do.base64 | tr -d ' ' | base64 --decode > ~/.ssh/id_do.pem

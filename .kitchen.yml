@@ -17,10 +17,10 @@ platforms:
   - name: fedora-21
   - name: ubuntu-12.04
     run_list:
-      - recipe[apt]
+      - recipe[apt::default]
   - name: ubuntu-14.04
     run_list:
-      - recipe[apt]
+      - recipe[apt::default]
   - name: freebsd-10.1
     driver:
       ssh:
