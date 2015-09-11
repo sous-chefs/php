@@ -258,7 +258,7 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 1. Clone this repository from GitHub:
 
-        $ git clone git@github.com:opscode-cookbooks/php.git
+        $ git clone git@github.com:chef-cookbooks/php.git
 
 2. Create a git branch
 
