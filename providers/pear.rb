@@ -44,6 +44,8 @@ action :install do
       status = install_package(@new_resource.package_name, install_version)
     end
   end
+
+  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :upgrade do
@@ -55,6 +57,8 @@ action :upgrade do
       status = upgrade_package(@new_resource.package_name, candidate_version)
     end
   end
+
+  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :remove do
@@ -65,6 +69,8 @@ action :remove do
       remove_package(@current_resource.package_name, @new_resource.version)
     end
   end
+
+  manage_pecl_ini(@new_resource.package_name, :delete, nil, nil, nil) if pecl?
 end
 
 action :purge do
@@ -75,6 +81,8 @@ action :purge do
       purge_package(@current_resource.package_name, @new_resource.version)
     end
   end
+
+  manage_pecl_ini(@new_resource.package_name, :delete, nil, nil, nil) if pecl?
 end
 
 def removing_package?
@@ -146,8 +154,6 @@ def install_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
-  enable_package(name)
 end
 
 def upgrade_package(name, version)
@@ -157,8 +163,6 @@ def upgrade_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
-  enable_package(name)
 end
 
 def remove_package(name, version)
@@ -167,20 +171,6 @@ def remove_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  disable_package(name)
-  manage_pecl_ini(name, :delete, nil, nil) if pecl?
-end
-
-def enable_package(name)
-  execute "/usr/sbin/php5enmod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5enmod') }
-  end
-end
-
-def disable_package(name)
-  execute "/usr/sbin/php5dismod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5dismod') }
-  end
 end
 
 def pear_shell_out(command)
@@ -222,7 +212,7 @@ def get_extension_files(name)
   files
 end
 
-def manage_pecl_ini(name, action, directives, zend_extensions)
+def manage_pecl_ini(name, action, priortiy, directives, zend_extensions)
   ext_prefix = get_extension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -237,22 +227,18 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
                end
   ]
 
-  directory "#{node['php']['ext_conf_dir']}" do
-    owner 'root'
-    group 'root'
-    mode '0755'
-    recursive true
+  pear_package_provider = self
+  res = php_module_config name do
+    priority   priority
+    directives directives
+    extensions extensions
+    action     case action
+                 when :create, :update then [:create, :enable]
+                 else [:disable, :delete]
+               end
+    only_if { pear_package_provider.pecl? }
   end
-
-  template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
-    source 'extension.ini.erb'
-    cookbook 'php'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(:name => name, :extensions => extensions, :directives => directives)
-    action action
-  end
+  new_resource.updated_by_last_action(res.updated_by_last_action?)
 end
 
 def grep_for_version(stdout, package)
