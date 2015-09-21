@@ -155,6 +155,29 @@ php_pear "YAML" do
 end
 ```
 
+### `php_module_config`
+Installs a configuration ini file for a given module. This resource is
+currently used internally by the php_pear package module.
+
+#### Actions
+- :create: Creates the configuration file.
+- :delete: Deletes the configuration file.
+- :enable: Enables the configuration file on debian like machines.
+- :disable: Disables the configuration file on debian like machines.
+
+#### Attribute Parameters
+- conf_name: name attribute. The name of the configuration file.
+- path: The path to install the configuration file under. This will default
+to `ext_conf_dir/conf_name.ini`.
+- priority: On debian like machines, this will provide the numbers prefixing
+the config file's symlink.
+- cookbook: Cookbook where the template source may be found.
+- source: Name of the erb template to use for the template.
+- directives: PHP directives to add to the configuration file.
+- extensions: PHP extensions to load.
+- php_sapi: On debian like machines, this lists the SAPI to enable the module
+for. By default this is ALL, though it might typically be any of fpm, cgi, cli.
+
 ### `php_fpm_pool`
 Installs the `php-fpm` package appropriate for your distro (if using packages)
 and configures a FPM pool for you. Currently only supported in Debian-family
