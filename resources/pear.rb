@@ -29,10 +29,10 @@ state_attrs :channel,
             :version,
             :zend_extensions
 
-attribute :package_name, :kind_of => String, :name_attribute => true
-attribute :version, :default => nil
-attribute :channel, :kind_of => String
-attribute :options, :kind_of => String
-attribute :directives, :kind_of => Hash, :default => {}
-attribute :zend_extensions, :kind_of => Array, :default => []
-attribute :preferred_state, :default => 'stable'
+attribute :package_name, kind_of: String, name_attribute: true
+attribute :version, default: nil
+attribute :channel, kind_of: String
+attribute :options, kind_of: String
+attribute :directives, kind_of: Hash, default: {}
+attribute :zend_extensions, kind_of: Array, default: []
+attribute :preferred_state, default: 'stable'

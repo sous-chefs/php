@@ -43,24 +43,24 @@ when 'rhel', 'fedora'
     default['php']['mysql']['package'] = 'php-mysql'
     default['php']['fpm_package']   = 'php-fpm'
     default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
-    default['php']['fpm_default_conf']   = '/etc/php-fpm.d/www.conf'
-    default['php']['fpm_service']   = 'php-fpm'
+    default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
+    default['php']['fpm_service'] = 'php-fpm'
     if node['php']['install_method'] == 'package'
       default['php']['fpm_user']      = 'apache'
       default['php']['fpm_group']     = 'apache'
     end
   end
 when 'debian'
-  default['php']['conf_dir']      = '/etc/php5/cli'
+  default['php']['conf_dir'] = '/etc/php5/cli'
   case node['platform']
   when 'ubuntu'
     if node['platform_version'].to_f >= 12.10
       default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
     else
-      default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+      default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
     end
   else
-    default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
+    default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
   end
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
@@ -70,7 +70,7 @@ when 'debian'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
   default['php']['fpm_service']   = 'php5-fpm'
-  default['php']['fpm_default_conf']   = '/etc/php5/fpm/pool.d/www.conf'
+  default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'

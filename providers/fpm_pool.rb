@@ -29,7 +29,7 @@ def install_fpm_package
   return if node['php']['install_method'] == 'source'
 
   if node['php']['fpm_package'].nil?
-    raise 'PHP-FPM package not found (you probably have an unsupported distro)'
+    fail 'PHP-FPM package not found (you probably have an unsupported distro)'
   else
     file node['php']['fpm_default_conf'] do
       action :nothing
@@ -58,17 +58,17 @@ action :install do
     action :create
     cookbook 'php'
     variables ({
-      :fpm_pool_name => new_resource.pool_name,
-      :fpm_pool_user => new_resource.user,
-      :fpm_pool_group => new_resource.group,
-      :fpm_pool_listen => new_resource.listen,
-      :fpm_pool_manager => new_resource.process_manager,
-      :fpm_pool_max_children => new_resource.max_children,
-      :fpm_pool_start_servers => new_resource.start_servers,
-      :fpm_pool_min_spare_servers => new_resource.min_spare_servers,
-      :fpm_pool_max_spare_servers => new_resource.max_spare_servers,
-      :fpm_pool_chdir => new_resource.chdir,
-      :fpm_pool_additional_config => new_resource.additional_config
+      fpm_pool_name: new_resource.pool_name,
+      fpm_pool_user: new_resource.user,
+      fpm_pool_group: new_resource.group,
+      fpm_pool_listen: new_resource.listen,
+      fpm_pool_manager: new_resource.process_manager,
+      fpm_pool_max_children: new_resource.max_children,
+      fpm_pool_start_servers: new_resource.start_servers,
+      fpm_pool_min_spare_servers: new_resource.min_spare_servers,
+      fpm_pool_max_spare_servers: new_resource.max_spare_servers,
+      fpm_pool_chdir: new_resource.chdir,
+      fpm_pool_additional_config: new_resource.additional_config
     })
     notifies :restart, "service[#{node['php']['fpm_package']}]"
   end

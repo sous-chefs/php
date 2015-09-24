@@ -28,7 +28,7 @@ when 'rhel', 'fedora'
   end
   php_pear 'APC' do
     action :install
-    directives(:shm_size => '128M', :enable_cli => 0)
+    directives(shm_size: '128M', enable_cli: 0)
   end
 when 'debian'
   package 'php-apc' do

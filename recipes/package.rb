@@ -23,7 +23,7 @@ if platform?('windows')
 
   include_recipe 'iis::mod_cgi'
 
-  install_dir = File.expand_path(node['php']['conf_dir']).gsub('/', '\\')
+  install_dir = File.expand_path(node['php']['conf_dir']).tr('/', '\\')
   windows_package node['php']['windows']['msi_name'] do
     source node['php']['windows']['msi_source']
     installer_type :msi
