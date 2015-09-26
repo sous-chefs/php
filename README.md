@@ -239,8 +239,9 @@ end
 
 Usage
 -----
-Simply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` attribute with in a role:
+Simply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
 
+####Role example:
 ```ruby
 name "php"
 description "Install php from source"
