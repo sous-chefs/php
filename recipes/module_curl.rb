@@ -24,6 +24,6 @@ when 'rhel', 'fedora'
   # centos php compiled with curl
 when 'debian'
   package 'php5-curl' do
-    action :upgrade
+    action :install
   end
 end
