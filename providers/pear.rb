@@ -202,7 +202,7 @@ def prefix_channel(channel)
   channel ? "#{channel}/" : ''
 end
 
-def get_extension_dir
+def extension_dir
   @extension_dir ||= begin
                        # Consider using "pecl config-get ext_dir". It is more cross-platform.
                        # p = shell_out("php-config --extension-dir")
@@ -223,7 +223,7 @@ def get_extension_files(name)
 end
 
 def manage_pecl_ini(name, action, directives, zend_extensions)
-  ext_prefix = get_extension_dir
+  ext_prefix = extension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
   files = get_extension_files(name)

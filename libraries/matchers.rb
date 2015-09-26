@@ -37,6 +37,7 @@ if defined?(ChefSpec)
   def install_php_fpm_pool(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:php_fpm_pool, :install, resource_name)
   end
+
   def uninstall_php_fpm_pool(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:php_fpm_pool, :uninstall, resource_name)
   end
