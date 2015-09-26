@@ -8,13 +8,16 @@ Installs and configures PHP and the PEAR package management system.  Also includ
 
 Requirements
 ------------
-### Platforms
+#### Platforms
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
 - Microsoft Windows
 
-### Cookbooks
+#### Chef
+- Chef 11+
+
+#### Cookbooks
 - build-essential
 - xml
 - mysql
@@ -285,13 +288,11 @@ This section details "quick development" steps. For a detailed explanation, see 
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@chef.io>)
-- Author:: Joshua Timberman (<joshua@chef.io>)
-- Author:: Julian C. Dunn (<jdunn@chef.io>)
 
-```text
-Copyright:: 2013-2015, Chef Software, Inc.
+**Author:** Cookbook Engineering Team (<cookbooks@chef.io>)
 
+**Copyright:** 2008-2015, Chef Software, Inc.
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
