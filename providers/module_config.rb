@@ -30,58 +30,70 @@ end
 #
 #use_inline_resources
 
+# create the configuration file
+#
 action :create do
   run_action_and_track(:create) { template_resource }
 end
 
+# delete the configuration file
+#
 action :delete do
   run_action_and_track(:delete) { template_resource }
 end
 
+# optionally enable the configuration file for a given php sapi (cgi,cli,fpm)
+# while also ensuring that this is done for the correct priorirty
+#
 action :enable do
-  resource_sapi_list.each do |sapi_name|
-    run_action_and_track(:run) do
-      activation_resource("php5enmod", sapi_name)
+  if supports_php5query?
+    resource_sapi_list.each do |sapi_name|
+      sapi_files_found(sapi_name).each do |sapi_file|
+        unless sapi_file == sapi_file_path(sapi_name, @new_resource.priority)
+          run_action_and_track(:delete) do
+            activation_resource(sapi_name, sapi_file)
+          end
+        end
+      end
+
+      run_action_and_track(:create) do
+        res = activation_resource(sapi_name)
+        res.not_if { sapi_files_found(sapi_name, @new_resource.priority).any? }
+        res
+      end
     end
+  else Chef::Log.info("#{new_resource} system does not support enabling")
   end
 end
 
+# optionally disable the configuration file for a given php sapi (cgi,cli,fpm)
+# while also ensuring that this is done for the correct priorirty
+#
 action :disable do
-  resource_sapi_list.each do |sapi_name|
-    run_action_and_track(:run, sapi_name) do
-      activation_resource("php5dismod", sapi_name)
+  if supports_php5query?
+    resource_sapi_list.each do |sapi_name|
+      run_action_and_track(:delete) do
+        res = activation_resource(sapi_name)
+        res.only_if { sapi_files_found(sapi_name, @new_resource.priority).any? }
+        res
+      end
     end
+  else Chef::Log.info("#{new_resource} system does not support disabling")
   end
 end
 
-
+# helper method to execute an action on a resource and collect whether
+# it was updated or not .. hit is a poor man's use_inline_resources
+#
 def run_action_and_track(action, &block)
   res = block.call
-  res.action(action)
-  new_resource.updated_by_last_action(res.updated_by_last_action?)
+  res.run_action(action) 
+  @new_resource.updated_by_last_action(true) if res.updated_by_last_action?
   res
 end
 
-def activation_resource(command, sapi_name)
-  new_resource = @new_resource
-  provider_scope = self
-  cmd = "/usr/sbin/#{command}"
-
-  execute "#{cmd} -s #{sapi_name} #{new_resource.conf_name}" do
-    case command
-    when "php5enmod"
-      not_if do
-        provider_scope.php_conf_enabled?(new_resource.conf_name, sapi_name)
-      end
-    when "php5dismod"
-      only_if do
-        provider_scope.php_conf_enabled?(new_resource.conf_name, sapi_name)
-      end
-    end
-    action :nothing
-  end
-end
-
+# the resource containing the configuration data
+#
 def template_resource
   new_resource = @new_resource
 
@@ -100,39 +112,67 @@ def template_resource
     end
 end
 
-#  list of desired php sapi ( debian-like only )
+# the resource supporting enabling / disabling of modules
+#
+def activation_resource(sapi_name, sapi_file = nil)
+  new_resource = @new_resource
+  sapi_file ||= sapi_file_path(sapi_name, new_resource.priority)
+  link sapi_file do
+    to new_resource.path
+    action :nothing
+  end
+end
+
+# determine whether php5query exists ( debian like systems )
+# this is required so that, on debian systems, we symlink the configuration
+# file into the respective SAPI configuration directories.
+#
+def supports_php5query?
+  if @supports_php5query.nil?
+  then @supports_php5query = ::File.exists?("/usr/sbin/php5query")
+  else @supports_php5query
+  end
+end
+
+# list of the desired PHP SAPI to enable/disable for
+#
+def sapi_list
+  if @sapi_list.nil?
+    @sapi_list = if supports_php5query?
+                       `/usr/sbin/php5query -q -S`.split("\n")
+                     else Array.new
+                     end
+  else @sapi_list
+  end
+end
+
+# list of the selected (new_resource.php_sapi) sapi
 #
 def resource_sapi_list
-  if new_resource.php_sapi.include?("ALL") then php_sapi_list
-  elsif with_php_query? then Array(new_resource.php_sapi)
-  else php_sapi_list
+  if new_resource.php_sapi.include?("ALL")
+    sapi_list
+  elsif supports_php5query?
+    Array(new_resource.php_sapi)
+  else
+    sapi_list
   end
 end
 
-# list of installed php sapi ( debian-like only )
+# configuration directory for a given sapi
 #
-def php_sapi_list
-  @php_sapi_list ||= 
-    if with_php_query?
-      `/usr/sbin/php5query -q -S`.split("\n")
-    else Array.new
-    end
+def sapi_directory(sapi)
+  "/etc/php5/#{sapi}/conf.d"
 end
 
-# verify whether config is enabled for php sapi ( debian-like only )
+# file path for a given sapi and priority
 #
-def php_conf_enabled?(conf_name, sapi_name)
-  if with_php_query?
-    `/usr/sbin/php5query -q -s #{sapi_name} -m #{conf_name}`
-    $?.exitstatus == 0
-  else true
-  end
+def sapi_file_path(sapi, priority)
+  ::File.join(sapi_directory(sapi), "#{priority}-#{@new_resource.conf_name}.ini")
 end
 
-# verify whether /usr/sbin/php5query exists ( debian-like boxes )
+# list of files matching sapi, new_resource.conf_name and a given priority
 #
-def with_php_query?
-  @with_php_query = ::File.exists?("/usr/sbin/php5query") if @with_php_query.nil?
-  @with_php_query
+def sapi_files_found(sapi, priority = "*")
+  ::Dir.glob(sapi_file_path(sapi, priority))
 end
 

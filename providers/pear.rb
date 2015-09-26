@@ -45,7 +45,7 @@ action :install do
     end
   end
 
-  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :upgrade do
@@ -58,7 +58,7 @@ action :upgrade do
     end
   end
 
-  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  manage_pecl_ini(@new_resource.package_name, :create, can_haz(@new_resource, 'priority'), can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
 end
 
 action :remove do
@@ -212,7 +212,7 @@ def get_extension_files(name)
   files
 end
 
-def manage_pecl_ini(name, action, priortiy, directives, zend_extensions)
+def manage_pecl_ini(name, exec_action, priority, directives, zend_extensions)
   ext_prefix = get_extension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -232,13 +232,19 @@ def manage_pecl_ini(name, action, priortiy, directives, zend_extensions)
     priority   priority
     directives directives
     extensions extensions
-    action     case action
-                 when :create, :update then [:create, :enable]
-                 else [:disable, :delete]
-               end
+    action     :nothing
     only_if { pear_package_provider.pecl? }
   end
-  new_resource.updated_by_last_action(res.updated_by_last_action?)
+
+  exec_action = case exec_action
+                  when :create, :update then [:create, :enable]
+                  else [:disable, :delete]
+                end
+
+  exec_action.each do |action_name|
+    res.run_action(action_name)
+    @new_resource.updated_by_last_action(true) if res.updated_by_last_action?
+  end
 end
 
 def grep_for_version(stdout, package)

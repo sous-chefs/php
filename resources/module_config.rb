@@ -34,7 +34,8 @@ attribute :path,
   :default => lazy { |r| "#{node['php']['ext_conf_dir']}/#{r.conf_name}.ini" }
 
 attribute :priority,
-  :kind_of => String
+  :kind_of => String,
+  :default => 20
 
 attribute :cookbook,
   :kind_of => String,
