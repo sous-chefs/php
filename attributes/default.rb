@@ -118,8 +118,8 @@ else
 end
 
 default['php']['url'] = 'http://us1.php.net/get'
-default['php']['version'] = '5.5.9'
-default['php']['checksum'] = '378de162efdaeeb725ed38d7fe956c9f0b9084ff'
+default['php']['version'] = '5.6.13'
+default['php']['checksum'] = '92acc6c067f5e015a6881b4119eafec10eca11722e810f2c2083f72e17119bcf'
 default['php']['prefix_dir'] = '/usr/local'
 
 default['php']['configure_options'] = %W(--prefix=#{php['prefix_dir']}

@@ -23,9 +23,13 @@ platforms:
         shell: '"/bin/sh"'
 
 suites:
-  - name: default
+  - name: package_install
     run_list:
       - recipe[php::default]
+  - name: source_install
+    run_list:
+      - recipe[php::default]
+    attributes: { php: { install_method: "source" } }
   - name: fpm_test
     run_list:
       - recipe[php::default]
