@@ -32,4 +32,12 @@ if defined?(ChefSpec)
   def add_php_pear_channel(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:php_pear_channel, :add, resource_name)
   end
+
+  ChefSpec.define_matcher :php_fpm_pool
+  def install_php_fpm_pool(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_fpm_pool, :install, resource_name)
+  end
+  def uninstall_php_fpm_pool(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_fpm_pool, :uninstall, resource_name)
+  end
 end
