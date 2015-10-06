@@ -11,8 +11,8 @@ group :lint do
 end
 
 group :unit do
-  gem 'berkshelf',  '~> 3.2'
-  gem 'chefspec',   '~> 4.3'
+  gem 'berkshelf',  '~> 4.0'
+  gem 'chefspec',   '~> 4.4'
 end
 
 group :kitchen_common do
@@ -20,7 +20,7 @@ group :kitchen_common do
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.18'
+  gem 'kitchen-vagrant', '~> 0.19'
 end
 
 group :kitchen_cloud do
