@@ -1,0 +1,52 @@
+settings:
+  parallel: true
+
+driver:
+  name: docker
+  # privileged is required otherwise the container doesn't boot right
+  privileged: true
+
+platforms:
+- name: centos-7.1
+  driver:
+    image: centos:7
+    platform: rhel
+    run_command: /usr/lib/systemd/systemd
+    provision_command:
+      - /bin/yum install -y initscripts net-tools wget
+- name: ubuntu-12.04
+  driver:
+    image: ubuntu-upstart:12.04
+    platform: ubuntu
+    disable_upstart: false
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/apt-get update
+      - /usr/bin/apt-get install apt-transport-https net-tools -y
+- name: ubuntu-14.04
+  driver:
+    image: ubuntu-upstart:14.04
+    platform: ubuntu
+    disable_upstart: false
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/apt-get update
+      - /usr/bin/apt-get install apt-transport-https net-tools -y
+
+suites:
+  - name: package_install
+    run_list:
+      - recipe[php::default]
+  - name: source_install
+    run_list:
+      - recipe[php::default]
+    attributes: { php: { install_method: "source" } }
+  - name: fpm_test
+    run_list:
+      - recipe[php::default]
+      - recipe[fpm_test]
+    excludes:
+      - centos-5.11
+      - centos-6.7
+      - fedora-21
+      - freebsd-10.1
