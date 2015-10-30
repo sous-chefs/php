@@ -146,7 +146,7 @@ def install_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions'), can_haz(@new_resource, 'priority')) if pecl?
   enable_package(name)
 end
 
@@ -157,7 +157,7 @@ def upgrade_package(name, version)
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
-  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions')) if pecl?
+  manage_pecl_ini(name, :create, can_haz(@new_resource, 'directives'), can_haz(@new_resource, 'zend_extensions'), can_haz(@new_resource, 'priority')) if pecl?
   enable_package(name)
 end
 
@@ -168,7 +168,7 @@ def remove_package(name, version)
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
   disable_package(name)
-  manage_pecl_ini(name, :delete, nil, nil) if pecl?
+  manage_pecl_ini(name, :delete, nil, nil, nil) if pecl?
 end
 
 def enable_package(name)
@@ -222,7 +222,7 @@ def get_extension_files(name)
   files
 end
 
-def manage_pecl_ini(name, action, directives, zend_extensions)
+def manage_pecl_ini(name, action, directives, zend_extensions, priority)
   ext_prefix = extension_dir
   ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -250,7 +250,7 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     owner 'root'
     group 'root'
     mode '0644'
-    variables(name: name, extensions: extensions, directives: directives)
+    variables(name: name, extensions: extensions, directives: directives, priority: priority)
     action action
   end
 end
