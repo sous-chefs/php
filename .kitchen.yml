@@ -13,6 +13,7 @@ platforms:
   - name: debian-8.1
     run_list: apt::default
   - name: fedora-21
+  - name: fedora-22
   - name: ubuntu-12.04
     run_list: apt::default
   - name: ubuntu-14.04

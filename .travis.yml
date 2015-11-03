@@ -16,10 +16,12 @@ env:
   matrix:
   - INSTANCE=package-install-ubuntu-1404
   - INSTANCE=package-install-ubuntu-1204
-  - INSTANCE=package-install-centos-71
+  - INSTANCE=package-install-centos-7
+  - INSTANCE=package-install-centos-6
   - INSTANCE=fpm-test-ubuntu-1404
   - INSTANCE=fpm-test-ubuntu-1204
-  - INSTANCE=fpm-test-centos-71
+  - INSTANCE=fpm-test-centos-7
+  - INSTANCE=fpm-test-centos-6
 
 # Don't `bundle install`
 install: echo "skip bundle install"
