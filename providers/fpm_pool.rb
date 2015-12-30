@@ -57,7 +57,7 @@ action :install do
     source 'fpm-pool.conf.erb'
     action :create
     cookbook 'php'
-    variables ({
+    variables(
       fpm_pool_name: new_resource.pool_name,
       fpm_pool_user: new_resource.user,
       fpm_pool_group: new_resource.group,
@@ -69,7 +69,7 @@ action :install do
       fpm_pool_max_spare_servers: new_resource.max_spare_servers,
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
-    })
+    )
     notifies :restart, "service[#{node['php']['fpm_service']}]"
   end
   new_resource.updated_by_last_action(t.updated_by_last_action?)
