@@ -185,6 +185,7 @@ More info: http://php.net/manual/en/install.fpm.php
 - min_spare_servers: Minimum number of servers to have as spares. Default: 1
 - max_spare_servers: Maximum number of servers to have as spares. Default: 3
 - chdir: The startup working directory of the pool. Default: `/`
+- additional_config: Additional parameters in JSON. Default: {}
 
 #### Examples
 ```ruby
