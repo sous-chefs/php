@@ -70,8 +70,8 @@ action :install do
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
     )
-    #Move this to an independant action
-    #notifies :restart, "service[#{node['php']['fpm_service']}]"
+    # Move this to an independant action
+    # notifies :restart, "service[#{node['php']['fpm_service']}]"
   end
   new_resource.updated_by_last_action(t.updated_by_last_action?)
 end
