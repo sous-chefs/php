@@ -1,6 +1,24 @@
 # php Cookbook CHANGELOG
 This file is used to list changes made in each version of the php cookbook.
 
+## v1.8.0 (2016-02-25)
+- Bumped the source install default version from 5.5.9 to 5.6.13
+- Added a chefignore file to limit the files uploaded to the Chef server
+- Added source_url and issues_url to the metadata.rb
+- Added additional Chefspec matchers
+- Added a Chef standard rubocop.yml file and resolved warnings
+- Added serverspec for integration testing
+- Remove legacy cloud Test Kitchen configs
+- Added testing in Travis CI with kitchen-docker
+- Added additional test suites to the Test Kitchen config
+- Updated contributing and testing documentation
+- Updated testing gem dependencies to the latest
+- Added maintainers.md and maintainers.toml files
+- Remove gitter chat from the readme
+- Add cookbook version badge to the readme
+- Added Fedora as a supported platform in the readme
+- Add missing cookbook dependencies to the readme
+
 ## v1.7.2 (2015-8-24)
 - Correct spelling in fpm_pool_start_servers (was servres)
 
