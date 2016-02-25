@@ -16,6 +16,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:php_pear, :purge, resource_name)
   end
 
+  def purge_php_pear(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_pear, :option, resource_name)
+  end
+
   ChefSpec.define_matcher :php_pear_channel
   def discover_php_pear_channel(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:php_pear_channel, :discover, resource_name)
