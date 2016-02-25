@@ -264,13 +264,13 @@ def grep_for_version(stdout, package)
     # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
     # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
     v = m.split(/\s+/)[1].strip
-    if v.split(%r{/\//})[0] =~ /.\./
-      # 1.1.4/(1.1.4 stable)
-      v = v.split(%r{/\//})[0]
-    else
-      # -n/a-/(1.0.0beta1 beta)
-      v = v.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
-    end
+    v = if v.split(%r{/\//})[0] =~ /.\./
+          # 1.1.4/(1.1.4 stable)
+          v.split(%r{/\//})[0]
+        else
+          # -n/a-/(1.0.0beta1 beta)
+          v.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+        end
   end
   v
 end
@@ -288,7 +288,7 @@ def pecl?
       elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, @new_resource.package_name)
         true
       else
-        fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
+        raise "Package #{@new_resource.package_name} not found in either PEAR or PECL."
       end
     end
 end

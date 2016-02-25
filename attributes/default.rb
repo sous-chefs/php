@@ -52,16 +52,16 @@ when 'rhel', 'fedora'
   end
 when 'debian'
   default['php']['conf_dir'] = '/etc/php5/cli'
-  case node['platform']
-  when 'ubuntu'
-    if node['platform_version'].to_f >= 12.10
-      default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
-    else
-      default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
-    end
-  else
-    default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
-  end
+  default['php']['ext_conf_dir'] = case node['platform']
+                                   when 'ubuntu'
+                                     if node['platform_version'].to_f >= 12.10
+                                       '/etc/php5/mods-available'
+                                     else
+                                       '/etc/php5/conf.d'
+                                     end
+                                   else
+                                     '/etc/php5/conf.d'
+                                   end
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
