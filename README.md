@@ -1,44 +1,35 @@
-php Cookbook
-============
-[![Build Status](https://travis-ci.org/chef-cookbooks/php.svg?branch=master)](http://travis-ci.org/chef-cookbooks/php)
-[![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
+# php Cookbook
+[![Build Status](https://travis-ci.org/chef-cookbooks/php.svg?branch=master)](http://travis-ci.org/chef-cookbooks/php) [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
 
 It installs and configures PHP and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
 
-Requirements
-------------
-#### Platforms
+## Requirements
+### Platforms
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
 - Microsoft Windows
 
-#### Chef
+### Chef
 - Chef 11+
 
-#### Cookbooks
+### Cookbooks
 - build-essential
 - xml
 - mysql
 - iis
 - windows
 
-
-Attributes
-----------
+## Attributes
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
 
 The file also contains the following attribute types:
+- platform specific locations and settings.
+- source installation settings
 
-* platform specific locations and settings.
-* source installation settings
-
-
-Resource/Provider
------------------
+## Resource/Provider
 This cookbook includes LWRPs for managing:
-
 - PEAR channels
 - PEAR/PECL packages
 
@@ -56,6 +47,7 @@ This cookbook includes LWRPs for managing:
 - channel_xml: the channel.xml file of the channel you are adding
 
 #### Examples
+
 ```ruby
 # discover the horde channel
 php_pear_channel "pear.horde.org" do
@@ -87,20 +79,21 @@ end
 [PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system.  As such this LWRP is clever enough to abstract away the small differences and can be used for managing either.  This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
 
 #### Actions
-- :install: Install a pear package - if version is provided, install that specific version
-- :upgrade: Upgrade a pear package - if version is provided, upgrade to that specific version
-- :remove: Remove a pear package
-- :purge: Purge a pear package (this usually entails removing configuration files as well as the package itself).  With pear packages this behaves the same as `:remove`
+- `:install`: Install a pear package - if version is provided, install that specific version
+- `:upgrade`: Upgrade a pear package - if version is provided, upgrade to that specific version
+- `:remove`: Remove a pear package
+- `:purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself).  With pear packages this behaves the same as `:remove`
 
 #### Attribute Parameters
-- package_name: name attribute. The name of the pear package to install
+- `package_name`: name attribute. The name of the pear package to install
 - version: the version of the pear package to install/upgrade.  If no version is given latest is assumed.
-- preferred_state: PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state
-- directives: extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file
-- zend_extensions: extension filenames which should be loaded with zend_extension.
-- options: Add additional options to the underlying pear package command
+- `preferred_state`: PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state
+- `directives`: extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file
+- `zend_extensions`: extension filenames which should be loaded with zend_extension.
+- o`ptions`: Add additional options to the underlying pear package command
 
 #### Examples
+
 ```ruby
 # upgrade a pear
 php_pear "XML_RPC" do
@@ -158,36 +151,31 @@ end
 ```
 
 ### `php_fpm_pool`
-Installs the `php-fpm` package appropriate for your distro (if using packages)
-and configures a FPM pool for you. Currently only supported in Debian-family
-operating systems and CentOS 7 (or at least tested with such, YMMV if you are
-using source).
+Installs the `php-fpm` package appropriate for your distro (if using packages) and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such, YMMV if you are using source).
 
 Please consider FPM functionally pre-release, and test it thoroughly in your environment before using it in production
 
-More info: http://php.net/manual/en/install.fpm.php
+More info: [http://php.net/manual/en/install.fpm.php](http://php.net/manual/en/install.fpm.php)
 
 #### Actions
-- :install: Installs the FPM pool (default).
-- :uninstall: Removes the FPM pool.
+- `:install`: Installs the FPM pool (default).
+- `:uninstall`: Removes the FPM pool.
 
 #### Attribute Parameters
-- pool_name: name attribute. The name of the FPM pool.
-- listen: The listen address. Default: `/var/run/php5-fpm.sock`
-- user: The user to run the FPM under. Default should be the webserver user for
-  your distro.
-- group: The group to run the FPM under. Default should be the webserver group
-  for your distro.
-- process_manager: Process manager to use - see
-  http://php.net/manual/en/install.fpm.configuration.php. Default: `dynamic`
-- max_children: Max children to scale to. Default: 5
-- start_servers: Number of servers to start the pool with. Default: 2
-- min_spare_servers: Minimum number of servers to have as spares. Default: 1
-- max_spare_servers: Maximum number of servers to have as spares. Default: 3
-- chdir: The startup working directory of the pool. Default: `/`
-- additional_config: Additional parameters in JSON. Default: {}
+- `pool_name`: name attribute. The name of the FPM pool.
+- `listen`: The listen address. Default: `/var/run/php5-fpm.sock`
+- `user`: The user to run the FPM under. Default should be the webserver user for your distro.
+- `group`: The group to run the FPM under. Default should be the webserver group for your distro.
+- `process_manager`: Process manager to use - see [http://php.net/manual/en/install.fpm.configuration.php](http://php.net/manual/en/install.fpm.configuration.php). Default: `dynamic`
+- `max_children`: Max children to scale to. Default: 5
+- `start_servers`: Number of servers to start the pool with. Default: 2
+- `min_spare_servers`: Minimum number of servers to have as spares. Default: 1
+- `max_spare_servers`: Maximum number of servers to have as spares. Default: 3
+- `chdir`: The startup working directory of the pool. Default: `/`
+- `additional_config`: Additional parameters in JSON. Default: {}
 
 #### Examples
+
 ```ruby
 # Install a FPM pool named "default"
 php_fpm_pool "default" do
@@ -195,8 +183,7 @@ php_fpm_pool "default" do
 end
 ```
 
-Recipes
--------
+## Recipes
 ### default
 Include the default recipe in a run list, to get `php`.  By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
 
@@ -206,11 +193,8 @@ This recipe installs PHP from packages.
 ### source
 This recipe installs PHP from source.
 
-
-Deprecated Recipes
-------------------
+## Deprecated Recipes
 The following recipes are deprecated and will be removed from a future version of this cookbook.
-
 - `module_apc`
 - `module_curl`
 - `module_fileinfo`
@@ -236,12 +220,11 @@ php_pear "memcache" do
 end
 ```
 
-
-Usage
------
+## Usage
 Simply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
 
 ####Role example:
+
 ```ruby
 name "php"
 description "Install php from source"
@@ -255,44 +238,45 @@ run_list(
 )
 ```
 
-
-Development
------------
+## Development
 This section details "quick development" steps. For a detailed explanation, see [[Contributing.md]].
+- Clone this repository from GitHub:
 
-1. Clone this repository from GitHub:
+  ```
+   $ git clone git@github.com:chef-cookbooks/php.git
+  ```
 
-        $ git clone git@github.com:chef-cookbooks/php.git
+- Create a git branch
 
-2. Create a git branch
+  ```
+   $ git checkout -b my_bug_fix
+  ```
 
-        $ git checkout -b my_bug_fix
+- Install dependencies:
 
-3. Install dependencies:
+  ```
+   $ bundle install
+  ```
 
-        $ bundle install
-
-4. Make your changes/patches/fixes, committing appropiately
-5. **Write tests**
-6. Run the tests:
-    - `bundle exec foodcritic -f any .`
-    - `bundle exec rspec`
-    - `bundle exec rubocop`
-    - `bundle exec kitchen test`
+- Make your changes/patches/fixes, committing appropiately
+- **Write tests**
+- Run the tests:
+  - `bundle exec foodcritic -f any .`
+  - `bundle exec rspec`
+  - `bundle exec rubocop`
+  - `bundle exec kitchen test`
 
   In detail:
-    - Foodcritic will catch any Chef-specific style errors
-    - RSpec will run the unit tests
-    - Rubocop will check for Ruby-specific style errors
-    - Test Kitchen will run and converge the recipes
+  - Foodcritic will catch any Chef-specific style errors
+  - RSpec will run the unit tests
+  - Rubocop will check for Ruby-specific style errors
+  - Test Kitchen will run and converge the recipes
 
-
-License & Authors
------------------
-
-**Author:** Cookbook Engineering Team (<cookbooks@chef.io>)
+## License & Authors
+**Author:** Cookbook Engineering Team ([cookbooks@chef.io](mailto:cookbooks@chef.io))
 
 **Copyright:** 2008-2015, Chef Software, Inc.
+
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -307,9 +291,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-Note: This cookbook contains a modified copy of `go-phar.pear` for use on the
-Microsoft Windows platform only to correct an (upstream bug)[http://pear.php.net/bugs/bug.php?id=16644]. The original
-`go-pear.phar` is licensed under the (PHP License version 2.02)[http://www.php.net/license/2_02.txt]:
+Note: This cookbook contains a modified copy of `go-phar.pear` for use on the Microsoft Windows platform only to correct an (upstream bug)[[http://pear.php.net/bugs/bug.php?id=16644](http://pear.php.net/bugs/bug.php?id=16644)]. The original `go-pear.phar` is licensed under the (PHP License version 2.02)[[http://www.php.net/license/2_02.txt](http://www.php.net/license/2_02.txt)]:
 
 ```
 --------------------------------------------------------------------
