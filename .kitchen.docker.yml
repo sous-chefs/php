@@ -52,8 +52,3 @@ suites:
     run_list:
       - recipe[php::default]
       - recipe[fpm_test]
-    excludes:
-      - centos-5.11
-      - centos-6.7
-      - fedora-21
-      - freebsd-10.1
