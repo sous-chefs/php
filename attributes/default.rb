@@ -1,9 +1,8 @@
 #
-# Author:: Seth Chisamore (<schisamo@chef.io>)
 # Cookbook Name:: php
-# Attribute:: default
+# Attributes:: default
 #
-# Copyright 2011-2015, Chef Software, Inc.
+# Copyright 2011-2016, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,8 +37,7 @@ when 'rhel', 'fedora'
   if node['platform_version'].to_f < 6
     default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
     default['php']['mysql']['package'] = 'php53-mysql'
-  else
-    default['php']['packages'] = %w(php php-devel php-cli php-pear)
+  else # set fpm attributes as we're on a modern PHP release
     default['php']['mysql']['package'] = 'php-mysql'
     default['php']['fpm_package']   = 'php-fpm'
     default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
@@ -48,6 +46,11 @@ when 'rhel', 'fedora'
     if node['php']['install_method'] == 'package'
       default['php']['fpm_user']      = 'apache'
       default['php']['fpm_group']     = 'apache'
+    end
+    if node['platform'] == 'amazon' # amazon names their packages with versions
+      default['php']['packages'] = %w(php56 php56-devel php-pear)
+    else # redhat does not name their packages with version on RHEL 6+
+      default['php']['packages'] = %w(php php-devel php-pear)
     end
   end
 when 'debian'
