@@ -12,7 +12,7 @@ depends 'build-essential'
 depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
-depends 'windows'
+depends 'windows', '>= 1.39.1'
 depends 'iis'
 
 %w(amazon centos debian fedora oracle redhat scientific suse ubuntu windows).each do |os|
