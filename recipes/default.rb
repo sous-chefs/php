@@ -21,13 +21,16 @@
 
 include_recipe "php::#{node['php']['install_method']}"
 
-# update the main channels
-php_pear_channel 'pear.php.net' do
-  action :update
-end
+# pear does not have php7 support yet
+if node['php']['version'] < '7'
+  # update the main channels
+  php_pear_channel 'pear.php.net' do
+    action :update
+  end
 
-php_pear_channel 'pecl.php.net' do
-  action :update
+  php_pear_channel 'pecl.php.net' do
+    action :update
+  end
 end
 
 include_recipe 'php::ini'
