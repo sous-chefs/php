@@ -26,6 +26,8 @@ require 'chef/mixin/shell_out'
 require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
+use_inline_resources
+
 def whyrun_supported?
   true
 end
@@ -33,18 +35,20 @@ end
 action :discover do
   unless exists?
     Chef::Log.info("Discovering pear channel #{@new_resource}")
-    execute "#{node['php']['pear']} channel-discover #{@new_resource.channel_name}" do
+    r = execute "#{node['php']['pear']} channel-discover #{@new_resource.channel_name}" do
       action :run
     end
+    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
 action :add do
   unless exists?
     Chef::Log.info("Adding pear channel #{@new_resource} from #{@new_resource.channel_xml}")
-    execute "#{node['php']['pear']} channel-add #{@new_resource.channel_xml}" do
+    r = execute "#{node['php']['pear']} channel-add #{@new_resource.channel_xml}" do
       action :run
     end
+    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
@@ -71,9 +75,10 @@ end
 action :remove do
   if exists?
     Chef::Log.info("Deleting pear channel #{@new_resource}")
-    execute "#{node['php']['pear']} channel-delete #{@new_resource.channel_name}" do
+    r = execute "#{node['php']['pear']} channel-delete #{@new_resource.channel_name}" do
       action :run
     end
+    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
