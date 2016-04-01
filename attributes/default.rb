@@ -63,11 +63,11 @@ when 'rhel', 'fedora'
       default['php']['fpm_listen_user'] = 'apache'
       default['php']['fpm_listen_group'] = 'apache'
     end
-    if node['platform'] == 'amazon' # amazon names their packages with versions
-      default['php']['packages'] = %w(php56 php56-devel php-pear)
-    else # redhat does not name their packages with version on RHEL 6+
-      default['php']['packages'] = %w(php php-devel php-pear)
-    end
+    default['php']['packages'] = if node['platform'] == 'amazon' # amazon names their packages with versions
+                                   %w(php56 php56-devel php-pear)
+                                 else # redhat does not name their packages with version on RHEL 6+
+                                   %w(php php-devel php-pear)
+                                 end
   end
 when 'debian'
   default['php']['conf_dir'] = '/etc/php5/cli'
