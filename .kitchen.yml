@@ -12,8 +12,6 @@ platforms:
     run_list: apt::default
   - name: debian-8.4
     run_list: apt::default
-  - name: fedora-22
-    run_list: yum::dnf_yum_compat
   - name: fedora-23
     run_list: yum::dnf_yum_compat
   - name: ubuntu-12.04
@@ -48,6 +46,5 @@ suites:
     excludes:
       - centos-5.11
       - centos-6.7
-      - fedora-22
       - fedora-23
       - freebsd-10.1
