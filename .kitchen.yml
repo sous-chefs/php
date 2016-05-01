@@ -39,9 +39,7 @@ suites:
     run_list:
       - recipe[php::default]
     attributes: { php: { install_method: "source" } }
-  - name: fpm_test
+  - name: resource_test
     run_list:
       - recipe[php::default]
-      - recipe[fpm_test]
-    excludes:
-      - centos-5.11
+      - recipe[php_test::default]

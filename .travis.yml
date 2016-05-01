@@ -19,12 +19,12 @@ env:
   - INSTANCE=package-install-centos-7
   - INSTANCE=package-install-centos-6
   - INSTANCE=package-install-centos-5
-  - INSTANCE=fpm-test-ubuntu-1604
-  - INSTANCE=fpm-test-ubuntu-1404
-  - INSTANCE=fpm-test-ubuntu-1204
-  - INSTANCE=fpm-test-centos-7
-  - INSTANCE=fpm-test-centos-6
-  - INSTANCE=fpm-test-centos-5
+  - INSTANCE=php_test-ubuntu-1604
+  - INSTANCE=php_test-ubuntu-1404
+  - INSTANCE=php_test-ubuntu-1204
+  - INSTANCE=php_test-centos-7
+  - INSTANCE=php_test-centos-6
+  - INSTANCE=php_test-centos-5
 
 # Don't `bundle install`
 install: echo "skip bundle install"
