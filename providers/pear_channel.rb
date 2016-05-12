@@ -35,20 +35,18 @@ end
 action :discover do
   unless exists?
     Chef::Log.info("Discovering pear channel #{@new_resource}")
-    r = execute "#{node['php']['pear']} channel-discover #{@new_resource.channel_name}" do
+    execute "#{node['php']['pear']} channel-discover #{@new_resource.channel_name}" do
       action :run
     end
-    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
 action :add do
   unless exists?
     Chef::Log.info("Adding pear channel #{@new_resource} from #{@new_resource.channel_xml}")
-    r = execute "#{node['php']['pear']} channel-add #{@new_resource.channel_xml}" do
+    execute "#{node['php']['pear']} channel-add #{@new_resource.channel_xml}" do
       action :run
     end
-    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
@@ -75,10 +73,9 @@ end
 action :remove do
   if exists?
     Chef::Log.info("Deleting pear channel #{@new_resource}")
-    r = execute "#{node['php']['pear']} channel-delete #{@new_resource.channel_name}" do
+    execute "#{node['php']['pear']} channel-delete #{@new_resource.channel_name}" do
       action :run
     end
-    new_resource.updated_by_last_action(true) if r.updated_by_last_action?
   end
 end
 
