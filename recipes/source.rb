@@ -33,6 +33,14 @@ node['php']['src_deps'].each do |pkg|
   package pkg
 end
 
+if  node['platform_family'].eql? 'debian' and
+  node['kernel']['machine'].eql? 'x86_64' and
+  node['platform_version'].eql? '14.04'
+  link '/usr/include/gmp.h' do
+    to '/usr/include/x86_64-linux-gnu/gmp.h'
+  end
+end
+
 version = node['php']['version']
 
 remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
