@@ -25,6 +25,17 @@ default['php']['bin'] = 'php'
 default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
 
+default['php']['version'] = '5.6.13'
+
+default['php']['url'] = 'http://us1.php.net/get'
+default['php']['checksum'] = '92acc6c067f5e015a6881b4119eafec10eca11722e810f2c2083f72e17119bcf'
+default['php']['prefix_dir'] = '/usr/local'
+default['php']['enable_mod'] = '/usr/sbin/php5enmod'
+default['php']['disable_mod'] = '/usr/sbin/php5dismod'
+
+default['php']['ini']['template'] = 'php.ini.erb'
+default['php']['ini']['cookbook'] = 'php'
+
 case node['platform_family']
 when 'rhel', 'fedora'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
@@ -32,12 +43,15 @@ when 'rhel', 'fedora'
   default['php']['ext_conf_dir']  = '/etc/php.d'
   default['php']['fpm_user']      = 'nobody'
   default['php']['fpm_group']     = 'nobody'
+  default['php']['fpm_listen_user']   = 'nobody'
+  default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel mhash-devel)
   if node['platform_version'].to_f < 6
     default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
     default['php']['mysql']['package'] = 'php53-mysql'
   else # set fpm attributes as we're on a modern PHP release
+    default['php']['packages'] = %w(php php-devel php-cli php-pear)
     default['php']['mysql']['package'] = 'php-mysql'
     default['php']['fpm_package']   = 'php-fpm'
     default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
@@ -46,25 +60,18 @@ when 'rhel', 'fedora'
     if node['php']['install_method'] == 'package'
       default['php']['fpm_user']      = 'apache'
       default['php']['fpm_group']     = 'apache'
+      default['php']['fpm_listen_user'] = 'apache'
+      default['php']['fpm_listen_group'] = 'apache'
     end
-    if node['platform'] == 'amazon' # amazon names their packages with versions
-      default['php']['packages'] = %w(php56 php56-devel php-pear)
-    else # redhat does not name their packages with version on RHEL 6+
-      default['php']['packages'] = %w(php php-devel php-pear)
-    end
+    default['php']['packages'] = if node['platform'] == 'amazon' # amazon names their packages with versions
+                                   %w(php56 php56-devel php-pear)
+                                 else # redhat does not name their packages with version on RHEL 6+
+                                   %w(php php-devel php-pear)
+                                 end
   end
 when 'debian'
   default['php']['conf_dir'] = '/etc/php5/cli'
-  default['php']['ext_conf_dir'] = case node['platform']
-                                   when 'ubuntu'
-                                     if node['platform_version'].to_f >= 12.10
-                                       '/etc/php5/mods-available'
-                                     else
-                                       '/etc/php5/conf.d'
-                                     end
-                                   else
-                                     '/etc/php5/conf.d'
-                                   end
+  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
@@ -72,15 +79,42 @@ when 'debian'
   default['php']['fpm_pooldir']   = '/etc/php5/fpm/pool.d'
   default['php']['fpm_user']      = 'www-data'
   default['php']['fpm_group']     = 'www-data'
-  default['php']['fpm_service']   = 'php5-fpm'
+  default['php']['fpm_listen_user']  = 'www-data'
+  default['php']['fpm_listen_group'] = 'www-data'
+  default['php']['fpm_service']      = 'php5-fpm'
   default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
+  case node['platform']
+  when 'ubuntu'
+    case node['platform_version'].to_f
+    when 16.04
+      default['php']['version']          = '7.0.4'
+      default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
+      default['php']['conf_dir']         = '/etc/php/7.0/cli'
+      default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config)
+      default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
+      default['php']['mysql']['package'] = 'php7.0-mysql'
+      default['php']['fpm_package']      = 'php7.0-fpm'
+      default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
+      default['php']['fpm_service']      = 'php7.0-fpm'
+      default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
+      default['php']['enable_mod']       = '/usr/sbin/phpenmod'
+      default['php']['disable_mod']      = '/usr/sbin/phpdismod'
+      default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
+    when 13.04..15.10
+      default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
+    when 10.04..12.10
+      default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
+    end
+  end
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['fpm_user']      = 'wwwrun'
   default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = %w(apache2-mod_php5 php5-pear)
+  default['php']['fpm_listen_user'] = 'wwwrun'
+  default['php']['fpm_listen_group'] = 'www'
+  default['php']['packages']         = %w(apache2-mod_php5 php5-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 when 'windows'
@@ -108,7 +142,9 @@ when 'freebsd'
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
   default['php']['fpm_user']      = 'www'
   default['php']['fpm_group']     = 'www'
-  default['php']['packages']      = %w( php56 pear )
+  default['php']['fpm_listen_user'] = 'www'
+  default['php']['fpm_listen_group'] = 'www'
+  default['php']['packages']         = %w( php56 pear )
   default['php']['mysql']['package'] = 'php56-mysqli'
 else
   default['php']['conf_dir']      = '/etc/php5/cli'
@@ -119,11 +155,6 @@ else
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
 end
-
-default['php']['url'] = 'http://us1.php.net/get'
-default['php']['version'] = '5.6.13'
-default['php']['checksum'] = '92acc6c067f5e015a6881b4119eafec10eca11722e810f2c2083f72e17119bcf'
-default['php']['prefix_dir'] = '/usr/local'
 
 default['php']['configure_options'] = %W(--prefix=#{php['prefix_dir']}
                                          --with-libdir=#{lib_dir}
@@ -162,6 +193,3 @@ default['php']['configure_options'] = %W(--prefix=#{php['prefix_dir']}
                                          --with-sqlite3
                                          --with-pdo-mysql
                                          --with-pdo-sqlite)
-
-default['php']['ini']['template'] = 'php.ini.erb'
-default['php']['ini']['cookbook'] = 'php'

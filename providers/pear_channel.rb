@@ -26,6 +26,8 @@ require 'chef/mixin/shell_out'
 require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
+use_inline_resources
+
 def whyrun_supported?
   true
 end

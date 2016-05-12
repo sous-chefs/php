@@ -54,6 +54,13 @@ else
   ext_dir_prefix = ''
 end
 
+# PHP is unable to find the GMP library in 16.04. The symlink brings the file
+# inside of the include libraries.
+link '/usr/include/gmp.h' do
+  to '/usr/include/x86_64-linux-gnu/gmp.h'
+  only_if { node['platform_family'] == 'debian' && node['platform_version'].to_f >= 14.04 }
+end
+
 bash 'build php' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
