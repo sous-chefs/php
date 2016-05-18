@@ -22,7 +22,7 @@ default_action :install
 actions :install, :uninstall
 
 attribute :pool_name, kind_of: String, name_attribute: true
-attribute :listen, default: '/var/run/php5-fpm.sock'
+attribute :listen, default: node['php']['fpm_service']
 attribute :user, kind_of: String, default: node['php']['fpm_user']
 attribute :group, kind_of: String, default: node['php']['fpm_group']
 attribute :listen_user, kind_of: String, default: node['php']['fpm_listen_user']
