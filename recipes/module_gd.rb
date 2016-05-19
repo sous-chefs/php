@@ -27,7 +27,7 @@ pkg = value_for_platform(
   'freebsd' => {
     'default' => 'php56-gd'
   },
-  'default' => 'php5-gd'
+  'default' => node['php']['gd']['package']
 )
 
 package pkg do

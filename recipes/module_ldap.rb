@@ -24,7 +24,7 @@ pkg = value_for_platform(
     el5_range => 'php53-ldap',
     'default' => 'php-ldap'
   },
-  'default' => 'php5-ldap'
+  'default' => node['php']['ldap']['package']
 )
 
 package pkg do

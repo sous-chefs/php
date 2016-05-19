@@ -24,7 +24,7 @@ pkg = value_for_platform(
     el5_range => 'php53-pgsql',
     'default' => 'php-pgsql'
   },
-  'default' => 'php5-pgsql'
+  'default' => node['php']['pgsql']['package']
 )
 
 package pkg do
