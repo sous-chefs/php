@@ -105,6 +105,11 @@ when 'debian'
     when 10.04..12.10
       default['php']['ext_conf_dir'] = '/etc/php5/conf.d'
     end
+  when 'debian'
+    case node['platform_version'].to_i
+    when 8
+      default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
+    end
   end
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'
