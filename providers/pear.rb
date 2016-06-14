@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+use_inline_resources
+
 require 'chef/mixin/shell_out'
 require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
@@ -25,6 +27,8 @@ include Chef::Mixin::ShellOut
 # the logic in all action methods mirror that of
 # the Chef::Provider::Package which will make
 # refactoring into core chef easy
+
+use_inline_resources
 
 def whyrun_supported?
   true
@@ -41,7 +45,7 @@ action :install do
       info_output = "Installing #{@new_resource}"
       info_output << " version #{install_version}" if install_version && !install_version.empty?
       Chef::Log.info(info_output)
-      status = install_package(@new_resource.package_name, install_version)
+      install_package(@new_resource.package_name, install_version)
     end
   end
 end
@@ -52,7 +56,7 @@ action :upgrade do
     description = "upgrade package #{@new_resource} version from #{orig_version} to #{candidate_version}"
     converge_by(description) do
       Chef::Log.info("Upgrading #{@new_resource} version from #{orig_version} to #{candidate_version}")
-      status = upgrade_package(@new_resource.package_name, candidate_version)
+      upgrade_package(@new_resource.package_name, candidate_version)
     end
   end
 end
@@ -172,14 +176,14 @@ def remove_package(name, version)
 end
 
 def enable_package(name)
-  execute "/usr/sbin/php5enmod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5enmod') }
+  execute "#{node['php']['enable_mod']} #{name}" do
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['enable_mod']) }
   end
 end
 
 def disable_package(name)
-  execute "/usr/sbin/php5dismod #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?('/usr/sbin/php5dismod') }
+  execute "#{node['php']['disable_mod']} #{name}" do
+    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['disable_mod']) }
   end
 end
 
@@ -237,7 +241,7 @@ def manage_pecl_ini(name, action, directives, zend_extensions, priority)
                end
   ]
 
-  directory "#{node['php']['ext_conf_dir']}" do
+  directory node['php']['ext_conf_dir'] do
     owner 'root'
     group 'root'
     mode '0755'
@@ -264,13 +268,13 @@ def grep_for_version(stdout, package)
     # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
     # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
     v = m.split(/\s+/)[1].strip
-    if v.split(/\//)[0] =~ /.\./
-      # 1.1.4/(1.1.4 stable)
-      v = v.split(/\//)[0]
-    else
-      # -n/a-/(1.0.0beta1 beta)
-      v = v.split(/(.*)\/\((.*)/).last.split(/\s/)[0]
-    end
+    v = if v.split(%r{/\//})[0] =~ /.\./
+          # 1.1.4/(1.1.4 stable)
+          v.split(%r{/\//})[0]
+        else
+          # -n/a-/(1.0.0beta1 beta)
+          v.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+        end
   end
   v
 end
@@ -288,7 +292,7 @@ def pecl?
       elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, @new_resource.package_name)
         true
       else
-        fail "Package #{@new_resource.package_name} not found in either PEAR or PECL."
+        raise "Package #{@new_resource.package_name} not found in either PEAR or PECL."
       end
     end
 end

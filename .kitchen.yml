@@ -7,20 +7,29 @@ provisioner:
 platforms:
   - name: centos-5.11
   - name: centos-6.7
-  - name: centos-7.1
-  - name: debian-7.8
+  - name: centos-7.2
+  - name: debian-7.10
     run_list: apt::default
-  - name: debian-8.1
+  - name: debian-8.4
     run_list: apt::default
-  - name: fedora-21
+  - name: fedora-23
+    run_list: yum::dnf_yum_compat
   - name: ubuntu-12.04
     run_list: apt::default
   - name: ubuntu-14.04
+    run_list: apt::default
+  - name: ubuntu-16.04
     run_list: apt::default
   - name: freebsd-10.1
     driver:
       ssh:
         shell: '"/bin/sh"'
+  - name: windows-2008r2
+    driver_config:
+      box: chef/windows-server-2008r2-standard
+  - name: windows-2012r2
+    driver_config:
+      box: chef/windows-server-2012r2-standard
 
 suites:
   - name: package_install
@@ -30,12 +39,7 @@ suites:
     run_list:
       - recipe[php::default]
     attributes: { php: { install_method: "source" } }
-  - name: fpm_test
+  - name: resource_test
     run_list:
       - recipe[php::default]
-      - recipe[fpm_test]
-    excludes:
-      - centos-5.11
-      - centos-6.7
-      - fedora-21
-      - freebsd-10.1
+      - recipe[php_test::default]

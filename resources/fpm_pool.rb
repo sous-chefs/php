@@ -24,7 +24,9 @@ actions :install, :uninstall
 attribute :pool_name, kind_of: String, name_attribute: true
 attribute :listen, default: '/var/run/php5-fpm.sock'
 attribute :user, kind_of: String, default: node['php']['fpm_user']
-attribute :group, kind_of: String, default: node['php']['fpm_user']
+attribute :group, kind_of: String, default: node['php']['fpm_group']
+attribute :listen_user, kind_of: String, default: node['php']['fpm_listen_user']
+attribute :listen_group, kind_of: String, default: node['php']['fpm_listen_group']
 attribute :process_manager, kind_of: String, default: 'dynamic'
 attribute :max_children, kind_of: Integer, default: 5
 attribute :start_servers, kind_of: Integer, default: 2

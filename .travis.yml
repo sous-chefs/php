@@ -1,6 +1,5 @@
-rvm: 2.2
-
 sudo: required
+dist: trusty
 
 # install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
 addons:
@@ -14,12 +13,18 @@ services: docker
 
 env:
   matrix:
+  - INSTANCE=package-install-ubuntu-1604
   - INSTANCE=package-install-ubuntu-1404
   - INSTANCE=package-install-ubuntu-1204
-  - INSTANCE=package-install-centos-71
-  - INSTANCE=fpm-test-ubuntu-1404
-  - INSTANCE=fpm-test-ubuntu-1204
-  - INSTANCE=fpm-test-centos-71
+  - INSTANCE=package-install-centos-7
+  - INSTANCE=package-install-centos-6
+  - INSTANCE=package-install-centos-5
+  - INSTANCE=resource-test-ubuntu-1604
+  - INSTANCE=resource-test-ubuntu-1404
+  - INSTANCE=resource-test-ubuntu-1204
+  - INSTANCE=resource-test-centos-7
+  - INSTANCE=resource-test-centos-6
+  - INSTANCE=resource-test-centos-5
 
 # Don't `bundle install`
 install: echo "skip bundle install"
@@ -29,12 +34,13 @@ before_script:
   # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
+
 script:
   - /opt/chefdk/embedded/bin/chef --version
   - /opt/chefdk/embedded/bin/rubocop --version
   - /opt/chefdk/embedded/bin/rubocop
   - /opt/chefdk/embedded/bin/foodcritic --version
-  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
+  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec -f any
   - /opt/chefdk/embedded/bin/rspec
   - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}

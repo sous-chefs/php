@@ -6,7 +6,7 @@ describe 'php::default' do
   context 'on freebsd' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.0')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs php' do

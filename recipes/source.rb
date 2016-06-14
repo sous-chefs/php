@@ -1,9 +1,9 @@
 #
 # Author::  Seth Chisamore (<schisamo@chef.io>)
 # Cookbook Name:: php
-# Recipe:: package
+# Recipe:: source
 #
-# Copyright 2011-2015, Chef Software, Inc.
+# Copyright 2011-2016, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,9 +30,7 @@ mysql_client 'default' do
 end
 
 node['php']['src_deps'].each do |pkg|
-  package pkg do
-    action :install
-  end
+  package pkg
 end
 
 version = node['php']['version']
@@ -54,6 +52,13 @@ if node['php']['ext_dir']
   ext_dir_prefix = "EXTENSION_DIR=#{node['php']['ext_dir']}"
 else
   ext_dir_prefix = ''
+end
+
+# PHP is unable to find the GMP library in 16.04. The symlink brings the file
+# inside of the include libraries.
+link '/usr/include/gmp.h' do
+  to '/usr/include/x86_64-linux-gnu/gmp.h'
+  only_if { node['platform_family'] == 'debian' && node['platform_version'].to_f >= 14.04 }
 end
 
 bash 'build php' do

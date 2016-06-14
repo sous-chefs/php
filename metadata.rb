@@ -3,7 +3,8 @@ maintainer        'Chef Software, Inc.'
 maintainer_email  'cookbooks@chef.io'
 license           'Apache 2.0'
 description       'Installs and maintains php and php modules'
-version           '1.7.2'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version           '1.9.0'
 source_url        'https://github.com/chef-cookbooks/php' if respond_to?(:source_url)
 issues_url        'https://github.com/chef-cookbooks/php/issues' if respond_to?(:issues_url)
 
@@ -11,10 +12,10 @@ depends 'build-essential'
 depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
-depends 'windows'
+depends 'windows', '>= 1.39.1'
 depends 'iis'
 
-%w(amazon centos debian fedora oracle redhat scientific suse ubuntu).each do |os|
+%w(amazon centos debian fedora oracle redhat scientific suse ubuntu windows).each do |os|
   supports os
 end
 

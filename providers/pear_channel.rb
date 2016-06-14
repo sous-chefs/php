@@ -20,9 +20,13 @@
 
 # http://pear.php.net/manual/en/guide.users.commandline.channels.php
 
+use_inline_resources
+
 require 'chef/mixin/shell_out'
 require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
+
+use_inline_resources
 
 def whyrun_supported?
   true
@@ -50,7 +54,7 @@ action :update do
   if exists?
     update_needed = false
     begin
-      updated_needed = true if shell_out("#{node['php']['pear']} search -c #{@new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+      update_needed = true if shell_out("#{node['php']['pear']} search -c #{@new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
     rescue Chef::Exceptions::CommandTimeout
       # CentOS can hang on 'pear search' if a channel needs updating
       Chef::Log.info("Timed out checking if channel-update needed...forcing update of pear channel #{@new_resource}")

@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+use_inline_resources
+
 def whyrun_supported?
   true
 end
@@ -29,7 +31,7 @@ def install_fpm_package
   return if node['php']['install_method'] == 'source'
 
   if node['php']['fpm_package'].nil?
-    fail 'PHP-FPM package not found (you probably have an unsupported distro)'
+    raise 'PHP-FPM package not found (you probably have an unsupported distro)'
   else
     file node['php']['fpm_default_conf'] do
       action :nothing
@@ -57,11 +59,13 @@ action :install do
     source 'fpm-pool.conf.erb'
     action :create
     cookbook 'php'
-    variables ({
+    variables(
       fpm_pool_name: new_resource.pool_name,
       fpm_pool_user: new_resource.user,
       fpm_pool_group: new_resource.group,
       fpm_pool_listen: new_resource.listen,
+      fpm_pool_listen_user: new_resource.listen_user,
+      fpm_pool_listen_group: new_resource.listen_group,
       fpm_pool_manager: new_resource.process_manager,
       fpm_pool_max_children: new_resource.max_children,
       fpm_pool_start_servers: new_resource.start_servers,
@@ -69,7 +73,7 @@ action :install do
       fpm_pool_max_spare_servers: new_resource.max_spare_servers,
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
-    })
+    )
     notifies :restart, "service[#{node['php']['fpm_service']}]"
   end
   new_resource.updated_by_last_action(t.updated_by_last_action?)
