@@ -19,6 +19,12 @@ env:
   - INSTANCE=package-install-centos-7
   - INSTANCE=package-install-centos-6
   - INSTANCE=package-install-centos-5
+  - INSTANCE=source-install-ubuntu-1604
+  - INSTANCE=source-install-ubuntu-1404
+  - INSTANCE=source-install-ubuntu-1204
+  - INSTANCE=source-install-centos-7
+  - INSTANCE=source-install-centos-6
+  - INSTANCE=source-install-centos-5
   - INSTANCE=resource-test-ubuntu-1604
   - INSTANCE=resource-test-ubuntu-1404
   - INSTANCE=resource-test-ubuntu-1204
