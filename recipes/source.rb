@@ -26,6 +26,7 @@ include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
 
 mysql_client 'default' do
   action :create
+  package_version ''
   only_if { configure_options =~ /mysql/ }
 end
 
