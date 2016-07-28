@@ -38,7 +38,7 @@ def install_fpm_package
     end
     package node['php']['fpm_package'] do
       action :install
-      notifies :delete, "file[#{node['php']['fpm_default_conf']}]"
+      notifies :delete, "file[#{node['php']['fpm_default_conf']}]", :immediately
     end
   end
 end
