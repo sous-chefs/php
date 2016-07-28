@@ -83,7 +83,7 @@ action :uninstall do
   # Ensure the FPM pacakge is installed, and the service is registered
   register_fpm_service
   # Delete the FPM pool.
-  f = file "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}" do
+  f = file "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
     action :delete
   end
   new_resource.updated_by_last_action(f.updated_by_last_action?)
