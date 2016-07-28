@@ -2,7 +2,7 @@
 # Author::  Joshua Timberman (<joshua@chef.io>)
 # Author::  Seth Chisamore (<schisamo@chef.io>)
 # Cookbook Name:: php
-# Recipe:: module_curl
+# Recipe:: module_apc
 #
 # Copyright 2009-2015, Chef Software, Inc.
 #
@@ -21,9 +21,17 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  # centos php compiled with curl
+  %w(httpd-devel pcre pcre-devel).each do |pkg|
+    package pkg do
+      action :install
+    end
+  end
+  php_pear 'APCu' do
+    action :install
+    directives(shm_size: '128M', enable_cli: 0)
+  end
 when 'debian'
-  package node['php']['curl']['package'] do
+  package node['php']['apcu']['package'] do
     action :install
   end
 end
