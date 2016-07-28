@@ -200,6 +200,7 @@ The following recipes are deprecated and will be removed from a future version o
 - `module_fileinfo`
 - `module_fpdf`
 - `module_gd`
+- `module_imap`
 - `module_ldap`
 - `module_memcache`
 - `module_mysql`

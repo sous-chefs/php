@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## v1.10.0 (2016-07-27)
+
+- PR #167 Preventing user specified pool of www from being deleted at the end of the chef run on the first install
+- PR #122 Add recipe for php module_imap 
+- PR #172 Fix uninstall action for resource php_fpm_pool
+
 ## v1.9.0 (2016-05-12)
 
 Special thanks to @ThatGerber for getting the PR for this release together
