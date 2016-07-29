@@ -9,6 +9,10 @@ addons:
     packages:
       - chefdk
 
+branches:
+  only:
+  - master
+
 services: docker
 
 env:
