@@ -6,11 +6,11 @@ provisioner:
 
 platforms:
   - name: centos-5.11
-  - name: centos-6.7
+  - name: centos-6.8
   - name: centos-7.2
   - name: debian-7.10
     run_list: apt::default
-  - name: debian-8.4
+  - name: debian-8.5
     run_list: apt::default
   - name: fedora-23
     run_list: yum::dnf_yum_compat
@@ -20,7 +20,7 @@ platforms:
     run_list: apt::default
   - name: ubuntu-16.04
     run_list: apt::default
-  - name: freebsd-10.1
+  - name: freebsd-10.3
     driver:
       ssh:
         shell: '"/bin/sh"'
