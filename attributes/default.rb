@@ -178,14 +178,14 @@ else
   default['php']['mysql']['package'] = 'php5-mysql'
 end
 
-default['php']['configure_options'] = %W(--prefix=#{php['prefix_dir']}
+default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
                                          --with-libdir=#{lib_dir}
-                                         --with-config-file-path=#{php['conf_dir']}
-                                         --with-config-file-scan-dir=#{php['ext_conf_dir']}
+                                         --with-config-file-path=#{node['php']['conf_dir']}
+                                         --with-config-file-scan-dir=#{node['php']['ext_conf_dir']}
                                          --with-pear
                                          --enable-fpm
-                                         --with-fpm-user=#{php['fpm_user']}
-                                         --with-fpm-group=#{php['fpm_group']}
+                                         --with-fpm-user=#{node['php']['fpm_user']}
+                                         --with-fpm-group=#{node['php']['fpm_group']}
                                          --with-zlib
                                          --with-openssl
                                          --with-kerberos
