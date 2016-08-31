@@ -2,10 +2,16 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 1.10.1 (2016-08-30)
+
+- [fix] bug fixes related with Ubuntu 16.04 and PHP 7 support
+- adding validator to listen attribute
+- Fix node.foo.bar warnings
+
 ## v1.10.0 (2016-07-27)
 
 - PR #167 Preventing user specified pool of www from being deleted at the end of the chef run on the first install
-- PR #122 Add recipe for php module_imap 
+- PR #122 Add recipe for php module_imap
 - PR #172 Fix uninstall action for resource php_fpm_pool
 
 ## v1.9.0 (2016-05-12)
