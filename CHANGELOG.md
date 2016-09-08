@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 2.0.0 (2016-09-07)
+- Require Chef 12+
+- Remove the dependency on the Windows cookbook which isn't necessary with Chef 12+
+
 ## 1.10.1 (2016-08-30)
 
 - [fix] bug fixes related with Ubuntu 16.04 and PHP 7 support
