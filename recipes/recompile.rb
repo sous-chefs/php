@@ -38,7 +38,7 @@ end
 bash 'un-pack php' do
   cwd Chef::Config[:file_cache_path]
   code "tar -zxf php-#{version}.tar.gz"
-  creates "#{node['php']['url']}/php-#{version}"
+  creates "#{Chef::Config[:file_cache_path]}/php-#{version}"
 end
 
 bash 're-build php' do
