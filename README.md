@@ -11,7 +11,7 @@ It installs and configures PHP and the PEAR package management system.  Also inc
 - Microsoft Windows
 
 ### Chef
-- Chef 12+
+- Chef 12.1+
 
 ### Cookbooks
 - build-essential
