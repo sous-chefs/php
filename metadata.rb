@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'
 description 'Installs and maintains php and php modules'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '2.1.0'
+version '2.1.1'
 source_url 'https://github.com/chef-cookbooks/php'
 issues_url 'https://github.com/chef-cookbooks/php/issues'
 chef_version '>= 12.1'
