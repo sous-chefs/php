@@ -29,9 +29,7 @@ mysql_client 'default' do
   only_if { configure_options =~ /mysql/ }
 end
 
-node['php']['src_deps'].each do |pkg|
-  package pkg
-end
+package node['php']['src_deps']
 
 version = node['php']['version']
 
