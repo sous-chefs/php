@@ -21,17 +21,12 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  %w(httpd-devel pcre pcre-devel).each do |pkg|
-    package pkg do
-      action :install
-    end
-  end
+  package %w(httpd-devel pcre pcre-devel)
+
   php_pear 'APC' do
     action :install
     directives(shm_size: '128M', enable_cli: 0)
   end
 when 'debian'
-  package node['php']['apc']['package'] do
-    action :install
-  end
+  package node['php']['apc']['package']
 end
