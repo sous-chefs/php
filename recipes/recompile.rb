@@ -46,6 +46,6 @@ bash 're-build php' do
   code <<-EOF
   (make clean)
   (#{ext_dir_prefix} ./configure #{configure_options})
-  (make && make install)
+  (make -j #{node['cpu']['total']} && make install)
   EOF
 end
