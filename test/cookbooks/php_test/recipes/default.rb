@@ -1,4 +1,5 @@
-include_recipe 'apt'
+apt_update if platform_family?('debian')
+
 include_recipe 'php'
 
 # update the main pear channel
