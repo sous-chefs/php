@@ -1,10 +1,10 @@
 #
 # Author::  Joshua Timberman (<joshua@chef.io>)
 # Author::  Seth Chisamore (<schisamo@chef.io>)
-# Cookbook Name:: php
+# Cookbook:: php
 # Recipe:: module_sqlite3
 #
-# Copyright 2009-2016, Chef Software, Inc.
+# Copyright:: 2009-2016, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

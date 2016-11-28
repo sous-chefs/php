@@ -1,6 +1,6 @@
 #
 # Author:: Artur Melo (<artur.melo@beubi.com>)
-# Cookbook Name:: php
+# Cookbook:: php
 # Recipe:: module_imap
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
