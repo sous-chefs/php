@@ -64,7 +64,7 @@ bash 'build php' do
   code <<-EOF
   tar -zxf php-#{version}.tar.gz
   (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
-  (cd php-#{version} && make && make install)
+  (cd php-#{version} && make -j #{node['cpu']['total']} && make install)
   EOF
   not_if "$(which #{node['php']['bin']}) --version | grep #{version}"
 end
