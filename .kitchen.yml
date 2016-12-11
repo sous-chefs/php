@@ -59,3 +59,5 @@ suites:
   - recipe[php::module_pgsql]
   - recipe[php::module_sqlite3]
   attributes: {}
+  
+  test using github
