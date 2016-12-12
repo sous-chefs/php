@@ -1,8 +1,3 @@
-require 'serverspec'
-
-# Required by serverspec
-set :backend, :exec
-
 describe 'PHP' do
   it 'has php' do
     expect(command('php -v').exit_status).to eq(0)
