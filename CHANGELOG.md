@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 2.2.0 (2016-12-12)
+
+- Use multipackage for installs to speed up chef runs
+- Use all CPUs when building from source
+- Remove need for apt/yum in testing
+- Add opensuse to the metadata
+- Migrate to inspec for integration testing
+
 ## 2.1.1 (2016-09-15)
 
 - Fix recompile un-pack php creates
