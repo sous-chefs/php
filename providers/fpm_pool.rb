@@ -30,16 +30,15 @@ def install_fpm_package
   # also, this is skipped for source
   return if node['php']['install_method'] == 'source'
 
-  if node['php']['fpm_package'].nil?
-    raise 'PHP-FPM package not found (you probably have an unsupported distro)'
-  else
-    file node['php']['fpm_default_conf'] do
-      action :nothing
-    end
-    package node['php']['fpm_package'] do
-      action :install
-      notifies :delete, "file[#{node['php']['fpm_default_conf']}]", :immediately
-    end
+  raise 'PHP-FPM package not found (you probably have an unsupported distro)' if node['php']['fpm_package'].nil?
+
+  file node['php']['fpm_default_conf'] do
+    action :nothing
+  end
+
+  package node['php']['fpm_package'] do
+    action :install
+    notifies :delete, "file[#{node['php']['fpm_default_conf']}]", :immediately
   end
 end
 

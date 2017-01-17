@@ -22,10 +22,10 @@
 pkg = value_for_platform(
   %w(centos redhat scientific fedora amazon oracle) => {
     el5_range => 'php53-gd',
-    'default' => 'php-gd'
+    'default' => 'php-gd',
   },
   'freebsd' => {
-    'default' => 'php56-gd'
+    'default' => 'php56-gd',
   },
   'default' => node['php']['gd']['package']
 )

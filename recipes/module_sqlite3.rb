@@ -19,11 +19,7 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  # already there in centos, --with-pdo-sqlite=shared
-when 'debian'
-  package node['php']['sqlite']['package'] do
-    action :install
-  end
+package node['php']['sqlite']['package'] do
+  action :install
+  only_if { platform_family?('debian') } # already there in centos, --with-pdo-sqlite=shared
 end

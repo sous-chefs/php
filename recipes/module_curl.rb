@@ -19,11 +19,7 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  # centos php compiled with curl
-when 'debian'
-  package node['php']['curl']['package'] do
-    action :install
-  end
+package node['php']['curl']['package'] do
+  action :install
+  only_if { platform_family?('debian') } # centos php compiled with curl
 end

@@ -25,7 +25,7 @@ describe 'php::default' do
         owner: 'root',
         mode: '0644',
         variables: {
-          directives: {}
+          directives: {},
         }
       )
     end
