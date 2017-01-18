@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '2.2.0'
 source_url 'https://github.com/chef-cookbooks/php'
 issues_url 'https://github.com/chef-cookbooks/php/issues'
-chef_version '>= 12.1'
+chef_version '>= 12.1' if respond_to?(:chef_version)
 
 depends 'build-essential'
 depends 'xml'

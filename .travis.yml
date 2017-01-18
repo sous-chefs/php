@@ -1,7 +1,7 @@
 sudo: required
 dist: trusty
 
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
+# install the pre-release chef-dk.  Use chef-stable-trusty to install the stable release
 addons:
   apt:
     sources:
@@ -34,16 +34,14 @@ env:
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
 
 script: KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 matrix:
   include:
-    - before_script:
-      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-      - /opt/chefdk/embedded/bin/chef --version
-      - /opt/chefdk/embedded/bin/cookstyle --version
-      - /opt/chefdk/embedded/bin/foodcritic --version
     - script:
       - /opt/chefdk/bin/chef exec rake
       env: UNIT_AND_LINT=1
