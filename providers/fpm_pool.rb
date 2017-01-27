@@ -44,6 +44,12 @@ end
 
 def register_fpm_service
   service node['php']['fpm_service'] do
+    case node["platform"]
+    when "ubuntu"
+      if node["platform_version"].to_f >= 14.04
+        provider Chef::Provider::Service::Upstart
+      end
+    end
     action :enable
   end
 end
