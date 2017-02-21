@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 2.2.1 (2017-02-21)
+
+- Fix double definition of ['php']['packages'] for rhel.
+
 ## 2.2.0 (2016-12-12)
 
 - Use multipackage for installs to speed up chef runs
