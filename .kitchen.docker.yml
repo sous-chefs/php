@@ -94,10 +94,24 @@ suites:
   - name: package_install
     run_list:
       - recipe[php::default]
+  - name: remi_package_install
+    run_list:
+      - recipe[php::default]
+    attributes:
+      php:
+        remi:
+           enabled: true
+           version: 71
+    includes:
+      - centos-6
+      - centos-7
+      - fedora-latest
   - name: source_install
     run_list:
       - recipe[php::default]
-    attributes: { php: { install_method: "source" } }
+    attributes:
+      php:
+        install_method: 'source'
   - name: resource_test
     run_list:
       - recipe[php::default]

@@ -14,6 +14,7 @@ depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
 depends 'iis'
+depends 'yum-remi-chef'
 
 %w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu windows).each do |os|
   supports os

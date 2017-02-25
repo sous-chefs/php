@@ -19,6 +19,10 @@
 # limitations under the License.
 #
 
+if node['php']['remi']['enabled'] && platform_family?('rhel', 'fedora', 'amazon')
+  include_recipe node['php']['remi']['version'].nil? ? 'yum-remi-chef::remi' : "yum-remi-chef::remi-php#{node['php']['remi']['version']}"
+end
+
 include_recipe "php::#{node['php']['install_method']}"
 
 # update the main channels

@@ -45,6 +45,9 @@ default['php']['ldap']['package']   = 'php5-ldap'
 default['php']['pgsql']['package']  = 'php5-pgsql'
 default['php']['sqlite']['package'] = 'php5-sqlite3'
 
+default['php']['remi']['enabled'] = false
+default['php']['remi']['version'] = nil
+
 case node['platform_family']
 when 'rhel', 'fedora'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
