@@ -8,6 +8,7 @@ transport:
 
 provisioner:
   name: dokken
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
@@ -19,7 +20,7 @@ platforms:
     pid_one_command: /sbin/init
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
 
 - name: debian-8
   driver:
@@ -27,7 +28,7 @@ platforms:
     pid_one_command: /bin/systemd
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
 
 - name: centos-6
   driver:
@@ -35,7 +36,7 @@ platforms:
     platform: rhel
     pid_one_command: /sbin/init
     intermediate_instructions:
-      - RUN yum -y install tar which initscripts
+      - RUN yum -y install lsof which initscripts net-tools wget net-tools
 
 - name: centos-7
   driver:
@@ -43,23 +44,14 @@ platforms:
     platform: rhel
     pid_one_command: /usr/lib/systemd/systemd
     intermediate_instructions:
-      - RUN yum clean all
-      - RUN yum -y install net-tools lsof
+      - RUN yum -y install lsof which systemd-sysv initscripts wget net-tools
 
 - name: fedora-latest
   driver:
     image: fedora:latest
     pid_one_command: /usr/lib/systemd/systemd
     intermediate_instructions:
-      - RUN dnf -y install tar yum
-
-- name: ubuntu-12.04
-  driver:
-    image: ubuntu-upstart:12.04
-    pid_one_command: /sbin/init
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
+      - RUN dnf -y install which systemd-sysv initscripts wget net-tools
 
 - name: ubuntu-14.04
   driver:
@@ -67,7 +59,7 @@ platforms:
     pid_one_command: /sbin/init
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
 
 - name: ubuntu-16.04
   driver:
@@ -75,20 +67,14 @@ platforms:
     pid_one_command: /bin/systemd
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-
-- name: opensuse-13.2
-  driver:
-    image: opensuse:13.2
-    pid_one_command: /bin/systemd
-    intermediate_instructions:
-      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which net-tools
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
 
 - name: opensuse-leap
   driver:
     image: opensuse:leap
     pid_one_command: /bin/systemd
     intermediate_instructions:
-      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
+      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which net-tools
 
 suites:
   - name: package_install

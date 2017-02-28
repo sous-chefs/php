@@ -5,9 +5,6 @@ license 'Apache 2.0'
 description 'Installs and maintains php and php modules'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '2.2.1'
-source_url 'https://github.com/chef-cookbooks/php'
-issues_url 'https://github.com/chef-cookbooks/php/issues'
-chef_version '>= 12.1' if respond_to?(:chef_version)
 
 depends 'build-essential'
 depends 'xml'
@@ -33,3 +30,7 @@ recipe 'php::module_memcache', 'Install the php5-memcache package'
 recipe 'php::module_mysql', 'Install the php5-mysql package'
 recipe 'php::module_pgsql', 'Install the php5-pgsql packag'
 recipe 'php::module_sqlite3', 'Install the php5-sqlite3 package'
+
+source_url 'https://github.com/chef-cookbooks/php'
+issues_url 'https://github.com/chef-cookbooks/php/issues'
+chef_version '>= 12.1' if respond_to?(:chef_version)

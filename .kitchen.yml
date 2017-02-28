@@ -3,6 +3,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
@@ -15,7 +16,6 @@ platforms:
   - name: debian-8.6
     run_list: apt::default
   - name: fedora-25
-  - name: opensuse-13.2
   - name: opensuse-leap-42.2
   - name: ubuntu-14.04
     run_list: apt::default
