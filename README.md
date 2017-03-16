@@ -33,7 +33,7 @@ This cookbook includes LWRPs for managing:
 - PEAR/PECL packages
 
 ### `php_pear_channel`
-[PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages.  This LWRP provides and easy way to manage these channels.
+[PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages.  This resource provides and easy way to manage these channels.
 
 #### Actions
 - :discover: Initialize a channel from its server.
@@ -44,6 +44,7 @@ This cookbook includes LWRPs for managing:
 #### Attribute Parameters
 - channel_name: name attribute. The name of the channel to discover
 - channel_xml: the channel.xml file of the channel you are adding
+- pear: pear binary, default: pear
 
 #### Examples
 
