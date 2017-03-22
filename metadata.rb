@@ -4,13 +4,14 @@ maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'
 description 'Installs and maintains php and php modules'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '2.2.1'
+version '3.0.0'
 
 depends 'build-essential'
 depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
 depends 'iis'
+depends 'windows'
 
 %w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu windows).each do |os|
   supports os
@@ -33,4 +34,4 @@ recipe 'php::module_sqlite3', 'Install the php5-sqlite3 package'
 
 source_url 'https://github.com/chef-cookbooks/php'
 issues_url 'https://github.com/chef-cookbooks/php/issues'
-chef_version '>= 12.1' if respond_to?(:chef_version)
+chef_version '>= 12.7' if respond_to?(:chef_version)

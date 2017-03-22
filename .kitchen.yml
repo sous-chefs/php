@@ -43,4 +43,4 @@ suites:
   - name: resource_test
     run_list:
       - recipe[php::default]
-      - recipe[php_test::default]
+      - recipe[test::default]

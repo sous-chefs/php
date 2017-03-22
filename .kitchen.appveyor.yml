@@ -1,0 +1,27 @@
+---
+driver:
+  name: proxy
+  host: localhost
+  reset_command: "exit 0"
+  port: 5985
+  username: <%= ENV["machine_user"] %>
+  password: <%= ENV["machine_pass"] %>
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: windows-2012R2
+
+suites:
+  - name: package_install
+    run_list:
+      - recipe[php::default]
+  - name: source_install
+    run_list:
+      - recipe[php::default]
+    attributes: { php: { install_method: "source" } }
+  - name: resource_test
+    run_list:
+      - recipe[php::default]
+      - recipe[test::default]

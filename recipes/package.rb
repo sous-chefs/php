@@ -60,6 +60,12 @@ else
       action :install
       options node['php']['package_options']
     end
+  end unless %w(rhel debian amazon suse).include?(node['platform_family'])
+
+  package node['php']['packages'] do
+    action :install
+    options node['php']['package_options']
+    only_if { %w(rhel debian amazon suse).include?(node['platform_family']) }
   end
 end
 
