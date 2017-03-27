@@ -1,14 +1,14 @@
 # php Cookbook
 [![Build Status](https://travis-ci.org/chef-cookbooks/php.svg?branch=master)](http://travis-ci.org/chef-cookbooks/php) [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
 
-It installs and configures PHP and the PEAR package management system.  Also includes LWRPs for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
+It installs and configures PHP and the PEAR package management system.  Also includes resources for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
 
 ## Requirements
 ### Platforms
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
-- Microsoft Windows
+- Microsoft Windows 
 
 ### Chef
 - Chef 12.1+
@@ -18,6 +18,7 @@ It installs and configures PHP and the PEAR package management system.  Also inc
 - xml
 - mysql
 - iis
+- windows
 
 ## Attributes
 - `node['php']['install_method']` = method to install php with, default `package`.
@@ -240,44 +241,10 @@ run_list(
 )
 ```
 
-## Development
-This section details "quick development" steps. For a detailed explanation, see [[Contributing.md]].
-- Clone this repository from GitHub:
-
-  ```
-   $ git clone git@github.com:chef-cookbooks/php.git
-  ```
-
-- Create a git branch
-
-  ```
-   $ git checkout -b my_bug_fix
-  ```
-
-- Install dependencies:
-
-  ```
-   $ bundle install
-  ```
-
-- Make your changes/patches/fixes, committing appropiately
-- **Write tests**
-- Run the tests:
-  - `bundle exec foodcritic -f any .`
-  - `bundle exec rspec`
-  - `bundle exec rubocop`
-  - `bundle exec kitchen test`
-
-  In detail:
-  - Foodcritic will catch any Chef-specific style errors
-  - RSpec will run the unit tests
-  - Rubocop will check for Ruby-specific style errors
-  - Test Kitchen will run and converge the recipes
-
 ## License & Authors
 **Author:** Cookbook Engineering Team ([cookbooks@chef.io](mailto:cookbooks@chef.io))
 
-**Copyright:** 2008-2016, Chef Software, Inc.
+**Copyright:** 2008-2017, Chef Software, Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
