@@ -33,4 +33,4 @@ recipe 'php::module_sqlite3', 'Install the php5-sqlite3 package'
 
 source_url 'https://github.com/chef-cookbooks/php'
 issues_url 'https://github.com/chef-cookbooks/php/issues'
-chef_version '>= 12.1' if respond_to?(:chef_version)
+chef_version '>= 12.7' if respond_to?(:chef_version)

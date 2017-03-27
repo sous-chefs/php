@@ -75,16 +75,3 @@ platforms:
     pid_one_command: /bin/systemd
     intermediate_instructions:
       - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which net-tools
-
-suites:
-  - name: package_install
-    run_list:
-      - recipe[php::default]
-  - name: source_install
-    run_list:
-      - recipe[php::default]
-    attributes: { php: { install_method: "source" } }
-  - name: resource_test
-    run_list:
-      - recipe[php::default]
-      - recipe[php_test::default]
