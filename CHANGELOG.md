@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 3.1.0 (2017-04-10)
+
+- Use multi-package installs on supported platform_family(rhel debian suse amazon)
+- Use a SPDX standardized license string in the metadata
+- Update specs for the new Fauxhai data
+
 ## 3.0.0 (2017-03-27)
 - Converted pear_channel LWRP into custom resource
 - Removed use of pear node attribute from pear_channel resource
@@ -10,6 +16,7 @@ This file is used to list changes made in each version of the php cookbook.
 - Eliminate duplicated resource from test cookbook that is in the default recipe.
 - Rename php-test to standard cookbook testing cookbook of "test"
 - Remove EOL ubuntu platform logic
+
 **NOTE** Windows package installation is currently broken. 
 
 ## 2.2.1 (2017-02-21)
