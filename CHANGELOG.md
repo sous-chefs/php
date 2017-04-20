@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 3.1.1 (2017-04-20)
+
+- Use the cookbook attribute as the default value of pear_channel pear property to provide better platform support
+
 ## 3.1.0 (2017-04-10)
 
 - Use multi-package installs on supported platform_family(rhel debian suse amazon)
