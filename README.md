@@ -8,7 +8,7 @@ It installs and configures PHP and the PEAR package management system.  Also inc
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
-- Microsoft Windows 
+- Microsoft Windows
 
 ### Chef
 - Chef 12.1+
@@ -23,6 +23,7 @@ It installs and configures PHP and the PEAR package management system.  Also inc
 ## Attributes
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
+- `node['php']['pear']` = Name of the pear executable to use, default `pear`.
 
 The file also contains the following attribute types:
 - platform specific locations and settings.

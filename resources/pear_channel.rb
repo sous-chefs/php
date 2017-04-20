@@ -22,7 +22,7 @@
 default_action :discover
 property :channel_xml, kind_of: String
 property :channel_name, kind_of: String, name_property: true
-property :pear, kind_of: String, default: 'pear'
+property :pear, kind_of: String, default: lazy { node['php']['pear'] }
 # TODO: add authenticated channel support!
 # property :username, :kind_of => String
 # property :password, :kind_of => String
