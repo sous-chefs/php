@@ -42,5 +42,4 @@ suites:
     attributes: { php: { install_method: "source" } }
   - name: resource_test
     run_list:
-      - recipe[php::default]
       - recipe[test::default]
