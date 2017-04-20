@@ -33,9 +33,6 @@ platforms:
       box: chef/windows-server-2012r2-standard
 
 suites:
-  - name: package_install
-    run_list:
-      - recipe[php::default]
   - name: source_install
     run_list:
       - recipe[php::default]
