@@ -46,7 +46,7 @@ default['php']['pgsql']['package']  = 'php5-pgsql'
 default['php']['sqlite']['package'] = 'php5-sqlite3'
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
@@ -56,26 +56,21 @@ when 'rhel', 'fedora'
   default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel mhash-devel)
-  if node['platform_version'].to_f < 6
-    default['php']['packages'] = %w(php53 php53-devel php53-cli php-pear)
-    default['php']['mysql']['package'] = 'php53-mysql'
-  else # set fpm attributes as we're on a modern PHP release
-    default['php']['packages'] = if node['platform'] == 'amazon' # amazon names their packages with versions
-                                   %w(php56 php56-devel php-pear)
-                                 else # redhat does not name their packages with version on RHEL 6+
-                                   %w(php php-devel php-cli php-pear)
-                                 end
-    default['php']['mysql']['package'] = 'php-mysql'
-    default['php']['fpm_package']   = 'php-fpm'
-    default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
-    default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
-    default['php']['fpm_service'] = 'php-fpm'
-    if node['php']['install_method'] == 'package'
-      default['php']['fpm_user']      = 'apache'
-      default['php']['fpm_group']     = 'apache'
-      default['php']['fpm_listen_user'] = 'apache'
-      default['php']['fpm_listen_group'] = 'apache'
-    end
+  default['php']['packages'] = if node['platform'] == 'amazon' # amazon names their packages with versions
+                                 %w(php56 php56-devel php-pear)
+                               else # redhat does not name their packages with version on RHEL 6+
+                                 %w(php php-devel php-cli php-pear)
+                               end
+  default['php']['mysql']['package'] = 'php-mysql'
+  default['php']['fpm_package']   = 'php-fpm'
+  default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
+  default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
+  default['php']['fpm_service'] = 'php-fpm'
+  if node['php']['install_method'] == 'package'
+    default['php']['fpm_user']      = 'apache'
+    default['php']['fpm_group']     = 'apache'
+    default['php']['fpm_listen_user'] = 'apache'
+    default['php']['fpm_listen_group'] = 'apache'
   end
 when 'debian'
   default['php']['conf_dir'] = '/etc/php5/cli'
