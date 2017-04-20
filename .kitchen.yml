@@ -12,15 +12,11 @@ platforms:
   - name: centos-6.8
   - name: centos-7.3
   - name: debian-7.11
-    run_list: apt::default
   - name: debian-8.6
-    run_list: apt::default
   - name: fedora-25
   - name: opensuse-leap-42.2
   - name: ubuntu-14.04
-    run_list: apt::default
   - name: ubuntu-16.04
-    run_list: apt::default
   - name: freebsd-10.3
     driver:
       ssh:
@@ -33,10 +29,9 @@ platforms:
       box: chef/windows-server-2012r2-standard
 
 suites:
-  - name: source_install
-    run_list:
-      - recipe[php::default]
-    attributes: { php: { install_method: "source" } }
   - name: resource_test
     run_list:
       - recipe[test::default]
+  - name: source_install
+    run_list:
+      - recipe[test::source]
