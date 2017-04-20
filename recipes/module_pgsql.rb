@@ -21,7 +21,6 @@
 
 pkg = value_for_platform(
   %w(centos redhat scientific fedora amazon oracle) => {
-    el5_range => 'php53-pgsql',
     'default' => 'php-pgsql',
   },
   'default' => node['php']['pgsql']['package']
