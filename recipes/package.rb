@@ -19,54 +19,17 @@
 # limitations under the License.
 #
 
-if platform?('windows')
-
-  include_recipe 'iis::mod_cgi'
-
-  install_dir = File.expand_path(node['php']['conf_dir']).tr('/', '\\')
-  windows_package node['php']['windows']['msi_name'] do
-    source node['php']['windows']['msi_source']
-    installer_type :msi
-
-    options %W(
-      /quiet
-      INSTALLDIR="#{install_dir}"
-      ADDLOCAL=#{node['php']['packages'].join(',')}
-    ).join(' ')
-  end
-
-  # WARNING: This is not the out-of-the-box go-pear.phar. It's been modified to patch this bug:
-  # http://pear.php.net/bugs/bug.php?id=16644
-  cookbook_file "#{node['php']['conf_dir']}/PEAR/go-pear.phar" do
-    source 'go-pear.phar'
-  end
-
-  template "#{node['php']['conf_dir']}/pear-options" do
-    source 'pear-options.erb'
-  end
-
-  execute 'install-pear' do
-    cwd node['php']['conf_dir']
-    command 'go-pear.bat < pear-options'
-    creates "#{node['php']['conf_dir']}/pear.bat"
-  end
-
-  ENV['PATH'] += ";#{install_dir}"
-  windows_path install_dir
-
-else
-  node['php']['packages'].each do |pkg|
-    package pkg do
-      action :install
-      options node['php']['package_options']
-    end
-  end unless %w(rhel debian amazon suse).include?(node['platform_family'])
-
-  package node['php']['packages'] do
+node['php']['packages'].each do |pkg|
+  package pkg do
     action :install
     options node['php']['package_options']
-    only_if { %w(rhel debian amazon suse).include?(node['platform_family']) }
   end
+end unless %w(rhel debian amazon suse).include?(node['platform_family'])
+
+package node['php']['packages'] do
+  action :install
+  options node['php']['package_options']
+  only_if { %w(rhel debian amazon suse).include?(node['platform_family']) }
 end
 
 include_recipe 'php::ini'

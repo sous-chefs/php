@@ -10,10 +10,8 @@ depends 'build-essential'
 depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
-depends 'iis'
-depends 'windows'
 
-%w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu windows).each do |os|
+%w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu).each do |os|
   supports os
 end
 
@@ -34,4 +32,4 @@ recipe 'php::module_sqlite3', 'Install the php5-sqlite3 package'
 
 source_url 'https://github.com/chef-cookbooks/php'
 issues_url 'https://github.com/chef-cookbooks/php/issues'
-chef_version '>= 12.7' if respond_to?(:chef_version)
+chef_version '>= 12.5' if respond_to?(:chef_version)

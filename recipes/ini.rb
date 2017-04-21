@@ -21,10 +21,8 @@
 template "#{node['php']['conf_dir']}/php.ini" do
   source node['php']['ini']['template']
   cookbook node['php']['ini']['cookbook']
-  unless platform?('windows')
-    owner 'root'
-    group node['root_group']
-    mode '0644'
-  end
+  owner 'root'
+  group node['root_group']
+  mode '0644'
   variables(directives: node['php']['directives'])
 end
