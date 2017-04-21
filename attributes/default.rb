@@ -115,8 +115,7 @@ when 'debian'
       default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
     end
   when 'debian'
-    case node['platform_version'].to_i
-    when 8
+    if node['platform_version'].to_i == 8
       default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
     end
   end
@@ -131,25 +130,6 @@ when 'suse'
   default['php']['packages']         = %w(apache2-mod_php5 php5-pear)
   default['php']['mysql']['package'] = 'php5-mysql'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-when 'windows'
-  default['php']['windows']['msi_name']      = 'PHP 5.6.30'
-  default['php']['windows']['msi_source']    = 'http://windows.php.net/downloads/releases/php-5.6.30-nts-Win32-VC11-x86.msi'
-  default['php']['bin']           = 'php.exe'
-  default['php']['conf_dir']      = 'C:\Program Files (x86)\PHP'
-  default['php']['ext_conf_dir']  = node['php']['conf_dir']
-  # These extensions are installed by default by the GUI MSI
-  default['php']['packages']      = %w(cgi ScriptExecutable PEAR
-                                       iis4FastCGI ext_php_bz2 ext_php_curl
-                                       ext_php_exif ext_php_gd2 ext_php_gettext
-                                       ext_php_gmp ext_php_imap ext_php_mbstring
-                                       ext_php_mysql ext_php_mysqli ext_php_openssl
-                                       ext_php_pdo_mysql ext_php_pdo_odbc ext_php_pdo_sqlite
-                                       ext_php_pgsql ext_php_soap ext_php_sockets
-                                       ext_php_sqlite3 ext_php_tidy ext_php_xmlrpc
-                                    )
-  default['php']['package_options'] = '' # Use this to customise your yum or apt command
-  default['php']['pear']          = 'pear.bat'
-  default['php']['pecl']          = 'pecl.bat'
 when 'freebsd'
   default['php']['conf_dir']      = '/usr/local/etc'
   default['php']['ext_conf_dir']  = '/usr/local/etc/php'

@@ -1,49 +1,58 @@
 # php Cookbook
+
 [![Build Status](https://travis-ci.org/chef-cookbooks/php.svg?branch=master)](http://travis-ci.org/chef-cookbooks/php) [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
 
-It installs and configures PHP and the PEAR package management system.  Also includes resources for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
+It installs and configures PHP and the PEAR package management system. Also includes resources for managing PEAR (and PECL) packages, PECL channels, and PHP-FPM pools.
 
 ## Requirements
+
 ### Platforms
+
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
-- Microsoft Windows
 
 ### Chef
+
 - Chef 12.1+
 
 ### Cookbooks
+
 - build-essential
 - xml
 - mysql
-- iis
-- windows
 
 ## Attributes
+
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
 - `node['php']['pear']` = Name of the pear executable to use, default `pear`.
 
 The file also contains the following attribute types:
+
 - platform specific locations and settings.
 - source installation settings
 
 ## Resource/Provider
+
 This cookbook includes LWRPs for managing:
+
 - PEAR channels
 - PEAR/PECL packages
 
 ### `php_pear_channel`
-[PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages.  This resource provides and easy way to manage these channels.
+
+[PEAR Channels](http://pear.php.net/manual/en/guide.users.commandline.channels.php) are alternative sources for PEAR packages. This resource provides and easy way to manage these channels.
 
 #### Actions
+
 - :discover: Initialize a channel from its server.
-- :add: Add a channel to the channel list, usually only used to add private channels.  Public channels are usually added using the `:discover` action
+- :add: Add a channel to the channel list, usually only used to add private channels. Public channels are usually added using the `:discover` action
 - :update: Update an existing channel
 - :remove: Remove a channel from the List
 
 #### Attribute Parameters
+
 - channel_name: name attribute. The name of the channel to discover
 - channel_xml: the channel.xml file of the channel you are adding
 - pear: pear binary, default: pear
@@ -78,17 +87,20 @@ end
 ```
 
 ### `php_pear`
-[PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system.  As such this LWRP is clever enough to abstract away the small differences and can be used for managing either.  This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
+
+[PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system. As such this LWRP is clever enough to abstract away the small differences and can be used for managing either. This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
 
 #### Actions
+
 - `:install`: Install a pear package - if version is provided, install that specific version
 - `:upgrade`: Upgrade a pear package - if version is provided, upgrade to that specific version
 - `:remove`: Remove a pear package
-- `:purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself).  With pear packages this behaves the same as `:remove`
+- `:purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself). With pear packages this behaves the same as `:remove`
 
 #### Attribute Parameters
+
 - `package_name`: name attribute. The name of the pear package to install
-- version: the version of the pear package to install/upgrade.  If no version is given latest is assumed.
+- version: the version of the pear package to install/upgrade. If no version is given latest is assumed.
 - `preferred_state`: PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state
 - `directives`: extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file
 - `zend_extensions`: extension filenames which should be loaded with zend_extension.
@@ -153,22 +165,25 @@ end
 ```
 
 ### `php_fpm_pool`
+
 Installs the `php-fpm` package appropriate for your distro (if using packages) and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such, YMMV if you are using source).
 
 Please consider FPM functionally pre-release, and test it thoroughly in your environment before using it in production
 
-More info: [http://php.net/manual/en/install.fpm.php](http://php.net/manual/en/install.fpm.php)
+More info: <http://php.net/manual/en/install.fpm.php>
 
 #### Actions
+
 - `:install`: Installs the FPM pool (default).
 - `:uninstall`: Removes the FPM pool.
 
 #### Attribute Parameters
+
 - `pool_name`: name attribute. The name of the FPM pool.
 - `listen`: The listen address. Default: `/var/run/php5-fpm.sock`
 - `user`: The user to run the FPM under. Default should be the webserver user for your distro.
 - `group`: The group to run the FPM under. Default should be the webserver group for your distro.
-- `process_manager`: Process manager to use - see [http://php.net/manual/en/install.fpm.configuration.php](http://php.net/manual/en/install.fpm.configuration.php). Default: `dynamic`
+- `process_manager`: Process manager to use - see <http://php.net/manual/en/install.fpm.configuration.php>. Default: `dynamic`
 - `max_children`: Max children to scale to. Default: 5
 - `start_servers`: Number of servers to start the pool with. Default: 2
 - `min_spare_servers`: Minimum number of servers to have as spares. Default: 1
@@ -186,17 +201,23 @@ end
 ```
 
 ## Recipes
+
 ### default
-Include the default recipe in a run list, to get `php`.  By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
+
+Include the default recipe in a run list, to get `php`. By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
 
 ### package
+
 This recipe installs PHP from packages.
 
 ### source
+
 This recipe installs PHP from source.
 
 ## Deprecated Recipes
+
 The following recipes are deprecated and will be removed from a future version of this cookbook.
+
 - `module_apc`
 - `module_apcu`
 - `module_curl`
@@ -210,7 +231,7 @@ The following recipes are deprecated and will be removed from a future version o
 - `module_pgsql`
 - `module_sqlite3`
 
-The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear LWRP.  For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
+The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear LWRP. For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
 
 ```ruby
 # using apt
@@ -225,9 +246,10 @@ end
 ```
 
 ## Usage
-Simply include the `php` recipe where ever you would like php installed.  To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
 
-####Role example:
+Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
+
+### Role example:
 
 ```ruby
 name "php"
@@ -243,6 +265,7 @@ run_list(
 ```
 
 ## License & Authors
+
 **Author:** Cookbook Engineering Team ([cookbooks@chef.io](mailto:cookbooks@chef.io))
 
 **Copyright:** 2008-2017, Chef Software, Inc.
@@ -259,84 +282,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-```
-
-Note: This cookbook contains a modified copy of `go-phar.pear` for use on the Microsoft Windows platform only to correct an (upstream bug)[[http://pear.php.net/bugs/bug.php?id=16644](http://pear.php.net/bugs/bug.php?id=16644)]. The original `go-pear.phar` is licensed under the (PHP License version 2.02)[[http://www.php.net/license/2_02.txt](http://www.php.net/license/2_02.txt)]:
-
-```
---------------------------------------------------------------------
-                  The PHP License, version 2.02
-Copyright (c) 1999 - 2002 The PHP Group. All rights reserved.
---------------------------------------------------------------------
-
-Redistribution and use in source and binary forms, with or without
-modification, is permitted provided that the following conditions
-are met:
-
-  1. Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-
-  2. Redistributions in binary form must reproduce the above
-     copyright notice, this list of conditions and the following
-     disclaimer in the documentation and/or other materials provided
-     with the distribution.
-
-  3. The name "PHP" must not be used to endorse or promote products
-     derived from this software without prior permission from the
-     PHP Group.  This does not apply to add-on libraries or tools
-     that work in conjunction with PHP.  In such a case the PHP
-     name may be used to indicate that the product supports PHP.
-
-  4. The PHP Group may publish revised and/or new versions of the
-     license from time to time. Each version will be given a
-     distinguishing version number.
-     Once covered code has been published under a particular version
-     of the license, you may always continue to use it under the
-     terms of that version. You may also choose to use such covered
-     code under the terms of any subsequent version of the license
-     published by the PHP Group. No one other than the PHP Group has
-     the right to modify the terms applicable to covered code created
-     under this License.
-
-  5. Redistributions of any form whatsoever must retain the following
-     acknowledgment:
-     "This product includes PHP, freely available from
-     http://www.php.net/".
-
-  6. The software incorporates the Zend Engine, a product of Zend
-     Technologies, Ltd. ("Zend"). The Zend Engine is licensed to the
-     PHP Association (pursuant to a grant from Zend that can be
-     found at http://www.php.net/license/ZendGrant/) for
-     distribution to you under this license agreement, only as a
-     part of PHP.  In the event that you separate the Zend Engine
-     (or any portion thereof) from the rest of the software, or
-     modify the Zend Engine, or any portion thereof, your use of the
-     separated or modified Zend Engine software shall not be governed
-     by this license, and instead shall be governed by the license
-     set forth at http://www.zend.com/license/ZendLicense/.
-
-
-
-THIS SOFTWARE IS PROVIDED BY THE PHP DEVELOPMENT TEAM ``AS IS'' AND
-ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE PHP
-DEVELOPMENT TEAM OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-OF THE POSSIBILITY OF SUCH DAMAGE.
-
---------------------------------------------------------------------
-
-This software consists of voluntary contributions made by many
-individuals on behalf of the PHP Group.
-
-The PHP Group can be contacted via Email at group@php.net.
-
-For more information on the PHP Group and the PHP project,
-please see <http://www.php.net>.
 ```

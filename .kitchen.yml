@@ -26,13 +26,6 @@ platforms:
     driver:
       ssh:
         shell: '"/bin/sh"'
-  - name: windows-2008r2
-    driver_config:
-      box: chef/windows-server-2008r2-standard
-  - name: windows-2012r2
-    driver_config:
-      box: chef/windows-server-2012r2-standard
-
 suites:
   - name: resource_test
     run_list:
