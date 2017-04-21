@@ -177,13 +177,13 @@ end
 
 def enable_package(name)
   execute "#{node['php']['enable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['enable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['enable_mod']) }
   end
 end
 
 def disable_package(name)
   execute "#{node['php']['disable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['disable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['disable_mod']) }
   end
 end
 
