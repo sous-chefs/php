@@ -102,7 +102,7 @@ end
 # so refactoring into core Chef should be easy
 
 def load_current_resource
-  @current_resource = new_resource
+  @current_resource = new_resource.class.new(new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
   @bin = node['php']['pear']
   if pecl?
