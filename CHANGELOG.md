@@ -2,6 +2,17 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.0.0 (2017-04-20)
+
+- Fix pear_channel resource to not fail on Chef 12.5 and 12.6
+- Remove support for RHEL 5 as it is now EOL
+- Resolve Amazon Linux failures on Chef 13
+- Convert fpm_pool to a custom resource
+- Fix php_pear failures on Chef 13
+- Remove non-functional support for Windows
+- Remove redundant Ubuntu version checks in the php_pear provider
+- Expand testing to test all of the resources
+
 ## 3.1.1 (2017-04-20)
 
 - Use the cookbook attribute as the default value of pear_channel pear property to provide better platform support
@@ -13,6 +24,7 @@ This file is used to list changes made in each version of the php cookbook.
 - Update specs for the new Fauxhai data
 
 ## 3.0.0 (2017-03-27)
+
 - Converted pear_channel LWRP into custom resource
 - Removed use of pear node attribute from pear_channel resource
 - Fix cookstyle issue with missing line on metadata.rb
@@ -21,7 +33,7 @@ This file is used to list changes made in each version of the php cookbook.
 - Rename php-test to standard cookbook testing cookbook of "test"
 - Remove EOL ubuntu platform logic
 
-**NOTE** Windows package installation is currently broken. 
+**NOTE** Windows package installation is currently broken.
 
 ## 2.2.1 (2017-02-21)
 

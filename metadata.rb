@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@chef.io'
 license 'Apache-2.0'
 description 'Installs and maintains php and php modules'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '3.1.1'
+version '4.0.0'
 
 depends 'build-essential'
 depends 'xml'
