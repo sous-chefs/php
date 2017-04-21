@@ -102,7 +102,7 @@ end
 # so refactoring into core Chef should be easy
 
 def load_current_resource
-  @current_resource = Chef::Resource::PhpPear.new(@new_resource.name)
+  @current_resource = new_resource.class.new(new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
   @bin = node['php']['pear']
   if pecl?
@@ -177,13 +177,13 @@ end
 
 def enable_package(name)
   execute "#{node['php']['enable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['enable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['enable_mod']) }
   end
 end
 
 def disable_package(name)
   execute "#{node['php']['disable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['disable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['disable_mod']) }
   end
 end
 
