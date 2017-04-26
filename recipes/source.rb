@@ -63,6 +63,7 @@ bash 'build php' do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
   tar -zxf php-#{version}.tar.gz
+  (cd php-#{version} && make clean)
   (cd php-#{version} && #{ext_dir_prefix} ./configure #{configure_options})
   (cd php-#{version} && make -j #{node['cpu']['total']} && make install)
   EOF
