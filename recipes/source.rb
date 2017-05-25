@@ -34,7 +34,11 @@ package node['php']['src_deps']
 version = node['php']['version']
 
 remote_file "#{Chef::Config[:file_cache_path]}/php-#{version}.tar.gz" do
-  source "#{node['php']['url']}/php-#{version}.tar.gz/from/this/mirror"
+  if %r{^http://museum.php.net/} =~ node['php']['url']
+    source "#{node['php']['url']}/php-#{version}.tar.gz"
+  else
+    source "#{node['php']['url']}/php-#{version}.tar.gz/from/this/mirror"
+  end
   checksum node['php']['checksum']
   mode '0644'
   not_if "$(which #{node['php']['bin']}) --version | grep #{version}"
