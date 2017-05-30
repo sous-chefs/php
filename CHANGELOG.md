@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.1.0 (2017-05-30)
+
+- Remove class_eval usage and require Chef 12.7+
+
 ## 4.0.0 (2017-04-20)
 
 - Fix pear_channel resource to not fail on Chef 12.5 and 12.6
