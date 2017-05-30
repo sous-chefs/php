@@ -14,7 +14,7 @@ It installs and configures PHP and the PEAR package management system. Also incl
 
 ### Chef
 
-- Chef 12.1+
+- Chef 12.7+
 
 ### Cookbooks
 

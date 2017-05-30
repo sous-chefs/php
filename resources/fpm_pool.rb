@@ -70,7 +70,7 @@ action :uninstall do
   end
 end
 
-action_class.class_eval do
+action_class do
   def install_fpm_package
     # Install the FPM pacakge for this platform, if it's available
     # Fail the run if it's an unsupported OS (FPM pacakge name not populated)

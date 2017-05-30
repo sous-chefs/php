@@ -73,7 +73,7 @@ action :remove do
   end
 end
 
-action_class.class_eval do
+action_class do
   def exists?
     shell_out!("#{new_resource.pear} channel-info #{new_resource.channel_name}")
     true
