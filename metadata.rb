@@ -7,7 +7,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '4.2.0'
 
 depends 'build-essential'
-depends 'xml'
 depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
 
