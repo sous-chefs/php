@@ -142,14 +142,6 @@ when 'freebsd'
   default['php']['fpm_listen_group'] = 'www'
   default['php']['packages']         = %w( php56 pear )
   default['php']['mysql']['package'] = 'php56-mysqli'
-else
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
-  default['php']['fpm_user']      = 'www-data'
-  default['php']['fpm_group']     = 'www-data'
-  default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
-  default['php']['mysql']['package'] = 'php5-mysql'
 end
 
 default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
