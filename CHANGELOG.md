@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.2.0 (2017-05-30)
+
+- Make sure package intalls, php-fpm, and source installs work on Amazon linux
+- Avoid symlink warning in the converges
+- Simplify the package install logic
+- Rename the inspec test to match the suite name so it actually runs
+- Test on FreeBSD 11 / Amazon Linux
+- Install 5.6.30 by default on source installs
+
 ## 4.1.0 (2017-05-30)
 
 - Remove class_eval usage and require Chef 12.7+
