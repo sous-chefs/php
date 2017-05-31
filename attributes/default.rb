@@ -56,14 +56,15 @@ when 'rhel', 'fedora', 'amazon'
   default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']       = "/usr/#{lib_dir}/php/modules"
   default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel mhash-devel)
-  default['php']['packages'] = if node['platform'] == 'amazon' # amazon names their packages with versions
-                                 %w(php56 php56-devel php-pear)
-                               else # redhat does not name their packages with version on RHEL 6+
-                                 %w(php php-devel php-cli php-pear)
-                               end
+  if node['platform'] == 'amazon' # amazon names their packages with versions
+    default['php']['packages']      = %w(php56 php56-devel php-pear)
+    default['php']['fpm_package']   = 'php56-fpm'
+  else # redhat does not name their packages with version on RHEL 6+
+    default['php']['packages']      = %w(php php-devel php-cli php-pear)
+    default['php']['fpm_package']   = 'php-fpm'
+  end
   default['php']['mysql']['package'] = 'php-mysql'
-  default['php']['fpm_package']   = 'php-fpm'
-  default['php']['fpm_pooldir']   = '/etc/php-fpm.d'
+  default['php']['fpm_pooldir'] = '/etc/php-fpm.d'
   default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
   default['php']['fpm_service'] = 'php-fpm'
   if node['php']['install_method'] == 'package'
