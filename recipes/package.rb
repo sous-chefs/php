@@ -19,17 +19,16 @@
 # limitations under the License.
 #
 
-node['php']['packages'].each do |pkg|
-  package pkg do
-    action :install
+if platform_family?('rhel', 'debian', 'amazon', 'suse')
+  package node['php']['packages'] do
     options node['php']['package_options']
   end
-end unless %w(rhel debian amazon suse).include?(node['platform_family'])
-
-package node['php']['packages'] do
-  action :install
-  options node['php']['package_options']
-  only_if { %w(rhel debian amazon suse).include?(node['platform_family']) }
+else
+  node['php']['packages'].each do |pkg|
+    package pkg do
+      options node['php']['package_options']
+    end
+  end
 end
 
 include_recipe 'php::ini'
