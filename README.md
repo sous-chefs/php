@@ -87,7 +87,7 @@ end
 
 ### `php_pear`
 
-[PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system. As such this LWRP is clever enough to abstract away the small differences and can be used for managing either. This LWRP also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
+[PEAR](http://pear.php.net/) is a framework and distribution system for reusable PHP components. [PECL](http://pecl.php.net/) is a repository for PHP Extensions. PECL contains C extensions for compiling into PHP. As C programs, PECL extensions run more efficiently than PEAR packages. PEARs and PECLs use the same packaging and distribution system. As such this resource is clever enough to abstract away the small differences and can be used for managing either. This resource also creates the proper module .ini file for each PECL extension at the correct location for each supported platform.
 
 #### Actions
 
@@ -192,7 +192,7 @@ More info: <http://php.net/manual/en/install.fpm.php>
 
 ```ruby
 # Install a FPM pool named "default"
-php_fpm_pool "default" do
+php_fpm_pool 'default' do
   action :install
 end
 ```
@@ -228,18 +228,14 @@ The following recipes are deprecated and will be removed from a future version o
 - `module_pgsql`
 - `module_sqlite3`
 
-The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear LWRP. For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
+The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear resource. For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
 
 ```ruby
 # using apt
-package "php5-memcache" do
-  action :install
-end
+package 'php5-memcache'
 
-# using pear LWRP
-php_pear "memcache" do
-  action :install
-end
+# using pear resource
+php_pear 'memcache'
 ```
 
 ## Usage
@@ -249,15 +245,15 @@ Simply include the `php` recipe where ever you would like php installed. To inst
 ### Role example:
 
 ```ruby
-name "php"
-description "Install php from source"
+name 'php'
+description 'Install php from source'
 override_attributes(
-  "php" => {
-    "install_method" => "source"
+  'php' => {
+    'install_method' => 'source',
   }
 )
 run_list(
-  "recipe[php]"
+  'recipe[php]'
 )
 ```
 
