@@ -66,10 +66,10 @@ end
 
 # download xml then add the symfony channel
 remote_file "#{Chef::Config[:file_cache_path]}/symfony-channel.xml" do
-  source "http://pear.symfony-project.com/channel.xml"
-  mode 0644
+  source 'http://pear.symfony-project.com/channel.xml'
+  mode '0644'
 end
-php_pear_channel "symfony" do
+php_pear_channel 'symfony' do
   channel_xml "#{Chef::Config[:file_cache_path]}/symfony-channel.xml"
   action :add
 end
@@ -109,20 +109,21 @@ end
 
 ```ruby
 # upgrade a pear
-php_pear "XML_RPC" do
+php_pear 'XML_RPC' do
   action :upgrade
 end
 
 
 # install a specific version
-php_pear "XML_RPC" do
-  version "1.5.4"
+php_pear 'XML_RPC' do
+  version '1.5.4'
   action :install
 end
 
 
 # install the mongodb pecl
-php_pear "mongo" do
+php_pear 'Install mongo but use a different resource name' do
+  package_name 'mongo'
   action :install
 end
 
