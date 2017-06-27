@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.3.0 (2017-06-27)
+
+- Remove fallback default php attributes that were used if we were on an unsupported platform. If we don't know the platform we don't support it and we should fail until we add proper support
+- Add a few attributes needed for fpm support on opensuse. This is a work in progress to get full PHP support on opensuse
+- Install xml deps and avoid using xml cookbook since it's been deprecated
+- Expand the php_pear testing
+- Remove double logging and log the correct package name in php_pear resource
+- Cleanup readme example codes, improve formatting and remove references to LWRPs as they are just resources now
+
 ## 4.2.0 (2017-05-30)
 
 - Make sure package intalls, php-fpm, and source installs work on Amazon linux
