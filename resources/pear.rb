@@ -19,7 +19,7 @@
 #
 
 default_action :install
-actions :install, :upgrade, :remove, :purge
+actions :install, :upgrade, :remove, :purge, :reinstall
 
 state_attrs :channel,
             :directives,

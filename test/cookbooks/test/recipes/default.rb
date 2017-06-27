@@ -21,9 +21,14 @@ php_pear 'Remove it now' do
   action :remove
 end
 
-php_pear 'reinstall the package' do
+php_pear 'install the package again' do
   package_name 'HTTP2'
   action :install
+end
+
+php_pear 'reinstall the package' do
+  package_name 'HTTP2'
+  action :reinstall
 end
 
 php_pear 'Purge it now' do

@@ -32,7 +32,7 @@ The file also contains the following attribute types:
 - platform specific locations and settings.
 - source installation settings
 
-## Resource
+## Resources
 
 This cookbook includes resources for managing:
 
@@ -94,7 +94,8 @@ end
 - `:install`: Install a pear package - if version is provided, install that specific version
 - `:upgrade`: Upgrade a pear package - if version is provided, upgrade to that specific version
 - `:remove`: Remove a pear package
-- `:purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself). With pear packages this behaves the same as `:remove`
+- `:reinstall`: Force install of the package even if the same version is already installed. Note: This will converge on every Chef run and is probably not what you want.
+- `:purge`: An alias for remove as the two behave the same in pear
 
 #### Properties
 

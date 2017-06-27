@@ -50,6 +50,18 @@ action :install do
   end
 end
 
+# reinstall is just an install that always fires
+action :reinstall do
+  install_version = @new_resource.version unless @new_resource.version.nil?
+  description = "reinstall package #{@new_resource.package_name} #{install_version}"
+  converge_by(description) do
+    info_output = "Installing #{@new_resource.package_name}"
+    info_output << " version #{install_version}" if install_version && !install_version.empty?
+    Chef::Log.info(info_output)
+    install_package(@new_resource.package_name, install_version, force: true)
+  end
+end
+
 action :upgrade do
   if @current_resource.version != candidate_version
     orig_version = @current_resource.version || 'uninstalled'
@@ -140,10 +152,11 @@ def candidate_version
                          end
 end
 
-def install_package(name, version)
+def install_package(name, version, **opts)
   command = "printf \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
   command << " install -a#{expand_options(@new_resource.options)}"
+  command << ' -f' if opts[:force] # allows us to force a reinstall
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
