@@ -17,6 +17,10 @@ if defined?(ChefSpec)
   end
 
   def purge_php_pear(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:php_pear, :reinstall, resource_name)
+  end
+
+  def purge_php_pear(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:php_pear, :option, resource_name)
   end
 
