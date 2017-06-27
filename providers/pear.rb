@@ -76,7 +76,7 @@ action :purge do
     description = "purge package #{@new_resource}"
     converge_by(description) do
       Chef::Log.info("Purging #{@new_resource}")
-      purge_package(@current_resource.package_name, @new_resource.version)
+      remove_package(@current_resource.package_name, @new_resource.version)
     end
   end
 end
@@ -192,10 +192,6 @@ def pear_shell_out(command)
   # pear/pecl commands return a 0 on failures...we'll grep for it
   p.invalid! if p.stdout.split('\n').last =~ /^ERROR:.+/i
   p
-end
-
-def purge_package(name, version)
-  remove_package(name, version)
 end
 
 def expand_channel(channel)
