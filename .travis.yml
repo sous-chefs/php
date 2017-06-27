@@ -19,7 +19,7 @@ services: docker
 
 env:
   matrix:
-  - INSTANCE=resource-test-amazonlinux
+    #  - INSTANCE=resource-test-amazonlinux
   - INSTANCE=resource-test-centos-6
   - INSTANCE=resource-test-centos-7
   - INSTANCE=resource-test-debian-7
