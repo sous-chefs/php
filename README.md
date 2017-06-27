@@ -32,9 +32,9 @@ The file also contains the following attribute types:
 - platform specific locations and settings.
 - source installation settings
 
-## Resource/Provider
+## Resource
 
-This cookbook includes LWRPs for managing:
+This cookbook includes resources for managing:
 
 - PEAR channels
 - PEAR/PECL packages
@@ -45,16 +45,16 @@ This cookbook includes LWRPs for managing:
 
 #### Actions
 
-- :discover: Initialize a channel from its server.
-- :add: Add a channel to the channel list, usually only used to add private channels. Public channels are usually added using the `:discover` action
-- :update: Update an existing channel
-- :remove: Remove a channel from the List
+- `:discover`: Initialize a channel from its server.
+- `:add`: Add a channel to the channel list, usually only used to add private channels. Public channels are usually added using the `:discover` action
+- `:update`: Update an existing channel
+- `:remove`: Remove a channel from the List
 
-#### Attribute Parameters
+#### Properties
 
-- channel_name: name attribute. The name of the channel to discover
-- channel_xml: the channel.xml file of the channel you are adding
-- pear: pear binary, default: pear
+- `channel_name`: name attribute. The name of the channel to discover
+- `channel_xml`: the channel.xml file of the channel you are adding
+- `pear`: pear binary, default: pear
 
 #### Examples
 
@@ -96,7 +96,7 @@ end
 - `:remove`: Remove a pear package
 - `:purge`: Purge a pear package (this usually entails removing configuration files as well as the package itself). With pear packages this behaves the same as `:remove`
 
-#### Attribute Parameters
+#### Properties
 
 - `package_name`: name attribute. The name of the pear package to install
 - version: the version of the pear package to install/upgrade. If no version is given latest is assumed.
