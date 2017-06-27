@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.4.0 (2017-06-27)
+
+- Add a reinstall action to php_pear
+- Added additional specs for package installs on different platforms
+
 ## 4.3.0 (2017-06-27)
 
 - Remove fallback default php attributes that were used if we were on an unsupported platform. If we don't know the platform we don't support it and we should fail until we add proper support
