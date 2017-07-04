@@ -37,6 +37,14 @@ platforms:
       - RUN /usr/bin/apt-get update
       - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
 
+- name: debian-9
+  driver:
+    image: debian:9
+    pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
+
 - name: centos-6
   driver:
     image: centos:6
