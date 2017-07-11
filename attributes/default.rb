@@ -88,31 +88,35 @@ when 'debian'
   default['php']['fpm_listen_group'] = 'www-data'
   default['php']['fpm_service']      = 'php5-fpm'
   default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
+
+  if (platform?('debian') && node['platform_version'].to_i >= 9) ||
+     (platform?('ubuntu') && node['platform_version'].to_f >= 16.04)
+    default['php']['version']          = '7.0.4'
+    default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
+    default['php']['conf_dir']         = '/etc/php/7.0/cli'
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config)
+    default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
+    default['php']['mysql']['package'] = 'php7.0-mysql'
+    default['php']['curl']['package']  = 'php7.0-curl'
+    default['php']['apc']['package']   = 'php-apc'
+    default['php']['apcu']['package']  = 'php-apcu'
+    default['php']['gd']['package']    = 'php7.0-gd'
+    default['php']['ldap']['package']  = 'php7.0-ldap'
+    default['php']['pgsql']['package'] = 'php7.0-pgsql'
+    default['php']['sqlite']['package'] = 'php7.0-sqlite3'
+    default['php']['fpm_package']      = 'php7.0-fpm'
+    default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
+    default['php']['fpm_service']      = 'php7.0-fpm'
+    default['php']['fpm_socket']       = '/var/run/php/php7.0-fpm.sock'
+    default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
+    default['php']['enable_mod']       = '/usr/sbin/phpenmod'
+    default['php']['disable_mod']      = '/usr/sbin/phpdismod'
+    default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
+  end
+
   case node['platform']
   when 'ubuntu'
     case node['platform_version'].to_f
-    when 16.04
-      default['php']['version']          = '7.0.4'
-      default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
-      default['php']['conf_dir']         = '/etc/php/7.0/cli'
-      default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config)
-      default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
-      default['php']['mysql']['package'] = 'php7.0-mysql'
-      default['php']['curl']['package']  = 'php7.0-curl'
-      default['php']['apc']['package']   = 'php-apc'
-      default['php']['apcu']['package']  = 'php-apcu'
-      default['php']['gd']['package']    = 'php7.0-gd'
-      default['php']['ldap']['package']  = 'php7.0-ldap'
-      default['php']['pgsql']['package'] = 'php7.0-pgsql'
-      default['php']['sqlite']['package'] = 'php7.0-sqlite3'
-      default['php']['fpm_package']      = 'php7.0-fpm'
-      default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
-      default['php']['fpm_service']      = 'php7.0-fpm'
-      default['php']['fpm_socket']       = '/var/run/php/php7.0-fpm.sock'
-      default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
-      default['php']['enable_mod']       = '/usr/sbin/phpenmod'
-      default['php']['disable_mod']      = '/usr/sbin/phpdismod'
-      default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
     when 13.04..15.10
       default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
     end

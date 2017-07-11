@@ -9,6 +9,9 @@ verifier:
   name: inspec
 
 platforms:
+  - name: amazon-linux
+    driver_config:
+      box: mvbcoding/awslinux
   - name: centos-6.9
   - name: centos-7.3
   - name: debian-7.11
@@ -31,10 +34,6 @@ platforms:
     driver:
       ssh:
         shell: '"/bin/sh"'
-  - name: amazon-linux
-    driver_config:
-      box: mvbcoding/awslinux
-
 suites:
   - name: resource_test
     run_list:
