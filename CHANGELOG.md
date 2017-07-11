@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.5.0 (2017-07-11)
+
+- Add reinstall chefspec matcher
+- Switch from maintainers files to a simple readme section
+- Remove allow_call_time_pass_reference and y2k_compliance config on Debian/Ubuntu as no supported PHP version supports it
+- Initial Debian 9 support
+
 ## 4.4.0 (2017-06-27)
 
 - Add a reinstall action to php_pear
