@@ -1,7 +1,7 @@
 driver:
   name: dokken
   privileged: true # because Docker and SystemD/Upstart
-  chef_version: current
+  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
 
 transport:
   name: dokken
@@ -28,6 +28,7 @@ platforms:
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
       - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
+      - RUN rm -rf /sbin/initctl
 
 - name: debian-8
   driver:
@@ -43,7 +44,7 @@ platforms:
     pid_one_command: /bin/systemd
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools -y
+      - RUN /usr/bin/apt-get install apt-transport-https lsb-release procps net-tools systemd -y
 
 - name: centos-6
   driver:
@@ -89,4 +90,4 @@ platforms:
     image: opensuse:leap
     pid_one_command: /bin/systemd
     intermediate_instructions:
-      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which net-tools
+      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which net-tools systemd-sysvinit
