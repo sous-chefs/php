@@ -264,6 +264,8 @@ This cookbook is maintained by Chef's Community Cookbook Engineering team. Our g
 
 ## License
 
+**Copyright:** 2011-2017, Chef Software, Inc.
+
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
