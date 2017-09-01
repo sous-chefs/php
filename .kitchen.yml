@@ -9,16 +9,16 @@ verifier:
   name: inspec
 
 platforms:
-  - name: amazon-linux
+  - name: amazonlinux
     driver_config:
       box: mvbcoding/awslinux
-  - name: centos-6.9
-  - name: centos-7.3
-  - name: debian-7.11
-  - name: debian-8.8
-  - name: debian-9.0
-  - name: fedora-25
-  - name: opensuse-leap-42.2
+  - name: centos-6
+  - name: centos-7
+  - name: debian-7
+  - name: debian-8
+  - name: debian-9
+  - name: fedora-26
+  - name: opensuse-leap-42
   - name: ubuntu-14.04
   - name: ubuntu-16.04
   - name: ubuntu-16.04-chef-12.7
@@ -26,7 +26,7 @@ platforms:
       box: bento/ubuntu-16.04
     provisioner:
       require_chef_omnibus: 12.7.2
-  - name: freebsd-10.3
+  - name: freebsd-10
     driver:
       ssh:
         shell: '"/bin/sh"'
