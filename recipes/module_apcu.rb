@@ -20,7 +20,7 @@
 #
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   package %w(httpd-devel pcre pcre-devel)
 
   php_pear 'APCu' do

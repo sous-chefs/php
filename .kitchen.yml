@@ -9,38 +9,35 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-6.8
-  - name: centos-7.3
-  - name: debian-7.11
-    run_list: apt::default
-  - name: debian-8.6
-    run_list: apt::default
-  - name: fedora-25
-  - name: opensuse-leap-42.2
+  - name: amazonlinux
+    driver_config:
+      box: mvbcoding/awslinux
+  - name: centos-6
+  - name: centos-7
+  - name: debian-7
+  - name: debian-8
+  - name: debian-9
+  - name: fedora-26
+  - name: opensuse-leap-42
   - name: ubuntu-14.04
-    run_list: apt::default
   - name: ubuntu-16.04
-    run_list: apt::default
-  - name: freebsd-10.3
+  - name: ubuntu-16.04-chef-12.7
+    driver_config:
+      box: bento/ubuntu-16.04
+    provisioner:
+      require_chef_omnibus: 12.7.2
+  - name: freebsd-10
     driver:
       ssh:
         shell: '"/bin/sh"'
-  - name: windows-2008r2
-    driver_config:
-      box: chef/windows-server-2008r2-standard
-  - name: windows-2012r2
-    driver_config:
-      box: chef/windows-server-2012r2-standard
-
+  - name: freebsd-11
+    driver:
+      ssh:
+        shell: '"/bin/sh"'
 suites:
-  - name: package_install
-    run_list:
-      - recipe[php::default]
-  - name: source_install
-    run_list:
-      - recipe[php::default]
-    attributes: { php: { install_method: "source" } }
   - name: resource_test
     run_list:
-      - recipe[php::default]
       - recipe[test::default]
+  - name: source_install
+    run_list:
+      - recipe[test::source]

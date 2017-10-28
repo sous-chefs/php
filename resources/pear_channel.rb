@@ -19,7 +19,6 @@
 # limitations under the License.
 #
 
-default_action :discover
 property :channel_xml, kind_of: String
 property :channel_name, kind_of: String, name_property: true
 property :pear, kind_of: String, default: lazy { node['php']['pear'] }
@@ -27,19 +26,10 @@ property :pear, kind_of: String, default: lazy { node['php']['pear'] }
 # property :username, :kind_of => String
 # property :password, :kind_of => String
 
-action_class do
-  def exists?
-    shell_out!("#{@new_resource.pear} channel-info #{@new_resource.channel_name}")
-    true
-  rescue Mixlib::ShellOut::ShellCommandFailed
-    false
-  end
-end
-
 action :discover do
   unless exists?
-    Chef::Log.info("Discovering pear channel #{@new_resource}")
-    execute "#{@new_resource.pear} channel-discover #{@new_resource.channel_name}" do
+    Chef::Log.info("Discovering pear channel #{new_resource}")
+    execute "#{new_resource.pear} channel-discover #{new_resource.channel_name}" do
       action :run
     end
   end
@@ -47,8 +37,8 @@ end
 
 action :add do
   unless exists?
-    Chef::Log.info("Adding pear channel #{@new_resource} from #{@new_resource.channel_xml}")
-    execute "#{@new_resource.pear} channel-add #{@new_resource.channel_xml}" do
+    Chef::Log.info("Adding pear channel #{new_resource} from #{new_resource.channel_xml}")
+    execute "#{new_resource.pear} channel-add #{new_resource.channel_xml}" do
       action :run
     end
   end
@@ -58,17 +48,17 @@ action :update do
   if exists?
     update_needed = false
     begin
-      update_needed = true if shell_out("#{@new_resource.pear} search -c #{@new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+      update_needed = true if shell_out("#{new_resource.pear} search -c #{new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
     rescue Chef::Exceptions::CommandTimeout
       # CentOS can hang on 'pear search' if a channel needs updating
-      Chef::Log.info("Timed out checking if channel-update needed...forcing update of pear channel #{@new_resource}")
+      Chef::Log.info("Timed out checking if channel-update needed...forcing update of pear channel #{new_resource}")
       update_needed = true
     end
     if update_needed
-      description = "update pear channel #{@new_resource}"
+      description = "update pear channel #{new_resource}"
       converge_by(description) do
-        Chef::Log.info("Updating pear channel #{@new_resource}")
-        shell_out!("#{@new_resource.pear} channel-update #{@new_resource.channel_name}")
+        Chef::Log.info("Updating pear channel #{new_resource}")
+        shell_out!("#{new_resource.pear} channel-update #{new_resource.channel_name}")
       end
     end
   end
@@ -76,9 +66,18 @@ end
 
 action :remove do
   if exists?
-    Chef::Log.info("Deleting pear channel #{@new_resource}")
-    execute "#{@new_resource.pear} channel-delete #{@new_resource.channel_name}" do
+    Chef::Log.info("Deleting pear channel #{new_resource}")
+    execute "#{new_resource.pear} channel-delete #{new_resource.channel_name}" do
       action :run
     end
+  end
+end
+
+action_class do
+  def exists?
+    shell_out!("#{new_resource.pear} channel-info #{new_resource.channel_name}")
+    true
+  rescue Mixlib::ShellOut::ShellCommandFailed
+    false
   end
 end

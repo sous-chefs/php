@@ -20,7 +20,7 @@
 #
 
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   package 'zlib-devel'
 
   php_pear 'memcache' do

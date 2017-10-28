@@ -2,6 +2,51 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.5.0 (2017-07-11)
+
+- Add reinstall chefspec matcher
+- Switch from maintainers files to a simple readme section
+- Remove allow_call_time_pass_reference and y2k_compliance config on Debian/Ubuntu as no supported PHP version supports it
+- Initial Debian 9 support
+
+## 4.4.0 (2017-06-27)
+
+- Add a reinstall action to php_pear
+- Added additional specs for package installs on different platforms
+
+## 4.3.0 (2017-06-27)
+
+- Remove fallback default php attributes that were used if we were on an unsupported platform. If we don't know the platform we don't support it and we should fail until we add proper support
+- Add a few attributes needed for fpm support on opensuse. This is a work in progress to get full PHP support on opensuse
+- Install xml deps and avoid using xml cookbook since it's been deprecated
+- Expand the php_pear testing
+- Remove double logging and log the correct package name in php_pear resource
+- Cleanup readme example codes, improve formatting and remove references to LWRPs as they are just resources now
+
+## 4.2.0 (2017-05-30)
+
+- Make sure package intalls, php-fpm, and source installs work on Amazon linux
+- Avoid symlink warning in the converges
+- Simplify the package install logic
+- Rename the inspec test to match the suite name so it actually runs
+- Test on FreeBSD 11 / Amazon Linux
+- Install 5.6.30 by default on source installs
+
+## 4.1.0 (2017-05-30)
+
+- Remove class_eval usage and require Chef 12.7+
+
+## 4.0.0 (2017-04-20)
+
+- Fix pear_channel resource to not fail on Chef 12.5 and 12.6
+- Remove support for RHEL 5 as it is now EOL
+- Resolve Amazon Linux failures on Chef 13
+- Convert fpm_pool to a custom resource
+- Fix php_pear failures on Chef 13
+- Remove non-functional support for Windows
+- Remove redundant Ubuntu version checks in the php_pear provider
+- Expand testing to test all of the resources
+
 ## 3.1.1 (2017-04-20)
 
 - Use the cookbook attribute as the default value of pear_channel pear property to provide better platform support
@@ -13,6 +58,7 @@ This file is used to list changes made in each version of the php cookbook.
 - Update specs for the new Fauxhai data
 
 ## 3.0.0 (2017-03-27)
+
 - Converted pear_channel LWRP into custom resource
 - Removed use of pear node attribute from pear_channel resource
 - Fix cookstyle issue with missing line on metadata.rb
@@ -21,7 +67,7 @@ This file is used to list changes made in each version of the php cookbook.
 - Rename php-test to standard cookbook testing cookbook of "test"
 - Remove EOL ubuntu platform logic
 
-**NOTE** Windows package installation is currently broken. 
+**NOTE** Windows package installation is currently broken.
 
 ## 2.2.1 (2017-02-21)
 

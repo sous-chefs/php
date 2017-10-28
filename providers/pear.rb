@@ -40,9 +40,9 @@ action :install do
 
   # If it's not installed at all or an upgrade, install it
   if install_version || @current_resource.version.nil?
-    description = "install package #{@new_resource} #{install_version}"
+    description = "install package #{@new_resource.package_name} #{install_version}"
     converge_by(description) do
-      info_output = "Installing #{@new_resource}"
+      info_output = "Installing #{@new_resource.package_name}"
       info_output << " version #{install_version}" if install_version && !install_version.empty?
       Chef::Log.info(info_output)
       install_package(@new_resource.package_name, install_version)
@@ -50,12 +50,23 @@ action :install do
   end
 end
 
+# reinstall is just an install that always fires
+action :reinstall do
+  install_version = @new_resource.version unless @new_resource.version.nil?
+  description = "reinstall package #{@new_resource.package_name} #{install_version}"
+  converge_by(description) do
+    info_output = "Installing #{@new_resource.package_name}"
+    info_output << " version #{install_version}" if install_version && !install_version.empty?
+    Chef::Log.info(info_output)
+    install_package(@new_resource.package_name, install_version, force: true)
+  end
+end
+
 action :upgrade do
   if @current_resource.version != candidate_version
     orig_version = @current_resource.version || 'uninstalled'
-    description = "upgrade package #{@new_resource} version from #{orig_version} to #{candidate_version}"
+    description = "upgrade package #{@new_resource.package_name} version from #{orig_version} to #{candidate_version}"
     converge_by(description) do
-      Chef::Log.info("Upgrading #{@new_resource} version from #{orig_version} to #{candidate_version}")
       upgrade_package(@new_resource.package_name, candidate_version)
     end
   end
@@ -63,9 +74,8 @@ end
 
 action :remove do
   if removing_package?
-    description = "remove package #{@new_resource}"
+    description = "remove package #{@new_resource.package_name}"
     converge_by(description) do
-      Chef::Log.info("Removing #{@new_resource}")
       remove_package(@current_resource.package_name, @new_resource.version)
     end
   end
@@ -73,10 +83,9 @@ end
 
 action :purge do
   if removing_package?
-    description = "purge package #{@new_resource}"
+    description = "purge package #{@new_resource.package_name}"
     converge_by(description) do
-      Chef::Log.info("Purging #{@new_resource}")
-      purge_package(@current_resource.package_name, @new_resource.version)
+      remove_package(@current_resource.package_name, @new_resource.version)
     end
   end
 end
@@ -102,7 +111,7 @@ end
 # so refactoring into core Chef should be easy
 
 def load_current_resource
-  @current_resource = Chef::Resource::PhpPear.new(@new_resource.name)
+  @current_resource = new_resource.class.new(new_resource.name)
   @current_resource.package_name(@new_resource.package_name)
   @bin = node['php']['pear']
   if pecl?
@@ -143,10 +152,11 @@ def candidate_version
                          end
 end
 
-def install_package(name, version)
+def install_package(name, version, **opts)
   command = "printf \"\r\" | #{@bin} -d"
   command << " preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
   command << " install -a#{expand_options(@new_resource.options)}"
+  command << ' -f' if opts[:force] # allows us to force a reinstall
   command << " #{prefix_channel(can_haz(@new_resource, 'channel'))}#{name}"
   command << "-#{version}" if version && !version.empty?
   pear_shell_out(command)
@@ -177,13 +187,13 @@ end
 
 def enable_package(name)
   execute "#{node['php']['enable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['enable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['enable_mod']) }
   end
 end
 
 def disable_package(name)
   execute "#{node['php']['disable_mod']} #{name}" do
-    only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exist?(node['php']['disable_mod']) }
+    only_if { platform?('ubuntu') && ::File.exist?(node['php']['disable_mod']) }
   end
 end
 
@@ -192,10 +202,6 @@ def pear_shell_out(command)
   # pear/pecl commands return a 0 on failures...we'll grep for it
   p.invalid! if p.stdout.split('\n').last =~ /^ERROR:.+/i
   p
-end
-
-def purge_package(name, version)
-  remove_package(name, version)
 end
 
 def expand_channel(channel)
