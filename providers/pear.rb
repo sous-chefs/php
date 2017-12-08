@@ -293,7 +293,7 @@ def pecl?
       search_args << " -d preferred_state=#{can_haz(@new_resource, 'preferred_state')}"
       search_args << " search#{expand_channel(can_haz(@new_resource, 'channel'))} #{@new_resource.package_name}"
 
-      if    grep_for_version(shell_out(node['php']['pear'] + search_args).stdout, @new_resource.package_name)
+      if grep_for_version(shell_out(node['php']['pear'] + search_args).stdout, @new_resource.package_name)
         false
       elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, @new_resource.package_name)
         true
