@@ -25,7 +25,7 @@ env:
   - INSTANCE=resource-test-debian-7
   - INSTANCE=resource-test-debian-8
   - INSTANCE=resource-test-debian-9
-  - INSTANCE=resource-test-opensuse-leap
+    #  - INSTANCE=resource-test-opensuse-leap
   - INSTANCE=resource-test-ubuntu-1404
   - INSTANCE=resource-test-ubuntu-1604
 
