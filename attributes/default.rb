@@ -94,7 +94,7 @@ when 'debian'
     default['php']['version']          = '7.0.4'
     default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
     default['php']['conf_dir']         = '/etc/php/7.0/cli'
-    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config)
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
     default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
     default['php']['mysql']['package'] = 'php7.0-mysql'
     default['php']['curl']['package']  = 'php7.0-curl'
