@@ -31,23 +31,25 @@ include PhpCookbook::Helpers
 
 load_current_value do |new_resource|
   unless current_installed_version(new_resource).nil?
-      version(current_installed_version(new_resource))
-      Chef::Log.debug("Current version is #{version}") if version
+    version(current_installed_version(new_resource))
+    Chef::Log.debug("Current version is #{version}") if version
   end
 end
 
 action :install do
   # If we specified a version, and it's not the current version, move to the specified version
   install_version = new_resource.version unless new_resource.version.nil? || new_resource.version == current_resource.version
+  # Check if the version we want is already installed
+  versions_match = candidate_version == current_installed_version(new_resource)
 
   # If it's not installed at all or an upgrade, install it
-  if install_version || new_resource.version.nil?
-    description = "install package #{new_resource.package_name} #{install_version}"
-    converge_by(description) do
+  if install_version || new_resource.version.nil? && !versions_match
+    converge_by("install package #{new_resource.package_name} #{install_version}") do
       info_output = "Installing #{new_resource.package_name}"
       info_output << " version #{install_version}" if install_version && !install_version.empty?
       Chef::Log.info(info_output)
       install_package(new_resource.package_name, install_version)
+      not_if { candidate_version == current_installed_version(new_resource) }
     end
   end
 end
@@ -55,8 +57,7 @@ end
 # reinstall is just an install that always fires
 action :reinstall do
   install_version = new_resource.version unless new_resource.version.nil?
-  description = "reinstall package #{new_resource.package_name} #{install_version}"
-  converge_by(description) do
+  converge_by("reinstall package #{new_resource.package_name} #{install_version}") do
     info_output = "Installing #{new_resource.package_name}"
     info_output << " version #{install_version}" if install_version && !install_version.empty?
     Chef::Log.info(info_output)
@@ -76,8 +77,7 @@ end
 
 action :remove do
   if removing_package?
-    description = "remove package #{new_resource.package_name}"
-    converge_by(description) do
+    converge_by("remove package #{new_resource.package_name}") do
       remove_package(@current_resource.package_name, new_resource.version)
     end
   end
@@ -85,8 +85,7 @@ end
 
 action :purge do
   if removing_package?
-    description = "purge package #{new_resource.package_name}"
-    converge_by(description) do
+    converge_by("purge package #{new_resource.package_name}") do
       remove_package(@current_resource.package_name, new_resource.version)
     end
   end
