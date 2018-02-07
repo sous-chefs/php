@@ -1,7 +1,7 @@
 module PhpCookbook
   module Helpers
     def current_installed_version(new_resource)
-      version_check_cmd = "#{new_resource.binary} -d "
+      version_check_cmd = "#{new_resource.binary} -d"
       version_check_cmd << " preferred_state=#{new_resource.preferred_state}"
       version_check_cmd << " list#{expand_channel(new_resource.channel)}"
       p = shell_out(version_check_cmd)
@@ -33,7 +33,7 @@ module PhpCookbook
       command << " #{prefix_channel(new_resource.channel)}#{name}"
       command << "-#{version}" if version && !version.empty?
       pear_shell_out(command)
-      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions) if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
       enable_package(name)
     end
 
@@ -44,7 +44,7 @@ module PhpCookbook
       command << " #{prefix_channel(new_resource.channel)}#{name}"
       command << "-#{version}" if version && !version.empty?
       pear_shell_out(command)
-      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions) if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
       enable_package(name)
     end
 
@@ -105,7 +105,7 @@ module PhpCookbook
       files
     end
 
-    def manage_pecl_ini(name, action, directives, zend_extensions)
+    def manage_pecl_ini(name, action, directives, zend_extensions, priority)
       ext_prefix = extension_dir
       ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -133,29 +133,33 @@ module PhpCookbook
         owner 'root'
         group 'root'
         mode '0644'
-        variables(name: name, extensions: extensions, directives: directives)
+        variables(
+          name: name,
+          extensions: extensions,
+          directives: directives,
+          priority: priority
+        )
         action action
       end
     end
 
     def grep_for_version(stdout, package)
-      v = nil
-
+      version = nil
       stdout.split(/\n/).grep(/^#{package}\s/i).each do |m|
         # XML_RPC          1.5.4    stable
         # mongo   1.1.4/(1.1.4 stable) 1.1.4 MongoDB database driver
         # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
         # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
-        v = m.split(/\s+/)[1].strip
-        v = if v.split(%r{/\//})[0] =~ /.\./
-              # 1.1.4/(1.1.4 stable)
-              v.split(%r{/\//})[0]
-            else
-              # -n/a-/(1.0.0beta1 beta)
-              v.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
-            end
+        version = m.split(/\s+/)[1].strip
+        version = if version.split(%r{/\//})[0] =~ /.\./
+                    # 1.1.4/(1.1.4 stable)
+                    version.split(%r{/\//})[0]
+                  else
+                    # -n/a-/(1.0.0beta1 beta)
+                    version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+                  end
       end
-      v
+      version
     end
 
     def pecl?
