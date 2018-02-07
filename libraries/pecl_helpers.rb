@@ -1,15 +1,13 @@
 module PhpCookbook
   module Helpers
     def current_installed_version(new_resource)
-      begin
-        version_check_cmd = "#{new_resource.binary} -d "
-        version_check_cmd << " preferred_state=#{new_resource.preferred_state}"
-        version_check_cmd << " list#{expand_channel(new_resource.channel)}"
-        p = shell_out(version_check_cmd)
-        response = nil
-        response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
-        response
-      end
+      version_check_cmd = "#{new_resource.binary} -d "
+      version_check_cmd << " preferred_state=#{new_resource.preferred_state}"
+      version_check_cmd << " list#{expand_channel(new_resource.channel)}"
+      p = shell_out(version_check_cmd)
+      response = nil
+      response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
+      response
     end
 
     def expand_options(options)
@@ -17,16 +15,14 @@ module PhpCookbook
     end
 
     def candidate_version
-      begin
-        candidate_version_cmd = "#{new_resource.binary} -d "
-        candidate_version_cmd << "preferred_state=#{new_resource.preferred_state}"
-        candidate_version_cmd << " search#{expand_channel(new_resource.channel)}"
-        candidate_version_cmd << " #{new_resource.package_name}"
-        p = shell_out(candidate_version_cmd)
-        response = nil
-        response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Matched packages/i
-        response
-      end
+      candidate_version_cmd = "#{new_resource.binary} -d "
+      candidate_version_cmd << "preferred_state=#{new_resource.preferred_state}"
+      candidate_version_cmd << " search#{expand_channel(new_resource.channel)}"
+      candidate_version_cmd << " #{new_resource.package_name}"
+      p = shell_out(candidate_version_cmd)
+      response = nil
+      response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Matched packages/i
+      response
     end
 
     def install_package(name, version, **opts)

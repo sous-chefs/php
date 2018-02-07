@@ -31,8 +31,8 @@ include PhpCookbook::Helpers
 
 load_current_value do |new_resource|
   unless current_installed_version(new_resource).nil?
-      version(current_installed_version(new_resource))
-      Chef::Log.debug("Current version is #{version}") if version
+    version(current_installed_version(new_resource))
+    Chef::Log.debug("Current version is #{version}") if version
   end
 end
 
