@@ -33,7 +33,7 @@ module PhpCookbook
       command << " #{prefix_channel(new_resource.channel)}#{name}"
       command << "-#{version}" if version && !version.empty?
       pear_shell_out(command)
-      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions) if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
       enable_package(name)
     end
 
@@ -44,7 +44,7 @@ module PhpCookbook
       command << " #{prefix_channel(new_resource.channel)}#{name}"
       command << "-#{version}" if version && !version.empty?
       pear_shell_out(command)
-      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions) if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
       enable_package(name)
     end
 
@@ -105,7 +105,7 @@ module PhpCookbook
       files
     end
 
-    def manage_pecl_ini(name, action, directives, zend_extensions)
+    def manage_pecl_ini(name, action, directives, zend_extensions, priority)
       ext_prefix = extension_dir
       ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
 
@@ -133,7 +133,12 @@ module PhpCookbook
         owner 'root'
         group 'root'
         mode '0644'
-        variables(name: name, extensions: extensions, directives: directives)
+        variables(
+          name: name,
+          extensions: extensions,
+          directives: directives,
+          priority: priority
+        )
         action action
       end
     end
@@ -147,12 +152,12 @@ module PhpCookbook
         # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
         version = m.split(/\s+/)[1].strip
         version = if version.split(%r{/\//})[0] =~ /.\./
-              # 1.1.4/(1.1.4 stable)
-              version.split(%r{/\//})[0]
-            else
-              # -n/a-/(1.0.0beta1 beta)
-              version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
-            end
+                    # 1.1.4/(1.1.4 stable)
+                    version.split(%r{/\//})[0]
+                  else
+                    # -n/a-/(1.0.0beta1 beta)
+                    version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+                  end
       end
       version
     end

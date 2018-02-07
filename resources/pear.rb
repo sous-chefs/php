@@ -26,6 +26,7 @@ property :directives, Hash, default: {}
 property :zend_extensions, Array, default: []
 property :preferred_state, String, default: 'stable'
 property :binary, String, default: 'pear'
+property :priority, [String, nil], default: nil
 
 include PhpCookbook::Helpers
 
