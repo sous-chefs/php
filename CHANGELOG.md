@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 4.6.0 (2018-02-07)
+
+- Converted the php_pear resource to a custom resource
+- Moved all helper logic out of the resource and into its own helper library file
+- Fix source install on Ubuntu by making sure we have xml2-config package 
+- Remove options that are no longer recognised by the php installer when installing from source
+- Remove matchers as we no longer require them with a modern ChefDK
+
 ## 4.5.0 (2017-07-11)
 
 - Add reinstall chefspec matcher
