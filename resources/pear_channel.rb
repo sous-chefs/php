@@ -19,9 +19,9 @@
 # limitations under the License.
 #
 
-property :channel_xml, kind_of: String
-property :channel_name, kind_of: String, name_property: true
-property :pear, kind_of: String, default: lazy { node['php']['pear'] }
+property :channel_xml, String
+property :channel_name, String, name_property: true
+property :binary, String, default: 'pear'
 # TODO: add authenticated channel support!
 # property :username, :kind_of => String
 # property :password, :kind_of => String
