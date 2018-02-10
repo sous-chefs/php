@@ -19,7 +19,6 @@ services: docker
 
 env:
   matrix:
-  - INSTANCE=resource-test-centos-6
   - INSTANCE=resource-test-centos-7
   - INSTANCE=resource-test-debian-7
   - INSTANCE=resource-test-debian-8
@@ -29,6 +28,8 @@ env:
   allow_failures:
   - INSTANCE=resource-test-amazonlinux
   - INSTANCE=resource-test-opensuse-leap
+  - INSTANCE=resource-test-centos-6
+  # CentOS-6 fails due to the candidate version not installing (PHP is too lower version 5.3 EOL :( )
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
