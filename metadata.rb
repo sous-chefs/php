@@ -7,7 +7,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '4.6.0'
 
 depends 'build-essential'
-depends 'mysql', '>= 6.0.0'
 depends 'yum-epel'
 
 %w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu).each do |os|
@@ -25,7 +24,6 @@ recipe 'php::module_gd', 'Install the php5-gd package'
 recipe 'php::module_imap', 'Install the php5-imap package'
 recipe 'php::module_ldap', 'Install the php5-ldap package'
 recipe 'php::module_memcache', 'Install the php5-memcache package'
-recipe 'php::module_mysql', 'Install the php5-mysql package'
 recipe 'php::module_pgsql', 'Install the php5-pgsql packag'
 recipe 'php::module_sqlite3', 'Install the php5-sqlite3 package'
 
