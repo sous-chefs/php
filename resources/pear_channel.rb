@@ -75,7 +75,7 @@ end
 
 action_class do
   def exists?
-    shell_out!("#{new_resource.pear} channel-info #{new_resource.channel_name}")
+    shell_out!("#{new_resource.binary} channel-info #{new_resource.channel_name}")
     true
   rescue Mixlib::ShellOut::ShellCommandFailed
     false
