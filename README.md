@@ -25,7 +25,6 @@ It installs and configures PHP and the PEAR package management system. Also incl
 
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
-- `node['php']['pear']` = Name of the pear executable to use, default `pear`.
 
 The file also contains the following attribute types:
 
