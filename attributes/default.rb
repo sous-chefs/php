@@ -22,7 +22,6 @@ default['php']['install_method'] = 'package'
 default['php']['directives'] = {}
 default['php']['bin'] = 'php'
 
-default['php']['pear'] = 'pear'
 default['php']['pecl'] = 'pecl'
 
 default['php']['version'] = '5.6.30'
