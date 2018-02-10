@@ -54,7 +54,7 @@ This cookbook includes resources for managing:
 
 - `channel_name`: name attribute. The name of the channel to discover
 - `channel_xml`: the channel.xml file of the channel you are adding
-- `pear`: pear binary, default: pear
+- `binary`: pear binary, default: pear
 
 #### Examples
 
