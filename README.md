@@ -19,7 +19,6 @@ It installs and configures PHP and the PEAR package management system. Also incl
 ### Cookbooks
 
 - build-essential
-- mysql
 
 ## Attributes
 
