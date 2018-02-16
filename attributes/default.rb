@@ -41,8 +41,6 @@ default['php']['apc']['package']    = 'php5-apc'
 default['php']['apcu']['package']   = 'php5-apcu'
 default['php']['gd']['package']     = 'php5-gd'
 default['php']['ldap']['package']   = 'php5-ldap'
-default['php']['pgsql']['package']  = 'php5-pgsql'
-default['php']['sqlite']['package'] = 'php5-sqlite3'
 
 case node['platform_family']
 when 'rhel', 'fedora', 'amazon'
@@ -63,7 +61,6 @@ when 'rhel', 'fedora', 'amazon'
     default['php']['packages']      = %w(php php-devel php-cli php-pear)
     default['php']['fpm_package']   = 'php-fpm'
   end
-  default['php']['mysql']['package'] = 'php-mysql'
   default['php']['fpm_pooldir'] = '/etc/php-fpm.d'
   default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
   default['php']['fpm_service'] = 'php-fpm'
@@ -78,7 +75,6 @@ when 'debian'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev libxml2-dev libxslt-dev zlib1g-dev)
   default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
-  default['php']['mysql']['package'] = 'php5-mysql'
   default['php']['fpm_package']   = 'php5-fpm'
   default['php']['fpm_pooldir']   = '/etc/php5/fpm/pool.d'
   default['php']['fpm_user']      = 'www-data'
@@ -95,14 +91,11 @@ when 'debian'
     default['php']['conf_dir']         = '/etc/php/7.0/cli'
     default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
     default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
-    default['php']['mysql']['package'] = 'php7.0-mysql'
     default['php']['curl']['package']  = 'php7.0-curl'
     default['php']['apc']['package']   = 'php-apc'
     default['php']['apcu']['package']  = 'php-apcu'
     default['php']['gd']['package']    = 'php7.0-gd'
     default['php']['ldap']['package']  = 'php7.0-ldap'
-    default['php']['pgsql']['package'] = 'php7.0-pgsql'
-    default['php']['sqlite']['package'] = 'php7.0-sqlite3'
     default['php']['fpm_package']      = 'php7.0-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
     default['php']['fpm_service']      = 'php7.0-fpm'
@@ -136,7 +129,6 @@ when 'suse'
   default['php']['fpm_listen_user'] = 'wwwrun'
   default['php']['fpm_listen_group'] = 'www'
   default['php']['packages']         = %w(apache2-mod_php5 php5-pear)
-  default['php']['mysql']['package'] = 'php5-mysql'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 when 'freebsd'
   default['php']['conf_dir']      = '/usr/local/etc'
@@ -147,7 +139,6 @@ when 'freebsd'
   default['php']['fpm_listen_user'] = 'www'
   default['php']['fpm_listen_group'] = 'www'
   default['php']['packages']         = %w( php56 pear )
-  default['php']['mysql']['package'] = 'php56-mysqli'
 end
 
 default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
@@ -178,9 +169,4 @@ default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
                                          --enable-soap
                                          --with-xmlrpc
                                          --with-mcrypt
-                                         --enable-mbstring
-                                         --with-mysqli=/usr/bin/mysql_config
-                                         --with-mysql-sock
-                                         --with-sqlite3
-                                         --with-pdo-mysql
-                                         --with-pdo-sqlite)
+                                         --enable-mbstring)
