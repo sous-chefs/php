@@ -50,7 +50,6 @@ action :install do
       info_output << " version #{install_version}" if install_version && !install_version.empty?
       Chef::Log.info(info_output)
       install_package(new_resource.package_name, install_version)
-      not_if { versions_match }
     end
   end
 end
