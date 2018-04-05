@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 5.1.0 (2018-04-05)
+
+- Don't eval the action_class
+- use php pear binary property in all recipes
+- Remove incorrect not_if in the php_pear resource
+- More testing updates
+- Initial support for Ubuntu 18.04
+
 ## 5.0.0 (2018-02-15)
 
 - Simplify this cookbook to remove the dependency on mysql cookbook, and remove the database dependencies in the recipes and attributes. This will allow folks who are using the mysql cookbook to be able to upgrade as needed (or pin to earlier versions). As this is a big change, pin to an earlier version if you need the mysql support that was previously available in this cookbook. Future versions may contain a resource that allows for recompiling php with the necessary extensions.
