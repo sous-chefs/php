@@ -20,7 +20,7 @@
 
 configure_options = node['php']['configure_options'].join(' ')
 
-include_recipe 'build-essential'
+build_essential 'install compilation tools'
 include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
 
 package node['php']['src_deps']

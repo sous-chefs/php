@@ -6,7 +6,7 @@ description 'Installs and maintains php and php modules'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '5.1.0'
 
-depends 'build-essential'
+depends 'build-essential', '>= 5.0'
 depends 'yum-epel'
 
 %w(amazon centos debian fedora oracle redhat scientific suse opensuse opensuseleap ubuntu).each do |os|
