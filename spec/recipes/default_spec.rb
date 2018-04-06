@@ -128,4 +128,19 @@ describe 'php::default' do
       expect(chef_run).to create_template('/etc/php/7.0/cli/php.ini')
     end
   end
+
+  context 'on ubuntu 18.04' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '18.04')
+                          .converge(described_recipe)
+    end
+
+    it 'installs php and pear' do
+      expect(chef_run).to install_package(['php7.2-cgi', 'php7.2', 'php7.2-dev', 'php7.2-cli', 'php-pear'])
+    end
+
+    it 'creates php.ini' do
+      expect(chef_run).to create_template('/etc/php/7.2/cli/php.ini')
+    end
+  end
 end
