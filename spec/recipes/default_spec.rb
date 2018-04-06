@@ -98,7 +98,6 @@ describe 'php::default' do
     end
   end
 
-
   context 'on ubuntu 14.04' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
