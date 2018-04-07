@@ -28,6 +28,39 @@ property :preferred_state, String, default: 'stable'
 property :binary, String, default: 'pear'
 property :priority, [String, nil], default: nil
 
+def current_installed_version(new_resource)
+  version_check_cmd = "#{new_resource.binary} -d"
+  version_check_cmd << " preferred_state=#{new_resource.preferred_state}"
+  version_check_cmd << " list#{expand_channel(new_resource.channel)}"
+  p = shell_out(version_check_cmd)
+  response = nil
+  response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
+  response
+end
+
+def expand_channel(channel)
+  channel ? " -c #{channel}" : ''
+end
+
+def grep_for_version(stdout, package)
+  version = nil
+  stdout.split(/\n/).grep(/^#{package}\s/i).each do |m|
+    # XML_RPC          1.5.4    stable
+    # mongo   1.1.4/(1.1.4 stable) 1.1.4 MongoDB database driver
+    # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
+    # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
+    version = m.split(/\s+/)[1].strip
+    version = if version.split(%r{/\//})[0] =~ /.\./
+                # 1.1.4/(1.1.4 stable)
+                version.split(%r{/\//})[0]
+              else
+                # -n/a-/(1.0.0beta1 beta)
+                version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+              end
+  end
+  version
+end
+
 load_current_value do |new_resource|
   unless current_installed_version(new_resource).nil?
     version(current_installed_version(new_resource))
@@ -90,16 +123,6 @@ action :purge do
 end
 
 action_class do
-  def current_installed_version(new_resource)
-    version_check_cmd = "#{new_resource.binary} -d"
-    version_check_cmd << " preferred_state=#{new_resource.preferred_state}"
-    version_check_cmd << " list#{expand_channel(new_resource.channel)}"
-    p = shell_out(version_check_cmd)
-    response = nil
-    response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Installed packages/i
-    response
-  end
-
   def expand_options(options)
     options ? " #{options}" : ''
   end
@@ -167,31 +190,8 @@ action_class do
     p
   end
 
-  def expand_channel(channel)
-    channel ? " -c #{channel}" : ''
-  end
-
   def prefix_channel(channel)
     channel ? "#{channel}/" : ''
-  end
-
-  def grep_for_version(stdout, package)
-    version = nil
-    stdout.split(/\n/).grep(/^#{package}\s/i).each do |m|
-      # XML_RPC          1.5.4    stable
-      # mongo   1.1.4/(1.1.4 stable) 1.1.4 MongoDB database driver
-      # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
-      # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
-      version = m.split(/\s+/)[1].strip
-      version = if version.split(%r{/\//})[0] =~ /.\./
-                  # 1.1.4/(1.1.4 stable)
-                  version.split(%r{/\//})[0]
-                else
-                  # -n/a-/(1.0.0beta1 beta)
-                  version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
-                end
-    end
-    version
   end
 
   def removing_package?
