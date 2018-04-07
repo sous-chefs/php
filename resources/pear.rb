@@ -28,8 +28,6 @@ property :preferred_state, String, default: 'stable'
 property :binary, String, default: 'pear'
 property :priority, [String, nil], default: nil
 
-include PhpCookbook::Helpers
-
 load_current_value do |new_resource|
   unless current_installed_version(new_resource).nil?
     version(current_installed_version(new_resource))
