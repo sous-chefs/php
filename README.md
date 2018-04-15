@@ -218,33 +218,6 @@ This recipe installs PHP from packages.
 
 This recipe installs PHP from source.
 
-## Deprecated Recipes
-
-The following recipes are deprecated and will be removed from a future version of this cookbook.
-
-- `module_apc`
-- `module_apcu`
-- `module_curl`
-- `module_fileinfo`
-- `module_fpdf`
-- `module_gd`
-- `module_imap`
-- `module_ldap`
-- `module_memcache`
-- `module_mysql`
-- `module_pgsql`
-- `module_sqlite3`
-
-The installation of the php modules in these recipes can now be accomplished by installing from a native package or via the new php_pear resource. For example, the functionality of the `module_memcache` recipe can be enabled in the following ways:
-
-```ruby
-# using apt
-package 'php5-memcache'
-
-# using pear resource
-php_pear 'memcache'
-```
-
 ## Usage
 
 Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
@@ -270,7 +243,7 @@ This cookbook is maintained by Chef's Community Cookbook Engineering team. Our g
 
 ## License
 
-**Copyright:** 2011-2017, Chef Software, Inc.
+**Copyright:** 2011-2018, Chef Software, Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");

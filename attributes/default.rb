@@ -2,7 +2,7 @@
 # Cookbook:: php
 # Attributes:: default
 #
-# Copyright:: 2011-2017, Chef Software, Inc.
+# Copyright:: 2011-2018, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ default['php']['pecl'] = 'pecl'
 
 default['php']['version'] = '5.6.30'
 
-default['php']['pear'] = 'pear'
+default['php']['pear'] = '/usr/bin/pear'
 
 default['php']['url'] = 'http://us1.php.net/get'
 default['php']['checksum'] = '8bc7d93e4c840df11e3d9855dcad15c1b7134e8acf0cf3b90b932baea2d0bde2'
@@ -37,12 +37,7 @@ default['php']['disable_mod'] = '/usr/sbin/php5dismod'
 default['php']['ini']['template'] = 'php.ini.erb'
 default['php']['ini']['cookbook'] = 'php'
 
-default['php']['fpm_socket']        = '/var/run/php5-fpm.sock'
-default['php']['curl']['package']   = 'php5-curl'
-default['php']['apc']['package']    = 'php5-apc'
-default['php']['apcu']['package']   = 'php5-apcu'
-default['php']['gd']['package']     = 'php5-gd'
-default['php']['ldap']['package']   = 'php5-ldap'
+default['php']['fpm_socket'] = '/var/run/php5-fpm.sock'
 
 case node['platform_family']
 when 'rhel', 'fedora', 'amazon'
@@ -93,11 +88,6 @@ when 'debian'
     default['php']['conf_dir']         = '/etc/php/7.0/cli'
     default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
     default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
-    default['php']['curl']['package']  = 'php7.0-curl'
-    default['php']['apc']['package']   = 'php-apc'
-    default['php']['apcu']['package']  = 'php-apcu'
-    default['php']['gd']['package']    = 'php7.0-gd'
-    default['php']['ldap']['package']  = 'php7.0-ldap'
     default['php']['fpm_package']      = 'php7.0-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
     default['php']['fpm_service']      = 'php7.0-fpm'
@@ -112,11 +102,6 @@ when 'debian'
     default['php']['conf_dir']         = '/etc/php/7.2/cli'
     default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
     default['php']['packages']         = %w(php7.2-cgi php7.2 php7.2-dev php7.2-cli php-pear)
-    default['php']['curl']['package']  = 'php7.2-curl'
-    default['php']['apc']['package']   = 'php-apc'
-    default['php']['apcu']['package']  = 'php-apcu'
-    default['php']['gd']['package']    = 'php7.2-gd'
-    default['php']['ldap']['package']  = 'php7.2-ldap'
     default['php']['fpm_package']      = 'php7.2-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.2/fpm/pool.d'
     default['php']['fpm_service']      = 'php7.2-fpm'

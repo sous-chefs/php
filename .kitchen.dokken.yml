@@ -21,7 +21,7 @@ platforms:
 
 - name: amazonlinux-2
   driver:
-    image: dokken/amazonlinux
+    image: dokken/amazonlinux-2
     pid_one_command: /usr/lib/systemd/systemd
 
 - name: debian-8
@@ -41,34 +41,38 @@ platforms:
 - name: centos-6
   driver:
     image: dokken/centos-6
-    platform: rhel
     pid_one_command: /sbin/init
 
 - name: centos-7
   driver:
     image: dokken/centos-7
-    platform: rhel
     pid_one_command: /usr/lib/systemd/systemd
 
-- name: fedora-26
+- name: fedora-latest
   driver:
-    image: dokken/fedora-26
+    image: dokken/fedora-latest
     pid_one_command: /usr/lib/systemd/systemd
 
 - name: ubuntu-14.04
   driver:
     image: dokken/ubuntu-14.04
     pid_one_command: /sbin/init
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
 
 - name: ubuntu-16.04
   driver:
     image: dokken/ubuntu-16.04
     pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
 
 - name: ubuntu-18.04
   driver:
     image: dokken/ubuntu-18.04
     pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
 
 - name: opensuse-leap
   driver:
