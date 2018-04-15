@@ -134,6 +134,7 @@ when 'suse'
   default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
   default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev libxml2-devel libxslt-devel zlib-devel)
   default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
+  default['php']['fpm_pooldir']      = '/etc/php5/fpm'
   default['php']['fpm_service']   = 'php-fpm'
   default['php']['fpm_package']   = 'php5-fpm'
   default['php']['fpm_user']      = 'wwwrun'
