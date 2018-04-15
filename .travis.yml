@@ -29,8 +29,9 @@ env:
   - INSTANCE=resource-test-amazonlinux-2
   - INSTANCE=resource-test-opensuse-leap
   - INSTANCE=resource-test-centos-6
+
+matrix:
   allow_failures:
-  - INSTANCE=resource-test-ubuntu-1804
   - INSTANCE=resource-test-amazonlinux
   - INSTANCE=resource-test-opensuse-leap
   - INSTANCE=resource-test-centos-6
