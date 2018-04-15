@@ -49,10 +49,16 @@ when 'rhel', 'fedora', 'amazon'
   default['php']['fpm_listen_user']   = 'nobody'
   default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']           = "/usr/#{lib_dir}/php/modules"
-  if node['platform'] == 'amazon' # amazon names their packages with versions
-    default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
-    default['php']['packages']      = %w(php56 php56-devel php-pear)
-    default['php']['fpm_package']   = 'php56-fpm'
+  if node['platform'] == 'amazon' # amazon names their packages with versions on 201X amazon
+    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
+
+    if node['platform_version'].to_i == 2
+      default['php']['packages']      = %w(php php-devel php-pear)
+      default['php']['fpm_package']   = 'php-fpm'
+    else
+      default['php']['packages']      = %w(php56 php56-devel php-pear)
+      default['php']['fpm_package']   = 'php56-fpm'
+    end
   else # redhat does not name their packages with version on RHEL 6+
     default['php']['src_deps']      = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
     default['php']['packages']      = %w(php php-devel php-cli php-pear)
