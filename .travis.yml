@@ -28,13 +28,6 @@ env:
   - INSTANCE=resource-test-amazonlinux
   - INSTANCE=resource-test-amazonlinux-2
   - INSTANCE=resource-test-opensuse-leap
-  - INSTANCE=resource-test-centos-6
-  allow_failures:
-  - INSTANCE=resource-test-ubuntu-1804
-  - INSTANCE=resource-test-amazonlinux
-  - INSTANCE=resource-test-opensuse-leap
-  - INSTANCE=resource-test-centos-6
-  # CentOS-6 fails due to the candidate version not installing (PHP is too lower version 5.3 EOL :( )
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
