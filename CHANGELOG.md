@@ -2,6 +2,20 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 6.0.0 (2018-04-16)
+
+### Breaking Change
+
+This release removes the previous recipes in this cookbook for setting up various PEAR extensions. These should now be setup using the php_pear module directly and not done by adding various recipes / manipulating attributes
+
+### Other Changes
+
+- Use the build_essential resource directly so we can call this from Chef itself on Chef 14
+- Add specs for additional platforms
+- Move the helpers back into the resources which makes them easier to ship in Chef later
+- Break out logic in the channel resource into a helper
+- Add support for Amazon Linux 2
+
 ## 5.1.0 (2018-04-05)
 
 - Don't eval the action_class
