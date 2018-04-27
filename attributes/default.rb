@@ -27,6 +27,11 @@ default['php']['pecl'] = 'pecl'
 default['php']['version'] = '5.6.30'
 
 default['php']['pear'] = '/usr/bin/pear'
+default['php']['pear_setup'] = true
+default['php']['pear_channels'] = [
+  'pear.php.net',
+  'pecl.php.net'
+]
 
 default['php']['url'] = 'http://us1.php.net/get'
 default['php']['checksum'] = '8bc7d93e4c840df11e3d9855dcad15c1b7134e8acf0cf3b90b932baea2d0bde2'
