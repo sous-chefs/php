@@ -30,7 +30,7 @@ default['php']['pear'] = '/usr/bin/pear'
 default['php']['pear_setup'] = true
 default['php']['pear_channels'] = [
   'pear.php.net',
-  'pecl.php.net'
+  'pecl.php.net',
 ]
 
 default['php']['url'] = 'http://us1.php.net/get'
