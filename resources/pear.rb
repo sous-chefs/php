@@ -197,10 +197,8 @@ action_class do
   def removing_package?
     if new_resource.version.nil?
       true # remove any version of a package
-    elsif new_resource.version == @current_resource.version
-      true # remove the version we have
     else
-      false # we don't have the version we want to remove
+      new_resource.version == @current_resource.version # we don't have the version we want to remove
     end
   end
 
