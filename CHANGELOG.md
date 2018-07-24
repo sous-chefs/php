@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 6.1.0 (2018-07-24)
+
+- Allow default recipe to skip pear channel configuration
+
 ## 6.0.0 (2018-04-16)
 
 ### Breaking Change
