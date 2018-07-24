@@ -24,6 +24,8 @@ It installs and configures PHP and the PEAR package management system. Also incl
 
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
+- `node['php']['pear_setup']` = Boolean value to determine whether to set up pear repositories. Default: `true`
+- `node['php']['pear_channels']` = List of external pear channels to add if `node['php']['pear_setup]` is true. Default: `['pear.php.net', 'pecl.php.net']`
 
 The file also contains the following attribute types:
 
@@ -244,6 +246,7 @@ This cookbook is maintained by Chef's Community Cookbook Engineering team. Our g
 ## License
 
 **Copyright:** 2011-2018, Chef Software, Inc.
+**Copyright:** 2018, Oracle and/or its affiliates. All rights reserved
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
