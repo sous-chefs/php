@@ -168,7 +168,7 @@ action_class do
     command << "-#{version}" if version && !version.empty?
     pear_shell_out(command)
     disable_package(name)
-    manage_pecl_ini(name, :delete, nil, nil) if pecl?
+    manage_pecl_ini(name, :delete, nil, nil, nil) if pecl?
   end
 
   def enable_package(name)
