@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## 6.1.1 (2018-08-07)
+
+- Pass in missing argument to manage_pecl_ini method when trying to remove a module
+
 ## 6.1.0 (2018-07-24)
 
 - Allow default recipe to skip pear channel configuration
