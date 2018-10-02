@@ -31,7 +31,7 @@ The file also contains the following attribute types:
 
 - platform specific locations and settings.
 - source installation settings
-
+.
 ## Resources
 
 This cookbook includes resources for managing:
