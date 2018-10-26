@@ -43,6 +43,8 @@ default['php']['ini']['template'] = 'php.ini.erb'
 default['php']['ini']['cookbook'] = 'php'
 
 default['php']['fpm_socket'] = '/var/run/php5-fpm.sock'
+default['php']['fpm_conf_dir'] = nil
+default['php']['fpm_ini_control'] = false
 
 case node['platform_family']
 when 'rhel', 'fedora', 'amazon'
@@ -91,6 +93,7 @@ when 'debian'
   default['php']['fpm_listen_group'] = 'www-data'
   default['php']['fpm_service']      = 'php5-fpm'
   default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
+  default['php']['fpm_conf_dir']     = '/etc/php5/fpm'
 
   if (platform?('debian') && node['platform_version'].to_i >= 9) ||
      (platform?('ubuntu') && node['platform_version'].to_f == 16.04)
@@ -104,6 +107,7 @@ when 'debian'
     default['php']['fpm_service']      = 'php7.0-fpm'
     default['php']['fpm_socket']       = '/var/run/php/php7.0-fpm.sock'
     default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/7.0/fpm'
     default['php']['enable_mod']       = '/usr/sbin/phpenmod'
     default['php']['disable_mod']      = '/usr/sbin/phpdismod'
     default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
@@ -118,6 +122,7 @@ when 'debian'
     default['php']['fpm_service']      = 'php7.2-fpm'
     default['php']['fpm_socket']       = '/var/run/php/php7.2-fpm.sock'
     default['php']['fpm_default_conf'] = '/etc/php/7.2/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/7.2/fpm'
     default['php']['enable_mod']       = '/usr/sbin/phpenmod'
     default['php']['disable_mod']      = '/usr/sbin/phpdismod'
     default['php']['ext_conf_dir']     = '/etc/php/7.2/mods-available'
