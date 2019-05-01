@@ -214,7 +214,14 @@ action_class do
   def get_extension_files(name)
     files = []
 
-    p = shell_out("#{new_resource.binary} list-files #{name}")
+    # use appropriate binary when listing pecl packages
+    list_binary = if new_resource.channel == 'pecl.php.net'
+                    node['php']['pecl']
+                  else
+                    new_resource.binary
+                  end
+
+    p = shell_out("#{list_binary} list-files #{name}")
     p.stdout.each_line.grep(/^src\s+.*\.so$/i).each do |line|
       files << line.split[1]
     end
@@ -231,7 +238,11 @@ action_class do
         search_args << " search#{expand_channel(new_resource.channel)} #{new_resource.package_name}"
 
         if grep_for_version(shell_out(new_resource.binary + search_args).stdout, new_resource.package_name)
-          false
+          if (new_resource.binary.include? 'pecl') || (new_resource.channel == 'pecl.php.net')
+            true
+          else
+            false
+          end
         elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, new_resource.package_name)
           true
         else

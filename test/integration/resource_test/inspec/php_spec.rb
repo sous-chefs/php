@@ -10,4 +10,8 @@ describe 'PHP' do
   it 'has the pecl.php.net channel' do
     expect(command('pear list-channels').stdout).to include('pecl.php.net')
   end
+
+  it 'has the PECL sync module' do
+    expect(command('php --ri sync').exit_status).to eq(0)
+  end
 end

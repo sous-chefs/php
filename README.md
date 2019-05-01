@@ -25,7 +25,7 @@ It installs and configures PHP and the PEAR package management system. Also incl
 - `node['php']['install_method']` = method to install php with, default `package`.
 - `node['php']['directives']` = Hash of directives and values to append to `php.ini`, default `{}`.
 - `node['php']['pear_setup']` = Boolean value to determine whether to set up pear repositories. Default: `true`
-- `node['php']['pear_channels']` = List of external pear channels to add if `node['php']['pear_setup]` is true. Default: `['pear.php.net', 'pecl.php.net']`
+- `node['php']['pear_channels']` = List of external pear channels to add if `node['php']['pear_setup']` is true. Default: `['pear.php.net', 'pecl.php.net']`
 
 The file also contains the following attribute types:
 
@@ -145,6 +145,18 @@ end
 php_pear 'apc' do
   action :install
   binary 'pear7'
+end
+
+# install sync using the pecl binary
+php_pear 'sync' do
+  version '1.1.1'
+  binary 'pecl'
+end
+
+# install sync using the pecl channel
+php_pear 'sync' do
+  version '1.1.1'
+  channel 'pecl.php.net'
 end
 
 # install the beta version of Horde_Url
