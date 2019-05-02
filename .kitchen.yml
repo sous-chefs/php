@@ -34,10 +34,21 @@ platforms:
     driver:
       ssh:
         shell: '"/bin/sh"'
+
 suites:
   - name: resource_test
     run_list:
       - recipe[test::default]
+  - name: resource_test_peclchannel
+    includes:
+      - ubuntu-16.04
+    run_list:
+      - recipe[test::default]
+    attributes:
+      pecl_method: 'channel'
+    verifier:
+      inspec_tests:
+        - test/integration/resource_test
   - name: source_install
     run_list:
       - recipe[test::source]

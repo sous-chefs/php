@@ -7,32 +7,23 @@ php_fpm_pool 'test-pool' do
   action :install
 end
 
-# Add a channel
+# Add PEAR channel
 php_pear_channel 'pear.php.net' do
   action :update
 end
 
-# Install a package from the pear.php.net channel
-# http://pear.php.net/package/HTTP2
-php_pear 'HTTP2'
+# Install https://pear.php.net/package/HTTP2
 php_pear 'HTTP2'
 
-php_pear 'Remove it now' do
-  package_name 'HTTP2'
-  action :remove
+# Add PECL channel
+php_pear_channel 'pecl.php.net' do
+  action :update
 end
 
-php_pear 'install the package again' do
-  package_name 'HTTP2'
-  action :install
-end
-
-php_pear 'reinstall the package' do
-  package_name 'HTTP2'
-  action :reinstall
-end
-
-php_pear 'Purge it now' do
-  package_name 'HTTP2'
-  action :purge
+# Install https://pecl.php.net/package/sync
+pecl_method = node['pecl_method'] || 'binary'
+php_pear "sync-#{pecl_method}" do
+  package_name 'sync'
+  binary 'pecl' if pecl_method == 'binary'
+  channel 'pecl.php.net' if pecl_method == 'channel'
 end
