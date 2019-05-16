@@ -5,7 +5,7 @@ describe 'php::default' do
 
   context 'on freebsd' do
     cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.0')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.2')
                           .converge(described_recipe)
     end
 
