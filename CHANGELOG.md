@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the php cookbook.
 
+## unreleased
+
+- Sync php.ini template with php.ini-production from php-7.2.18
+
 ## 6.1.1 (2018-08-07)
 
 - Pass in missing argument to manage_pecl_ini method when trying to remove a module
@@ -42,7 +46,7 @@ This release removes the previous recipes in this cookbook for setting up variou
 
 - Converted the php_pear resource to a custom resource
 - Moved all helper logic out of the resource and into its own helper library file
-- Fix source install on Ubuntu by making sure we have xml2-config package 
+- Fix source install on Ubuntu by making sure we have xml2-config package
 - Remove options that are no longer recognised by the php installer when installing from source
 - Remove matchers as we no longer require them with a modern ChefDK
 
