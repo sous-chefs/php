@@ -1,9 +1,12 @@
-# php Cookbook CHANGELOG
+# PHP Cookbook CHANGELOG
 
-This file is used to list changes made in each version of the php cookbook.
+This file is used to list changes made in each version of the PHP cookbook.
 
-## unreleased
+## Unreleased
 
+## 7.0.0 (2019-08-07)
+
+- *Drop support for Chef 13* so we don't need to require build essentials
 - Sync php.ini template with php.ini-production from php-7.2.18
 
 ## 6.1.1 (2018-08-07)
