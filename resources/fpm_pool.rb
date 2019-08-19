@@ -1,29 +1,10 @@
-#
-# Author:: Chris Marchesi <cmarchesi@paybyphone.com>
-# Cookbook:: php
-# Resource:: fpm_pool
-#
-# Copyright:: 2015-2018, Chef Software, Inc <legal@chef.io>
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 property :pool_name, String, name_property: true
-property :listen, String, default: lazy { node['php']['fpm_socket'] }
-property :user, String, default: lazy { node['php']['fpm_user'] }
-property :group, String, default: lazy { node['php']['fpm_group'] }
-property :listen_user, String, default: lazy { node['php']['fpm_listen_user'] }
-property :listen_group, String, default: lazy { node['php']['fpm_listen_group'] }
+property :version, String, default: '7.3'
+property :listen, String, default: lazy { default_fpm_socket(version) }
+property :user, String, default: lazy { default_fpm_user }
+property :group, String, default: lazy { default_fpm_group }
+property :listen_user, String, default: lazy { default_fpm_listen_user }
+property :listen_group, String, default: lazy { default_fpm_listen_group }
 property :process_manager, String, default: 'dynamic'
 property :max_children, Integer, default: 5
 property :start_servers, Integer, default: 2

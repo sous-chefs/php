@@ -1,6 +1,6 @@
 apt_update 'update'
 
-include_recipe 'php'
+php_install ''
 
 # Create a test pool
 php_fpm_pool 'test-pool' do

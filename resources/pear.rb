@@ -1,23 +1,3 @@
-#
-# Author:: Seth Chisamore <schisamo@chef.io>
-# Cookbook:: php
-# Resource:: pear
-#
-# Copyright:: 2011-2018, Chef Software, Inc <legal@chef.io>
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 property :package_name, String, name_property: true
 property :version, [String, nil], default: nil
 property :channel, String
@@ -172,8 +152,8 @@ action_class do
   end
 
   def enable_package(name)
-    execute "#{node['php']['enable_mod']} #{name}" do
-      only_if { platform?('ubuntu') && ::File.exist?(node['php']['enable_mod']) }
+    execute "phpenmod #{name}" do
+      only_if { platform?('ubuntu') && ::File.exist?(phpenmod) }
     end
   end
 
@@ -204,24 +184,14 @@ action_class do
 
   def extension_dir
     @extension_dir ||= begin
-                         # Consider using "pecl config-get ext_dir". It is more cross-platform.
-                         # p = shell_out("php-config --extension-dir")
-                         p = shell_out("#{node['php']['pecl']} config-get ext_dir")
+                         p = shell_out("pecl config-get #{ext_dir}")
                          p.stdout.strip
                        end
   end
 
   def get_extension_files(name)
     files = []
-
-    # use appropriate binary when listing pecl packages
-    list_binary = if new_resource.channel == 'pecl.php.net'
-                    node['php']['pecl']
-                  else
-                    new_resource.binary
-                  end
-
-    p = shell_out("#{list_binary} list-files #{name}")
+    p = shell_out("#{new_resource.binary} list-files #{name}")
     p.stdout.each_line.grep(/^src\s+.*\.so$/i).each do |line|
       files << line.split[1]
     end
@@ -243,7 +213,7 @@ action_class do
           else
             false
           end
-        elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, new_resource.package_name)
+        elsif grep_for_version(shell_out(new_resource.binary + search_args).stdout, new_resource.package_name)
           true
         else
           raise "Package #{new_resource.package_name} not found in either PEAR or PECL."
