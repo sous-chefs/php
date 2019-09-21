@@ -4,6 +4,10 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+## 7.0.1 (2019-09-21)
+
+- Fix dependency problem with installing php from source on ubuntu 18.04
+
 ## 7.0.0 (2019-08-07)
 
 - *Drop support for Chef 13* so we don't need to require build essentials
