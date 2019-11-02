@@ -1,19 +1,23 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
   - lint-yaml
   - lint-markdown
-
 version: 2.1
-
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -23,3 +27,120 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
+      - kitchen/dokken-single:
+          name: resource-test-amazonlinux
+          suite: resource-test-amazonlinux
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-amazonlinux-2
+          suite: resource-test-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-debian-8
+          suite: resource-test-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-debian-9
+          suite: resource-test-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-centos-6
+          suite: resource-test-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-centos-7
+          suite: resource-test-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-fedora-latest
+          suite: resource-test-fedora-latest
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-ubuntu-1404
+          suite: resource-test-ubuntu-1404
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-ubuntu-1604
+          suite: resource-test-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-ubuntu-1804
+          suite: resource-test-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-opensuse-leap
+          suite: resource-test-opensuse-leap
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: resource-test-peclchannel-ubuntu-1604
+          suite: resource-test-peclchannel-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-amazonlinux
+          suite: source-install-amazonlinux
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-amazonlinux-2
+          suite: source-install-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-debian-8
+          suite: source-install-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-debian-9
+          suite: source-install-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-centos-6
+          suite: source-install-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-centos-7
+          suite: source-install-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-fedora-latest
+          suite: source-install-fedora-latest
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-ubuntu-1404
+          suite: source-install-ubuntu-1404
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-ubuntu-1604
+          suite: source-install-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-ubuntu-1804
+          suite: source-install-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: source-install-opensuse-leap
+          suite: source-install-opensuse-leap
+          requires: *lint_and_unit
+      - final:
+          requires:
+            - resource-test-amazonlinux
+            - resource-test-amazonlinux-2
+            - resource-test-debian-8
+            - resource-test-debian-9
+            - resource-test-centos-6
+            - resource-test-centos-7
+            - resource-test-fedora-latest
+            - resource-test-ubuntu-1404
+            - resource-test-ubuntu-1604
+            - resource-test-ubuntu-1804
+            - resource-test-opensuse-leap
+            - resource-test-peclchannel-ubuntu-1604
+            - source-install-amazonlinux
+            - source-install-amazonlinux-2
+            - source-install-debian-8
+            - source-install-debian-9
+            - source-install-centos-6
+            - source-install-centos-7
+            - source-install-fedora-latest
+            - source-install-ubuntu-1404
+            - source-install-ubuntu-1604
+            - source-install-ubuntu-1804
+            - source-install-opensuse-leap
