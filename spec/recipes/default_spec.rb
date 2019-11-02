@@ -10,7 +10,7 @@ describe 'php::default' do
     end
 
     it 'installs php and pear' do
-      expect(chef_run).to install_package(['php56', 'php56-devel', 'php-pear'])
+      expect(chef_run).to install_package(%w(php56 php56-devel php-pear))
     end
 
     it 'creates php.ini' do
@@ -25,7 +25,7 @@ describe 'php::default' do
     end
 
     it 'installs php and pear' do
-      expect(chef_run).to install_package(['php', 'php-devel', 'php-cli', 'php-pear'])
+      expect(chef_run).to install_package(%w(php php-devel php-cli php-pear))
     end
 
     it 'creates php.ini' do
@@ -40,7 +40,7 @@ describe 'php::default' do
     end
 
     it 'installs php and pear' do
-      expect(chef_run).to install_package(['php', 'php-devel', 'php-cli', 'php-pear'])
+      expect(chef_run).to install_package(%w(php php-devel php-cli php-pear))
     end
 
     it 'creates php.ini' do
@@ -55,7 +55,7 @@ describe 'php::default' do
     end
 
     it 'installs php and pear' do
-      expect(chef_run).to install_package(['php5-cgi', 'php5', 'php5-dev', 'php5-cli', 'php-pear'])
+      expect(chef_run).to install_package(%w(php5-cgi php5 php5-dev php5-cli php-pear))
     end
 
     it 'creates php.ini' do

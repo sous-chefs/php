@@ -21,7 +21,7 @@
 configure_options = node['php']['configure_options'].join(' ')
 
 build_essential 'install compilation tools'
-include_recipe 'yum-epel' if node['platform_family'] == 'rhel'
+include_recipe 'yum-epel' if platform_family?('rhel')
 
 package node['php']['src_deps']
 
@@ -50,7 +50,7 @@ end
 # inside of the include libraries.
 link '/usr/include/gmp.h' do
   to '/usr/include/x86_64-linux-gnu/gmp.h'
-  only_if { node['platform_family'] == 'debian' && node['platform_version'].to_f >= 14.04 }
+  only_if { platform_family?('debian') && node['platform_version'].to_f >= 14.04 }
 end
 
 bash 'build php' do
