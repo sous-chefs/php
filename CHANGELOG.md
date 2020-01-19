@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 - Simplify platform checks
 - Remove unused long_description metadata from metadata.rb
+- Migrated to Github Actions
 
 ## 7.0.0 (2019-08-07)
 
