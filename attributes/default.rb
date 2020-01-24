@@ -56,7 +56,7 @@ when 'rhel', 'fedora', 'amazon'
   default['php']['fpm_listen_user']   = 'nobody'
   default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']           = "/usr/#{lib_dir}/php/modules"
-  if node['platform'] == 'amazon' # amazon names their packages with versions on 201X amazon
+  if platform?('amazon') # amazon names their packages with versions on 201X amazon
     default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
 
     if node['platform_version'].to_i == 2
