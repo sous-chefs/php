@@ -115,7 +115,7 @@ when 'debian'
     default['php']['version']          = '7.0.4'
     default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
     default['php']['conf_dir']         = '/etc/php/7.2/cli'
-    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
     default['php']['packages']         = %w(php7.2-cgi php7.2 php7.2-dev php7.2-cli php-pear)
     default['php']['fpm_package']      = 'php7.2-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.2/fpm/pool.d'
