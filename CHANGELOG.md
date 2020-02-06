@@ -8,6 +8,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 - Simplify platform checks
 - Remove unused long_description metadata from metadata.rb
 - Migrated to Github Actions for testing
+- Adding control of php-fpm php.ini with specific attribute
 
 ## 7.0.0 (2019-08-07)
 
