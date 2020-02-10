@@ -4,6 +4,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Run cookstyle 0.75.1
 - Fix dependency problem with installing php from source on ubuntu 18.04
 - Simplify platform checks
 - Remove unused long_description metadata from metadata.rb
