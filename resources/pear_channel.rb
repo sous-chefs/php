@@ -22,9 +22,6 @@
 property :channel_xml, String
 property :channel_name, String, name_property: true
 property :binary, String, default: 'pear'
-# TODO: add authenticated channel support!
-# property :username, :kind_of => String
-# property :password, :kind_of => String
 
 action :discover do
   unless exists?
