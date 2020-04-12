@@ -19,14 +19,14 @@
 #
 
 property :package_name, String, name_property: true
-property :version, [String, nil], default: nil
+property :version, [String, nil]
 property :channel, String
 property :options, String
 property :directives, Hash, default: {}
 property :zend_extensions, Array, default: []
 property :preferred_state, String, default: 'stable'
 property :binary, String, default: 'pear'
-property :priority, [String, nil], default: nil
+property :priority, [String, nil]
 
 def current_installed_version(new_resource)
   version_check_cmd = "#{new_resource.binary} -d"
