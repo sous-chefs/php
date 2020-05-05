@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
-## Unreleased
+## 7.1.0 (2020-05-05)
 
 - Split out resource documentation into the documentation folder
 - Run cookstyle 0.75.1
