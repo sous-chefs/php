@@ -16,7 +16,6 @@ describe 'PHP' do
   end
 
   it 'has the correct priority set' do
-    expect(command('php -i').stdout).to include("50-sync")
+    expect(command('php -i').stdout).to include('50-sync')
   end
-
 end
