@@ -26,4 +26,5 @@ php_pear "sync-#{pecl_method}" do
   package_name 'sync'
   binary 'pecl' if pecl_method == 'binary'
   channel 'pecl.php.net' if pecl_method == 'channel'
+  priority '50'
 end
