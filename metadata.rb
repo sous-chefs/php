@@ -6,7 +6,7 @@ description 'Installs and maintains php and php modules'
 source_url 'https://github.com/sous-chefs/php'
 issues_url 'https://github.com/sous-chefs/php/issues'
 chef_version '>= 14.0'
-version '7.1.0'
+version '7.2.0'
 
 depends 'yum-epel'
 

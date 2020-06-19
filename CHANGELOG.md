@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## 7.2.0 (2020-06-19)
+
+- Include extension priority on the specified format to the extension file
+
 ## 7.1.0 (2020-05-05)
 
 - Split out resource documentation into the documentation folder
