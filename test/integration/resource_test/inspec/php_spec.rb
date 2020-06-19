@@ -14,4 +14,8 @@ describe 'PHP' do
   it 'has the PECL sync module' do
     expect(command('php --ri sync').exit_status).to eq(0)
   end
+
+  it 'has the correct priority set' do
+    expect(command('php -i').stdout).to include('50-sync')
+  end
 end
