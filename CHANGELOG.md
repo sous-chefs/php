@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
+- Refactor version conditionals to use `Chef::VersionConstraint`
+
 ## 7.2.0 (2020-06-19)
 
 - Include extension priority on the specified format to the extension file

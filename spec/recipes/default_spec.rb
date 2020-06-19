@@ -78,7 +78,7 @@ describe 'php::default' do
     end
   end
 
-  context 'on ubuntu 14.04' do
+  context 'on ubuntu 16.04' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
                           .converge(described_recipe)

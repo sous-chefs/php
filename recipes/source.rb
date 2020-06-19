@@ -50,7 +50,7 @@ end
 # inside of the include libraries.
 link '/usr/include/gmp.h' do
   to '/usr/include/x86_64-linux-gnu/gmp.h'
-  only_if { platform_family?('debian') && node['platform_version'].to_f >= 14.04 }
+  only_if { platform?('ubuntu') }
 end
 
 bash 'build php' do
