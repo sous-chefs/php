@@ -48,21 +48,6 @@ describe 'php::default' do
     end
   end
 
-  context 'on debian 8' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'debian', version: '8')
-                          .converge(described_recipe)
-    end
-
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(%w(php5-cgi php5 php5-dev php5-cli php-pear))
-    end
-
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php5/cli/php.ini')
-    end
-  end
-
   context 'on debian 9' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'debian', version: '9')

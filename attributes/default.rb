@@ -95,10 +95,8 @@ when 'debian'
   default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
   default['php']['fpm_conf_dir']     = '/etc/php5/fpm'
 
-  if platform?('debian') && node['platform_version'].to_i == 8
-    default['php']['ext_conf_dir'] = '/etc/php5/mods-available'
-  elsif (platform?('debian') && node['platform_version'].to_i >= 9) ||
-        (platform?('ubuntu') && node['platform_version'].to_f == 16.04)
+  if (platform?('debian') && node['platform_version'].to_i >= 9) ||
+     (platform?('ubuntu') && node['platform_version'].to_f == 16.04)
     default['php']['version']          = '7.0.4'
     default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
     default['php']['conf_dir']         = '/etc/php/7.0/cli'
