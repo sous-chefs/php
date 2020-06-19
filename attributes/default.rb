@@ -126,6 +126,21 @@ when 'debian'
     default['php']['fpm_default_conf'] = '/etc/php/7.2/fpm/pool.d/www.conf'
     default['php']['fpm_conf_dir']     = '/etc/php/7.2/fpm'
     default['php']['ext_conf_dir']     = '/etc/php/7.2/mods-available'
+  elsif platform?('ubuntu') && node['platform_version'].to_f >= 20.04
+    default['php']['version']          = '7.4.7'
+    default['php']['checksum']         = 'a554a510190e726ebe7157fb00b4aceabdb50c679430510a3b93cbf5d7546e44'
+    default['php']['conf_dir']         = '/etc/php/7.4/cli'
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev sqlite3)
+    default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
+    default['php']['fpm_package']      = 'php7.4-fpm'
+    default['php']['fpm_pooldir']      = '/etc/php/7.4/fpm/pool.d'
+    default['php']['fpm_service']      = 'php7.4-fpm'
+    default['php']['fpm_socket']       = '/var/run/php/php7.4-fpm.sock'
+    default['php']['fpm_default_conf'] = '/etc/php/7.4/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/7.4/fpm'
+    default['php']['enable_mod']       = '/usr/sbin/phpenmod'
+    default['php']['disable_mod']      = '/usr/sbin/phpdismod'
+    default['php']['ext_conf_dir']     = '/etc/php/7.4/mods-available'
   end
 when 'suse'
   default['php']['conf_dir']      = '/etc/php5/cli'

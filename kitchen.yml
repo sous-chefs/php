@@ -19,6 +19,7 @@ platforms:
   - name: opensuse-leap-42
   - name: ubuntu-16.04
   - name: ubuntu-18.04
+  - name: ubuntu-20.04
 
 suites:
   - name: resource_test

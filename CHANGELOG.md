@@ -4,6 +4,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Add support for Ubuntu 20.04
 - Refactor version conditionals to use `Chef::VersionConstraint`
 
 ## 7.2.0 (2020-06-19)
