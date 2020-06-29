@@ -34,7 +34,7 @@ default['php']['pear_channels'] = [
   'pecl.php.net',
 ]
 
-default['php']['url'] = 'http://us1.php.net/get'
+default['php']['url'] = 'https://www.php.net/distributions'
 default['php']['checksum'] = '8bc7d93e4c840df11e3d9855dcad15c1b7134e8acf0cf3b90b932baea2d0bde2'
 default['php']['prefix_dir'] = '/usr/local'
 default['php']['enable_mod'] = '/usr/sbin/php5enmod'
