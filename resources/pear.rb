@@ -291,5 +291,10 @@ action_class do
       )
       action action
     end
+
+    execute "#{node['php']['enable_mod']} #{name}" do
+      creates "#{node['php']['conf_dir']}/conf.d/#{name}"
+      only_if { platform_family? 'debian' }
+    end
   end
 end
