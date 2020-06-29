@@ -142,6 +142,8 @@ when 'debian'
   end
 end
 
+default['php']['src_recompile'] = false
+
 default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
                                          --with-libdir=#{lib_dir}
                                          --with-config-file-path=#{node['php']['conf_dir']}
