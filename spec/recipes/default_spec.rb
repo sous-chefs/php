@@ -1,110 +1,76 @@
-require_relative '../spec_helper'
+require 'spec_helper'
 
-describe 'php::default' do
-  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
-
-  context 'on amazon linux' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'amazon', version: '2017')
-                          .converge(described_recipe)
-    end
-
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(%w(php56 php56-devel php-pear))
-    end
-
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php.ini')
-    end
+shared_examples_for 'php' do
+  it 'installs php and pear' do
+    expect(chef_run).to install_package packages
   end
 
-  context 'on centos 6' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6')
-                          .converge(described_recipe)
-    end
+  it 'creates php.ini' do
+    expect(chef_run).to create_template php_ini_path
+  end
+end
 
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(%w(php php-devel php-cli php-pear))
-    end
+describe 'php::default' do
+  context 'on amazon linux 2' do
+    platform 'amazon', '2'
 
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php.ini')
-    end
+    let(:packages) { %w(php php-devel php-pear) }
+    let(:php_ini_path) { '/etc/php.ini' }
+
+    it_should_behave_like 'php'
   end
 
   context 'on centos 7' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '7')
-                          .converge(described_recipe)
-    end
+    platform 'centos', '7'
 
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(%w(php php-devel php-cli php-pear))
-    end
+    let(:packages) { %w(php php-devel php-cli php-pear) }
+    let(:php_ini_path) { '/etc/php.ini' }
 
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php.ini')
-    end
+    it_should_behave_like 'php'
   end
 
   context 'on debian 9' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'debian', version: '9')
-                          .converge(described_recipe)
-    end
+    platform 'debian', '9'
 
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(['php7.0-cgi', 'php7.0', 'php7.0-dev', 'php7.0-cli', 'php-pear'])
-    end
+    let(:packages) { ['php7.0-cgi', 'php7.0', 'php7.0-dev', 'php7.0-cli', 'php-pear'] }
+    let(:php_ini_path) { '/etc/php/7.0/cli/php.ini' }
 
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php/7.0/cli/php.ini')
-    end
+    it_should_behave_like 'php'
+  end
+
+  context 'on debian 10' do
+    platform 'debian', '10'
+
+    let(:packages) { %w(php-cgi php php-dev php-cli php-pear) }
+    let(:php_ini_path) { '/etc/php/7.3/cli/php.ini' }
+
+    it_should_behave_like 'php'
   end
 
   context 'on ubuntu 16.04' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
-                          .converge(described_recipe)
-    end
+    platform 'ubuntu', '16.04'
 
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(['php7.0-cgi', 'php7.0', 'php7.0-dev', 'php7.0-cli', 'php-pear'])
-    end
+    let(:packages) { ['php7.0-cgi', 'php7.0', 'php7.0-dev', 'php7.0-cli', 'php-pear'] }
+    let(:php_ini_path) { '/etc/php/7.0/cli/php.ini' }
 
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php/7.0/cli/php.ini')
-    end
-  end
-
-  context 'on ubuntu 16.04' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04')
-                          .converge(described_recipe)
-    end
-
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(['php7.0-cgi', 'php7.0', 'php7.0-dev', 'php7.0-cli', 'php-pear'])
-    end
-
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php/7.0/cli/php.ini')
-    end
+    it_should_behave_like 'php'
   end
 
   context 'on ubuntu 18.04' do
-    cached(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '18.04')
-                          .converge(described_recipe)
-    end
+    platform 'ubuntu', '18.04'
 
-    it 'installs php and pear' do
-      expect(chef_run).to install_package(['php7.2-cgi', 'php7.2', 'php7.2-dev', 'php7.2-cli', 'php-pear'])
-    end
+    let(:packages) { ['php7.2-cgi', 'php7.2', 'php7.2-dev', 'php7.2-cli', 'php-pear'] }
+    let(:php_ini_path) { '/etc/php/7.2/cli/php.ini' }
 
-    it 'creates php.ini' do
-      expect(chef_run).to create_template('/etc/php/7.2/cli/php.ini')
-    end
+    it_should_behave_like 'php'
+  end
+
+  context 'on ubuntu 20.04' do
+    platform 'ubuntu', '20.04'
+
+    let(:packages) { %w(php-cgi php php-dev php-cli php-pear) }
+    let(:php_ini_path) { '/etc/php/7.4/cli/php.ini' }
+
+    it_should_behave_like 'php'
   end
 end
