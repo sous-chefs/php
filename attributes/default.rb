@@ -81,36 +81,38 @@ when 'rhel', 'fedora', 'amazon'
     default['php']['fpm_listen_group'] = 'apache'
   end
 when 'debian'
-  default['php']['conf_dir'] = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev libxml2-dev libxslt-dev zlib1g-dev)
-  default['php']['packages']      = %w(php5-cgi php5 php5-dev php5-cli php-pear)
-  default['php']['fpm_package']   = 'php5-fpm'
-  default['php']['fpm_pooldir']   = '/etc/php5/fpm/pool.d'
-  default['php']['fpm_user']      = 'www-data'
-  default['php']['fpm_group']     = 'www-data'
+  default['php']['version']          = '7.0.4'
+  default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
+  default['php']['conf_dir']         = '/etc/php/7.0/cli'
+  default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
+  default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
+  default['php']['disable_mod']      = '/usr/sbin/phpdismod'
+  default['php']['enable_mod']       = '/usr/sbin/phpenmod'
+  default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
+  default['php']['fpm_conf_dir']     = '/etc/php/7.0/fpm'
+  default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
+  default['php']['fpm_package']      = 'php7.0-fpm'
+  default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
+  default['php']['fpm_service']      = 'php7.0-fpm'
+  default['php']['fpm_socket']       = '/var/run/php/php7.0-fpm.sock'
+  default['php']['fpm_user']         = 'www-data'
+  default['php']['fpm_group']        = 'www-data'
   default['php']['fpm_listen_user']  = 'www-data'
   default['php']['fpm_listen_group'] = 'www-data'
-  default['php']['fpm_service']      = 'php5-fpm'
-  default['php']['fpm_default_conf'] = '/etc/php5/fpm/pool.d/www.conf'
-  default['php']['fpm_conf_dir']     = '/etc/php5/fpm'
 
-  if (platform?('debian') && node['platform_version'].to_i >= 9) ||
-     (platform?('ubuntu') && node['platform_version'].to_f == 16.04)
-    default['php']['version']          = '7.0.4'
-    default['php']['checksum']         = 'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
-    default['php']['conf_dir']         = '/etc/php/7.0/cli'
-    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev pkg-config libxml2-dev)
-    default['php']['packages']         = %w(php7.0-cgi php7.0 php7.0-dev php7.0-cli php-pear)
-    default['php']['fpm_package']      = 'php7.0-fpm'
-    default['php']['fpm_pooldir']      = '/etc/php/7.0/fpm/pool.d'
-    default['php']['fpm_service']      = 'php7.0-fpm'
-    default['php']['fpm_socket']       = '/var/run/php/php7.0-fpm.sock'
-    default['php']['fpm_default_conf'] = '/etc/php/7.0/fpm/pool.d/www.conf'
-    default['php']['fpm_conf_dir']     = '/etc/php/7.0/fpm'
-    default['php']['enable_mod']       = '/usr/sbin/phpenmod'
-    default['php']['disable_mod']      = '/usr/sbin/phpdismod'
-    default['php']['ext_conf_dir']     = '/etc/php/7.0/mods-available'
+  if platform?('debian') && node['platform_version'].to_i >= 10
+    default['php']['version']          = '7.3.19'
+    default['php']['checksum']         = '809126b46d62a1a06c2d5a0f9d7ba61aba40e165f24d2d185396d0f9646d3280'
+    default['php']['conf_dir']         = '/etc/php/7.3/cli'
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
+    default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
+    default['php']['fpm_package']      = 'php7.3-fpm'
+    default['php']['fpm_pooldir']      = '/etc/php/7.3/fpm/pool.d'
+    default['php']['fpm_service']      = 'php7.3-fpm'
+    default['php']['fpm_socket']       = '/var/run/php/php7.3-fpm.sock'
+    default['php']['fpm_default_conf'] = '/etc/php/7.3/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/7.3/fpm'
+    default['php']['ext_conf_dir']     = '/etc/php/7.3/mods-available'
   elsif platform?('ubuntu') && node['platform_version'].to_f == 18.04
     default['php']['version']          = '7.2.31'
     default['php']['checksum']         = '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c'
@@ -123,8 +125,6 @@ when 'debian'
     default['php']['fpm_socket']       = '/var/run/php/php7.2-fpm.sock'
     default['php']['fpm_default_conf'] = '/etc/php/7.2/fpm/pool.d/www.conf'
     default['php']['fpm_conf_dir']     = '/etc/php/7.2/fpm'
-    default['php']['enable_mod']       = '/usr/sbin/phpenmod'
-    default['php']['disable_mod']      = '/usr/sbin/phpdismod'
     default['php']['ext_conf_dir']     = '/etc/php/7.2/mods-available'
   end
 when 'suse'
