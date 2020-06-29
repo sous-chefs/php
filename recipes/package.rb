@@ -19,10 +19,8 @@
 # limitations under the License.
 #
 
-node['php']['packages'].each do |pkg|
-  package pkg do
-    options node['php']['package_options']
-  end
+package node['php']['packages'] do
+  options node['php']['package_options']
 end
 
 include_recipe 'php::ini'
