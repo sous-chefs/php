@@ -20,19 +20,19 @@ platforms:
   - name: ubuntu-20.04
 
 suites:
-  - name: resource_test
+  - name: resource
     run_list:
       - recipe[test::default]
-  - name: resource_test_peclchannel
+  - name: resource_peclchannel
     includes:
       - ubuntu-16.04
     run_list:
       - recipe[test::default]
     attributes:
-      pecl_method: 'channel'
+      pecl_method: channel
     verifier:
       inspec_tests:
-        - test/integration/resource_test
+        - test/integration/resource
   - name: source_install
     run_list:
       - recipe[test::source]

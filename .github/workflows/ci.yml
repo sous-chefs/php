@@ -49,8 +49,8 @@ jobs:
           - 'ubuntu-1804'
           - 'ubuntu-2004'
         suite:
+          - 'resource'
           - 'source-install'
-          - 'resource-test'
       fail-fast: false
 
     steps:
