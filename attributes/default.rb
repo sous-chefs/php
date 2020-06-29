@@ -56,7 +56,8 @@ when 'rhel', 'amazon'
   default['php']['fpm_listen_user']   = 'nobody'
   default['php']['fpm_listen_group']  = 'nobody'
   default['php']['ext_dir']           = "/usr/#{lib_dir}/php/modules"
-  if platform?('amazon') # amazon names their packages with versions on 201X amazon
+  # amazon names their packages with versions on 201X amazon
+  if platform?('amazon')
     default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
 
     if node['platform_version'].to_i == 2
@@ -105,6 +106,7 @@ when 'debian'
     default['php']['checksum']         = '809126b46d62a1a06c2d5a0f9d7ba61aba40e165f24d2d185396d0f9646d3280'
     default['php']['conf_dir']         = '/etc/php/7.3/cli'
     default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
+    # Debian >= 10 drops versions from the package names
     default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
     default['php']['fpm_package']      = 'php7.3-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.3/fpm/pool.d'
@@ -131,6 +133,7 @@ when 'debian'
     default['php']['checksum']         = 'a554a510190e726ebe7157fb00b4aceabdb50c679430510a3b93cbf5d7546e44'
     default['php']['conf_dir']         = '/etc/php/7.4/cli'
     default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev sqlite3)
+    # Ubuntu >= 20.04 drops versions from the package names
     default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
     default['php']['fpm_package']      = 'php7.4-fpm'
     default['php']['fpm_pooldir']      = '/etc/php/7.4/fpm/pool.d'
