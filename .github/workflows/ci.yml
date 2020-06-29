@@ -42,8 +42,9 @@ jobs:
         os:
           - 'amazonlinux-2'
           - 'debian-9'
-          - 'centos-6'
+          - 'debian-10'
           - 'centos-7'
+          - 'centos-8'
           - 'ubuntu-1604'
           - 'ubuntu-1804'
           - 'ubuntu-2004'

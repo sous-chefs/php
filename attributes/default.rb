@@ -47,7 +47,7 @@ default['php']['fpm_conf_dir'] = nil
 default['php']['fpm_ini_control'] = false
 
 case node['platform_family']
-when 'rhel', 'fedora', 'amazon'
+when 'rhel', 'amazon'
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   default['php']['conf_dir']      = '/etc'
   default['php']['ext_conf_dir']  = '/etc/php.d'
@@ -142,29 +142,6 @@ when 'debian'
     default['php']['disable_mod']      = '/usr/sbin/phpdismod'
     default['php']['ext_conf_dir']     = '/etc/php/7.4/mods-available'
   end
-when 'suse'
-  default['php']['conf_dir']      = '/etc/php5/cli'
-  default['php']['ext_conf_dir']  = '/etc/php5/conf.d'
-  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev libxml2-devel libxslt-devel zlib-devel)
-  default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
-  default['php']['fpm_pooldir']      = '/etc/php5/fpm'
-  default['php']['fpm_service']   = 'php-fpm'
-  default['php']['fpm_package']   = 'php5-fpm'
-  default['php']['fpm_user']      = 'wwwrun'
-  default['php']['fpm_group']     = 'www'
-  default['php']['fpm_listen_user'] = 'wwwrun'
-  default['php']['fpm_listen_group'] = 'www'
-  default['php']['packages']         = %w(apache2-mod_php5 php5-pear)
-  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-when 'freebsd'
-  default['php']['conf_dir']      = '/usr/local/etc'
-  default['php']['ext_conf_dir']  = '/usr/local/etc/php'
-  default['php']['src_deps']      = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng12-dev libssl-dev libt1-dev)
-  default['php']['fpm_user']      = 'www'
-  default['php']['fpm_group']     = 'www'
-  default['php']['fpm_listen_user'] = 'www'
-  default['php']['fpm_listen_group'] = 'www'
-  default['php']['packages']         = %w( php56 pear )
 end
 
 default['php']['configure_options'] = %W(--prefix=#{node['php']['prefix_dir']}
