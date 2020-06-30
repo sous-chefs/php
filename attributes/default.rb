@@ -60,11 +60,11 @@ when 'rhel', 'amazon'
   default['php']['ext_dir']           = "/usr/#{lib_dir}/php/modules"
   default['php']['fpm_package']       = 'php-fpm'
 
-  if platform?('amazon')
-    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
+  if platform?('amazon') || node['platform_version'].to_i < 8
+    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
     default['php']['packages'] = %w(php php-devel php-pear)
   else # redhat does not name their packages with version on RHEL 6+
-    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
+    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
     default['php']['packages'] = %w(php php-devel php-cli php-pear)
   end
   default['php']['fpm_pooldir'] = '/etc/php-fpm.d'
