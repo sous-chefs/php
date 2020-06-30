@@ -30,7 +30,7 @@ php_exists = if node['php']['src_recompile']
 
 build_essential
 
-include_recipe 'yum-epel' if platform_family?('rhel')
+include_recipe 'yum-epel' if platform_family?('rhel', 'amazon')
 
 package node['php']['src_deps']
 
