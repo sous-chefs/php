@@ -10,31 +10,29 @@ verifier:
   name: inspec
 
 platforms:
-  - name: amazonlinux
-    driver_config:
-      box: mvbcoding/awslinux
-  - name: centos-6
+  - name: amazonlinux-2
   - name: centos-7
-  - name: debian-8
+  - name: centos-8
   - name: debian-9
-  - name: opensuse-leap-42
+  - name: debian-10
   - name: ubuntu-16.04
   - name: ubuntu-18.04
+  - name: ubuntu-20.04
 
 suites:
-  - name: resource_test
+  - name: resource
     run_list:
       - recipe[test::default]
-  - name: resource_test_peclchannel
+  - name: resource_peclchannel
     includes:
       - ubuntu-16.04
     run_list:
       - recipe[test::default]
     attributes:
-      pecl_method: 'channel'
+      pecl_method: channel
     verifier:
       inspec_tests:
-        - test/integration/resource_test
+        - test/integration/resource
   - name: source_install
     run_list:
       - recipe[test::source]

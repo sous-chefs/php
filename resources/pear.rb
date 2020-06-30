@@ -69,6 +69,8 @@ load_current_value do |new_resource|
 end
 
 action :install do
+  build_essential
+
   # If we specified a version, and it's not the current version, move to the specified version
   install_version = new_resource.version unless new_resource.version.nil? || new_resource.version == current_resource.version
   # Check if the version we want is already installed
@@ -87,6 +89,8 @@ end
 
 # reinstall is just an install that always fires
 action :reinstall do
+  build_essential
+
   install_version = new_resource.version unless new_resource.version.nil?
   converge_by("reinstall package #{new_resource.package_name} #{install_version}") do
     info_output = "Installing #{new_resource.package_name}"
@@ -286,6 +290,11 @@ action_class do
         priority: priority
       )
       action action
+    end
+
+    execute "#{node['php']['enable_mod']} #{name}" do
+      creates "#{node['php']['conf_dir']}/conf.d/#{name}"
+      only_if { platform_family? 'debian' }
     end
   end
 end

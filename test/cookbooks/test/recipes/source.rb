@@ -1,5 +1,6 @@
-apt_update 'update'
+apt_update
 
-node.override['php']['install_method'] = 'source'
+node.default['php']['install_method'] = 'source'
+node.default['php']['pear'] = '/usr/local/bin/pear'
 
 include_recipe 'php'
