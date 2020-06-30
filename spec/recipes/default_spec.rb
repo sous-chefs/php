@@ -14,7 +14,7 @@ describe 'php::default' do
   context 'on amazon linux 2' do
     platform 'amazon', '2'
 
-    let(:packages) { %w(php php-devel php-pear) }
+    let(:packages) { %w(php php-devel php-cli php-pear) }
     let(:php_ini_path) { '/etc/php.ini' }
 
     it_should_behave_like 'php'
