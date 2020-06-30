@@ -25,7 +25,7 @@ default['php']['bin'] = 'php'
 
 default['php']['pecl'] = 'pecl'
 
-default['php']['version'] = '5.6.40'
+default['php']['version'] = '7.2.31'
 
 default['php']['pear'] = '/usr/bin/pear'
 default['php']['pear_setup'] = true
@@ -35,15 +35,15 @@ default['php']['pear_channels'] = [
 ]
 
 default['php']['url'] = 'https://www.php.net/distributions'
-default['php']['checksum'] = '56fb9878d12fdd921f6a0897e919f4e980d930160e154cbde2cc6d9206a27cac'
+default['php']['checksum'] = '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c' # checksum of the .tar.gz files
 default['php']['prefix_dir'] = '/usr/local'
-default['php']['enable_mod'] = '/usr/sbin/php5enmod'
-default['php']['disable_mod'] = '/usr/sbin/php5dismod'
+default['php']['enable_mod'] = '/usr/sbin/phpenmod'
+default['php']['disable_mod'] = '/usr/sbin/phpdismod'
 
 default['php']['ini']['template'] = 'php.ini.erb'
 default['php']['ini']['cookbook'] = 'php'
 
-default['php']['fpm_socket'] = '/var/run/php5-fpm.sock'
+default['php']['fpm_socket'] = '/var/run/php7.2-fpm.sock'
 default['php']['fpm_conf_dir'] = nil
 default['php']['fpm_ini_control'] = false
 
