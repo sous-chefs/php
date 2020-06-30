@@ -100,7 +100,7 @@ when 'debian'
     default['php']['version']          = '7.3.19'
     default['php']['checksum']         = '809126b46d62a1a06c2d5a0f9d7ba61aba40e165f24d2d185396d0f9646d3280'
     default['php']['conf_dir']         = '/etc/php/7.3/cli'
-    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-turbo-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-turbo-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev file re2c libzip-dev)
     # Debian >= 10 drops versions from the package names
     default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
     default['php']['fpm_package']      = 'php7.3-fpm'
