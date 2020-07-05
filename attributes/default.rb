@@ -25,7 +25,7 @@ default['php']['bin'] = 'php'
 
 default['php']['pecl'] = 'pecl'
 
-default['php']['version'] = '5.6.40'
+default['php']['version'] = '7.2.31'
 
 default['php']['pear'] = '/usr/bin/pear'
 default['php']['pear_setup'] = true
@@ -35,15 +35,15 @@ default['php']['pear_channels'] = [
 ]
 
 default['php']['url'] = 'https://www.php.net/distributions'
-default['php']['checksum'] = '56fb9878d12fdd921f6a0897e919f4e980d930160e154cbde2cc6d9206a27cac'
+default['php']['checksum'] = '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c' # checksum of the .tar.gz files
 default['php']['prefix_dir'] = '/usr/local'
-default['php']['enable_mod'] = '/usr/sbin/php5enmod'
-default['php']['disable_mod'] = '/usr/sbin/php5dismod'
+default['php']['enable_mod'] = '/usr/sbin/phpenmod'
+default['php']['disable_mod'] = '/usr/sbin/phpdismod'
 
 default['php']['ini']['template'] = 'php.ini.erb'
 default['php']['ini']['cookbook'] = 'php'
 
-default['php']['fpm_socket'] = '/var/run/php5-fpm.sock'
+default['php']['fpm_socket'] = '/var/run/php7.2-fpm.sock'
 default['php']['fpm_conf_dir'] = nil
 default['php']['fpm_ini_control'] = false
 
@@ -60,13 +60,12 @@ when 'rhel', 'amazon'
   default['php']['ext_dir']           = "/usr/#{lib_dir}/php/modules"
   default['php']['fpm_package']       = 'php-fpm'
 
-  if platform?('amazon')
-    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel)
-    default['php']['packages'] = %w(php php-devel php-pear)
-  else # redhat does not name their packages with version on RHEL 6+
-    default['php']['src_deps'] = %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
-    default['php']['packages'] = %w(php php-devel php-cli php-pear)
-  end
+  default['php']['src_deps'] = if platform?('amazon') || node['platform_version'].to_i < 8
+                                 %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
+                               else # redhat does not name their packages with version on RHEL 6+
+                                 %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
+                               end
+  default['php']['packages'] = %w(php php-devel php-cli php-pear)
   default['php']['fpm_pooldir'] = '/etc/php-fpm.d'
   default['php']['fpm_default_conf'] = '/etc/php-fpm.d/www.conf'
   default['php']['fpm_service'] = 'php-fpm'
