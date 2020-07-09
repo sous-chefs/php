@@ -6,6 +6,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 - Add support for Ubuntu 20.04
 - Refactor version conditionals to use `Chef::VersionConstraint`
+- Only symlink GMP on Ubuntu 16.04 to aid source builds
 
 ## 7.2.0 (2020-06-19)
 
