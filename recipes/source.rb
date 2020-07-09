@@ -18,6 +18,10 @@
 # limitations under the License.
 #
 
+if platform?('debian') && node['platform_version'].to_i == 9
+  Chef::Log.fatal 'Debian 9 is not supported when building from source'
+end
+
 version = node['php']['version']
 configure_options = node['php']['configure_options'].join(' ')
 ext_dir_prefix = node['php']['ext_dir'] ? "EXTENSION_DIR=#{node['php']['ext_dir']}" : ''

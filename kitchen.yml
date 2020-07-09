@@ -36,3 +36,5 @@ suites:
   - name: source_install
     run_list:
       - recipe[test::source]
+    excludes:
+      - debian-9

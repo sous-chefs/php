@@ -51,6 +51,9 @@ jobs:
         suite:
           - 'resource'
           - 'source-install'
+        exclude:
+          - os: debian-9
+            suite: source-install
       fail-fast: false
 
     steps:
