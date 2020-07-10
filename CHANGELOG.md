@@ -2,8 +2,15 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
-## Unreleased
+## 8.0.0 (2020-07-09)
 
+- Drop support for:
+  - Debian 8
+  - Ubuntu < 16.04
+  - Amazon Linux 1
+- Set default PHP version to 7.2.x
+- Update Ubuntu 18.04 support to source build PHP 7.2
+- Update attributes for Debian 10
 - Add support for Ubuntu 20.04
 - Only symlink GMP on Ubuntu 16.04 to aid source builds
 - Drop support for installing from source on Debian 9
