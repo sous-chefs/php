@@ -18,6 +18,10 @@
 # limitations under the License.
 #
 
+if platform?('debian') && node['platform_version'].to_i == 9
+  Chef::Log.fatal 'Debian 9 is not supported when building from source'
+end
+
 version = node['php']['version']
 configure_options = node['php']['configure_options'].join(' ')
 ext_dir_prefix = node['php']['ext_dir'] ? "EXTENSION_DIR=#{node['php']['ext_dir']}" : ''
@@ -60,11 +64,11 @@ if node['php']['ext_dir']
   end
 end
 
-# PHP is unable to find the GMP library in 16.04. The symlink brings the file
-# inside of the include libraries.
+# PHP is unable to find the GMP library on Ubuntu 16.04
+# This symlink brings the file inside of the included libraries
 link '/usr/include/gmp.h' do
   to '/usr/include/x86_64-linux-gnu/gmp.h'
-  only_if { platform?('ubuntu') }
+  only_if { platform?('ubuntu') && node['platform_version'].to_f == 16.04 }
 end
 
 execute 'clean build' do

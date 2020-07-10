@@ -58,6 +58,8 @@ This recipe installs PHP from packages.
 
 This recipe installs PHP from source.
 
+*Note:* Debian 9 is not supported for building from source.
+
 ## Usage
 
 Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
