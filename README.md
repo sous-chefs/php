@@ -12,10 +12,7 @@ It installs and configures PHP and the PEAR package management system. Also incl
 
 This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of Chef cookbook maintainers working together to maintain important cookbooks. If you’d like to know more please visit [sous-chefs.org](https://sous-chefs.org/) or come chat with us on the Chef Community Slack in [#sous-chefs](https://chefcommunity.slack.com/messages/C2V7B88SF).
 
-## Requirements
-
-### Platforms
-
+## Requirements Platforms
 - Debian, Ubuntu
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
@@ -79,18 +76,18 @@ run_list(
 )
 ```
 
-## Contributors
+##Thanks to all Contributors
 
 This project exists thanks to all the people who [contribute.](https://opencollective.com/sous-chefs/contributors.svg?width=890&button=false)
 
-### Backers
+### Thansk to all Backers
 
 Thank you to all our backers!
 
 ![https://opencollective.com/sous-chefs#backers](https://opencollective.com/sous-chefs/backers.svg?width=600&avatarHeight=40)
 
-### Sponsors
-
+### Thanks to all Sponsors
+Please visit given below links for becoming sponsor.
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 ![https://opencollective.com/sous-chefs/sponsor/0/website](https://opencollective.com/sous-chefs/sponsor/0/avatar.svg?avatarHeight=100)
