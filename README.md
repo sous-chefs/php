@@ -1,4 +1,4 @@
-# php Cookbook
+## php Cookbook
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/php.svg)](https://supermarket.chef.io/cookbooks/php)
 [![Build Status](https://img.shields.io/circleci/project/github/sous-chefs/php/master.svg)](https://circleci.com/gh/sous-chefs/php)
@@ -17,7 +17,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 - CentOS, Red Hat, Oracle, Scientific, Amazon Linux
 - Fedora
 
-### Chef
+## Chef
 
 - Chef 14+
 
@@ -43,15 +43,15 @@ This cookbook includes resources for managing:
 
 ## Recipes
 
-### default
+## default
 
 Include the default recipe in a run list, to get `php`. By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
 
-### package
+## package
 
 This recipe installs PHP from packages.
 
-### source
+## source
 
 This recipe installs PHP from source.
 
@@ -61,7 +61,7 @@ This recipe installs PHP from source.
 
 Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
 
-### Role example
+## Role example
 
 ```ruby
 name 'php'
@@ -76,18 +76,18 @@ run_list(
 )
 ```
 
-##Thanks to all Contributors
+## Thanks to all Contributors
 
 This project exists thanks to all the people who [contribute.](https://opencollective.com/sous-chefs/contributors.svg?width=890&button=false)
 
-### Thansk to all Backers
+## Thansk to all Backers
 
-Thank you to all our backers!
+## Thank you to all our backers!
 
 ![https://opencollective.com/sous-chefs#backers](https://opencollective.com/sous-chefs/backers.svg?width=600&avatarHeight=40)
 
-### Thanks to all Sponsors
-Please visit given below links for becoming sponsor.
+## Thanks to all Sponsors
+## Please visit given below links for becoming sponsor.
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 ![https://opencollective.com/sous-chefs/sponsor/0/website](https://opencollective.com/sous-chefs/sponsor/0/avatar.svg?avatarHeight=100)
