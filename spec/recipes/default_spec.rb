@@ -68,7 +68,7 @@ describe 'php::default' do
   context 'on ubuntu 20.04' do
     platform 'ubuntu', '20.04'
 
-    let(:packages) { %w(php-cgi php php-dev php-cli php-pear) }
+    let(:packages) { ['php7.4-cgi', 'php7.4', 'php7.4-dev', 'php7.4-cli', 'php-pear'] }
     let(:php_ini_path) { '/etc/php/7.4/cli/php.ini' }
 
     it_should_behave_like 'php'

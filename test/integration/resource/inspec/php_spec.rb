@@ -21,3 +21,10 @@ describe 'PHP' do
     end
   end
 end
+
+# Check if we didn't accidentally pull in Apache as a dependency (#311)
+unless os[:family] == 'redhat'
+  describe package('apache2') do
+    it { should_not be_installed }
+  end
+end
