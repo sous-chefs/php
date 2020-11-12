@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
-## Unreleased
+## 8.0.1 (2020-11-12)
 
 - Prevent Apache from being pulled in as a dependency on Ubuntu 20.04 (#311)
 
