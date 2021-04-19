@@ -23,6 +23,9 @@ suites:
   - name: resource
     run_list:
       - recipe[test::default]
+  - name: resource_community
+    run_list:
+      - recipe[test::community]
   - name: resource_peclchannel
     includes:
       - ubuntu-16.04

@@ -9,6 +9,8 @@ chef_version      '>= 14.0'
 version           '8.0.1'
 
 depends 'yum-epel'
+depends 'yum-remi-chef'
+depends 'ondrej_ppa_ubuntu'
 
 supports 'amazon', '>= 2.0'
 supports 'centos', '>= 7.0'

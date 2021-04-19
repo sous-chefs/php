@@ -54,6 +54,17 @@ Include the default recipe in a run list, to get `php`. By default `php` is inst
 
 This recipe installs PHP from packages.
 
+### community_package
+
+This recipe intalls PHP from one of two available community package repositories, depending on platform family. This provides the ability to install PHP versions that are no provided by the official distro repositories.
+
+Set `node['php']['install_method'] = 'community_package'` to use these repositories.
+
+Please see `test/cookbooks/test/recipes/community.rb` for an example of how to use attributes to install the desired version of PHP & its supporting packages, and please refer to the documentation on these community repositories:
+
+- RHEL/Amazon - [Remi’s RPM repository](https://rpms.remirepo.net)
+- Debian - [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)
+
 ### source
 
 This recipe installs PHP from source.
@@ -62,7 +73,7 @@ This recipe installs PHP from source.
 
 ## Usage
 
-Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute with in a role or wrapper cookbook:
+Simply include the `php` recipe where ever you would like php installed. To install from source override the `node['php']['install_method']` attribute within a role or wrapper cookbook:
 
 ### Role example
 
