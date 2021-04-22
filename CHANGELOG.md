@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
+- Add ability to use community repositories to install newer versions of PHP
+
 ## 8.0.1 (2020-11-12)
 
 - Prevent Apache from being pulled in as a dependency on Ubuntu 20.04 (#311)

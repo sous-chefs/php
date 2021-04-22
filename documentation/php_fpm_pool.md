@@ -3,8 +3,8 @@
 Installs the `php-fpm` package appropriate for your distro (if using packages) and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such, YMMV if you are using source).
 
 Please consider FPM functionally pre-release, and test it thoroughly in your environment before using it in production
-
-More info: <http://php.net/manual/en/install.fpm.php>
+<!-- markdown-link-check-disable -->
+More info: <https://www.php.net/manual/en/install.fpm.php>
 
 ## Actions
 
@@ -19,7 +19,7 @@ More info: <http://php.net/manual/en/install.fpm.php>
 | `listen`            | `String` | Default: `/var/run/php5-fpm.sock`    | The listen address                                                                    |
 | `user`              |          | The webserver user for your distro.  | The user to run the FPM under                                                         |
 | `group`             |          | The webserver group for your distro. | The group to run the FPM under                                                        |
-| `process_manager`   |          | `dynamic`                            | Process manager to use - see <http://php.net/manual/en/install.fpm.configuration.php> |
+| `process_manager`   |          | `dynamic`                            | Process manager to use - see <https://www.php.net/manual/en/install.fpm.configuration.php> |
 | `max_children`      |          | `5`                                  | Max children to scale to                                                              |
 | `start_servers`     |          | `2`                                  | Number of servers to start the pool with                                              |
 | `min_spare_servers` |          | `1`                                  | Minimum number of servers to have as spares                                           |
