@@ -3,7 +3,7 @@
 Installs the `php-fpm` package appropriate for your distro (if using packages) and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such, YMMV if you are using source).
 
 Please consider FPM functionally pre-release, and test it thoroughly in your environment before using it in production
-
+<!-- markdown-link-check-disable -->
 More info: <https://www.php.net/manual/en/install.fpm.php>
 
 ## Actions
