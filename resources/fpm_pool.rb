@@ -3,7 +3,7 @@
 # Cookbook:: php
 # Resource:: fpm_pool
 #
-# Copyright:: 2015-2018, Chef Software, Inc <legal@chef.io>
+# Copyright:: 2015-2021, Chef Software, Inc <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+unified_mode true
 
 property :pool_name, String, name_property: true
 property :listen, String, default: lazy { node['php']['fpm_socket'] }
