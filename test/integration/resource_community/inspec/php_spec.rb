@@ -3,7 +3,7 @@ describe command('php -v') do
   its('stdout') { should match /PHP 8.0/ }
 end
 
-describe command('pear list-channels') do
+describe command('php-pear list-channels') do
   its('stdout') { should match /pear\.php\.net/ }
   its('stdout') { should match /pecl\.php\.net/ }
 end

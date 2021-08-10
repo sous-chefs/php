@@ -8,9 +8,9 @@ issues_url        'https://github.com/sous-chefs/php/issues'
 version           '8.1.2'
 chef_version      '>= 15.3'
 
+depends 'ondrej_ppa_ubuntu'
 depends 'yum-epel'
 depends 'yum-remi-chef'
-depends 'ondrej_ppa_ubuntu'
 
 supports 'amazon', '>= 2.0'
 supports 'centos', '>= 7.0'
