@@ -1,13 +1,8 @@
-describe 'PHP' do
-  it 'has php' do
-    expect(command('php -v').exit_status).to eq(0)
-  end
+describe command('php -v') do
+  its('exit_status') { should eq 0 }
+end
 
-  it 'has the pear.php.net channel' do
-    expect(command('pear list-channels').stdout).to include('pear.php.net')
-  end
-
-  it 'has the pecl.php.net channel' do
-    expect(command('pear list-channels').stdout).to include('pecl.php.net')
-  end
+describe command('pear list-channels') do
+  its('stdout') { should match /pear\.php\.net/ }
+  its('stdout') { should match /pecl\.php\.net/ }
 end

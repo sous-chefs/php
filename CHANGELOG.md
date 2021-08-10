@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the PHP cookbook.
 ## Unreleased
 
 - Enable `unified_mode` for Chef 17 compatibility
+- Remove EOL Ubuntu 16.04 from testing
 
 ## 8.1.2 - *2021-08-30*
 

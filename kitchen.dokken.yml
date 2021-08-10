@@ -10,7 +10,6 @@ transport:
 
 provisioner:
   name: dokken
-  deprecations_as_errors: true
 
 verifier:
   name: inspec
@@ -44,13 +43,6 @@ platforms:
     driver:
       image: dokken/centos-8
       pid_one_command: /usr/lib/systemd/systemd
-
-  - name: ubuntu-16.04
-    driver:
-      image: dokken/ubuntu-16.04
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN /usr/bin/apt-get update
 
   - name: ubuntu-18.04
     driver:
