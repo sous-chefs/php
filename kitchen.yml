@@ -29,6 +29,8 @@ suites:
   - name: resource_community
     run_list:
       - recipe[test::community]
+    excludes:
+      - centos-8 # no support for dnf modules currently
   - name: resource_peclchannel
     run_list:
       - recipe[test::default]

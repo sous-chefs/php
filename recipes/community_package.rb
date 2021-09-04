@@ -19,9 +19,19 @@
 #
 
 if platform_family?('rhel', 'amazon')
+  raise 'php::community_package does not support CentOS 8! Chef does not currently have support ' \
+  'for DNF streams required to enable the REMI repo on C8' if node['platform_version'].to_i >= 8
+
   include_recipe 'yum-remi-chef::remi'
-elsif platform_family?('debian')
+elsif platform?('ubuntu')
   include_recipe 'ondrej_ppa_ubuntu'
+elsif platform?('debian')
+  # use sury repo for debian (https://deb.sury.org/)
+  apt_repository 'sury-php' do
+    uri 'https://packages.sury.org/php/'
+    key 'https://packages.sury.org/php/apt.gpg'
+    components %w(main)
+  end
 end
 
 include_recipe 'php::package'

@@ -55,6 +55,8 @@ jobs:
         exclude:
           - os: debian-9
             suite: source-install
+          - os: centos-8
+            suite: resource-community
       fail-fast: false
 
     steps:

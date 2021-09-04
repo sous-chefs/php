@@ -62,8 +62,11 @@ Set `node['php']['install_method'] = 'community_package'` to use these repositor
 
 Please see `test/cookbooks/test/recipes/community.rb` for an example of how to use attributes to install the desired version of PHP & its supporting packages, and please refer to the documentation on these community repositories:
 
-- RHEL/Amazon - [Remi’s RPM repository](https://rpms.remirepo.net)
-- Debian - [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)
+- CentOS 7 / Amazon 2 - [Remi’s RPM repository](https://rpms.remirepo.net)
+- Ubuntu - [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)
+- Debian - [Sury repo](https://deb.sury.org/)
+
+> ⚠ This recipe does not support CentOS 8! Chef does not currently support module streams required for the REMI repo on C8
 
 ### source
 
