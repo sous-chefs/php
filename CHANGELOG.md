@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 9.0.0 - *2021-09-08*
 
 - Enable `unified_mode` for Chef 17 compatibility
