@@ -4,6 +4,10 @@ driver:
 
 provisioner:
   name: chef_zero
+  product_name: chef
+  chef_license: accept-no-persist
+  enforce_idempotency: true
+  multiple_converge: 2
   deprecations_as_errors: true
 
 verifier:
@@ -15,7 +19,6 @@ platforms:
   - name: centos-8
   - name: debian-9
   - name: debian-10
-  - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: ubuntu-20.04
 
@@ -26,9 +29,9 @@ suites:
   - name: resource_community
     run_list:
       - recipe[test::community]
+    excludes:
+      - centos-8 # no support for dnf modules currently
   - name: resource_peclchannel
-    includes:
-      - ubuntu-16.04
     run_list:
       - recipe[test::default]
     attributes:

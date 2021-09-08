@@ -4,6 +4,11 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Enable `unified_mode` for Chef 17 compatibility
+- Remove EOL Ubuntu 16.04 from testing
+- Add missing attributes to Ubuntu community package test
+- Add missing suites to GH Actions
+
 ## 8.1.2 - *2021-08-30*
 
 - Standardise files with files in sous-chefs/repo-management

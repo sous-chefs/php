@@ -1,4 +1,4 @@
-apt_update
+apt_update 'update'
 
 node.default['php']['install_method'] = 'source'
 node.default['php']['pear'] = '/usr/local/bin/pear'

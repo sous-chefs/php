@@ -2,19 +2,26 @@ node.default['php']['fpm_ini_control'] = false
 
 if platform_family?('rhel', 'amazon')
   node.default['php']['packages']         = %w(php80 php80-php-devel php80-php-cli php80-php-pear)
-  node.default['php']['fpm_package']      = 'php80-php-fpm'
-  node.default['php']['fpm_service']      = 'php80-php-fpm'
-  node.default['php']['pear']             = '/usr/bin/php80-pear'
   node.default['php']['conf_dir']         = '/etc/opt/remi/php80'
   node.default['php']['ext_conf_dir']     = '/etc/opt/remi/php80/php.d'
+  node.default['php']['fpm_package']      = 'php80-php-fpm'
+  node.default['php']['fpm_service']      = 'php80-php-fpm'
   node.default['php']['fpm_pooldir']      = '/etc/opt/remi/php80/php-fpm.d'
   node.default['php']['fpm_default_conf'] = '/etc/opt/remi/php80/php-fpm.d/www.conf'
+  node.default['php']['pear']             = '/usr/bin/php80-pear'
 
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   node.default['php']['ext_dir'] = "/opt/remi/php80/root/#{lib_dir}/php/modules"
 elsif platform_family?('debian')
-  node.default['php']['packages']    = %w(php8.0-cgi php8.0 php8.0-dev php8.0-cli php-pear)
-  node.default['php']['fpm_package'] = 'php8.0-fpm'
+  node.default['php']['packages']         = %w(php8.0 php8.0-cgi php8.0-cli php8.0-dev php-pear)
+  node.default['php']['conf_dir']         = '/etc/php/8.0/'
+  node.default['php']['ext_conf_dir']     = '/etc/php/8.0/mods-available'
+  node.default['php']['fpm_package']      = 'php8.0-fpm'
+  node.default['php']['fpm_service']      = 'php8.0-fpm'
+  node.default['php']['fpm_conf_dir']     = '/etc/php/8.0/fpm'
+  node.default['php']['fpm_pooldir']      = '/etc/php/8.0/fpm/pool.d'
+  node.default['php']['fpm_default_conf'] = '/etc/php/8.0/fpm/pool.d/www.conf'
+  node.default['php']['fpm_socket']       = '/var/run/php/php8.0-fpm.sock'
 end
 
 node.default['php']['install_method'] = 'community_package'
