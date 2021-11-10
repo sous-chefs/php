@@ -19,9 +19,6 @@
 #
 
 if platform_family?('rhel', 'amazon')
-  raise 'php::community_package does not support CentOS 8! Chef does not currently have support ' \
-  'for DNF streams required to enable the REMI repo on C8' if node['platform_version'].to_i >= 8
-
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
   include_recipe 'ondrej_ppa_ubuntu'
