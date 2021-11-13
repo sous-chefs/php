@@ -3,7 +3,7 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
+  name: chef_infra
   product_name: chef
   chef_license: accept-no-persist
   enforce_idempotency: true
@@ -29,8 +29,6 @@ suites:
   - name: resource_community
     run_list:
       - recipe[test::community]
-    excludes:
-      - centos-8 # no support for dnf modules currently
   - name: resource_peclchannel
     run_list:
       - recipe[test::default]

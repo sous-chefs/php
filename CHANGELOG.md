@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Reenable community package recipe for CentOS 8
+  - Bumps `yum-remi-chef` dependency to >= 5.0.1
+
 ## 9.0.0 - *2021-09-08*
 
 - Enable `unified_mode` for Chef 17 compatibility
