@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+Standardise files with files in sous-chefs/repo-management
+
 ## 9.1.0 - *2021-11-13*
 
 - Reenable community package recipe for CentOS 8
