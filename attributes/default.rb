@@ -95,7 +95,7 @@ when 'debian'
   default['php']['fpm_listen_user']  = 'www-data'
   default['php']['fpm_listen_group'] = 'www-data'
 
-  if platform?('debian') && node['platform_version'].to_i >= 10
+  if platform?('debian') && node['platform_version'].to_i == 10
     default['php']['version']          = '7.3.19'
     default['php']['checksum']         = '809126b46d62a1a06c2d5a0f9d7ba61aba40e165f24d2d185396d0f9646d3280'
     default['php']['conf_dir']         = '/etc/php/7.3/cli'
@@ -109,6 +109,19 @@ when 'debian'
     default['php']['fpm_default_conf'] = '/etc/php/7.3/fpm/pool.d/www.conf'
     default['php']['fpm_conf_dir']     = '/etc/php/7.3/fpm'
     default['php']['ext_conf_dir']     = '/etc/php/7.3/mods-available'
+  elsif platform?('debian') && node['platform_version'].to_i >= 11
+    default['php']['version']          = '7.4.27'
+    default['php']['checksum']         = '564fd5bc9850370db0cb4058d9087f2f40177fa4921ce698a375416db9ab43ca'
+    default['php']['conf_dir']         = '/etc/php/7.4/cli'
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-turbo-dev libkrb5-dev libmcrypt-dev libonig-dev libpng-dev libsqlite3-dev libssl-dev pkg-config libxml2-dev file re2c libzip-dev)
+    default['php']['packages']         = %w(php-cgi php php-dev php-cli php-pear)
+    default['php']['fpm_package']      = 'php7.4-fpm'
+    default['php']['fpm_pooldir']      = '/etc/php/7.4/fpm/pool.d'
+    default['php']['fpm_service']      = 'php7.4-fpm'
+    default['php']['fpm_socket']       = '/var/run/php/php7.4-fpm.sock'
+    default['php']['fpm_default_conf'] = '/etc/php/7.4/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/7.4/fpm'
+    default['php']['ext_conf_dir']     = '/etc/php/7.4/mods-available'
   elsif platform?('ubuntu') && node['platform_version'].to_f == 18.04
     default['php']['version']          = '7.2.31'
     default['php']['checksum']         = '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c'

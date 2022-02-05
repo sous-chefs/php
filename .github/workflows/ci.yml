@@ -45,6 +45,7 @@ jobs:
           - centos-8
           - debian-9
           - debian-10
+          - debian-11
           - ubuntu-1804
           - ubuntu-2004
         suite:
@@ -55,8 +56,6 @@ jobs:
         exclude:
           - os: debian-9
             suite: source-install
-          - os: centos-8
-            suite: resource-community
       fail-fast: false
 
     steps:
