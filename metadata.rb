@@ -14,7 +14,7 @@ depends 'yum-remi-chef', '>= 5.0.1'
 
 supports 'amazon', '>= 2.0'
 supports 'centos', '>= 7.0'
-supports 'debian', '>= 9.0'
+supports 'debian', '>= 10.0'
 supports 'oracle', '>= 7.0'
 supports 'redhat', '>= 7.0'
 supports 'scientific', '>= 7.0'

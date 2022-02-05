@@ -4,6 +4,11 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Switch to using reusable CI workflow
+- Update tested platforms
+  - removed: CentOS 8, Debian 9
+  - added: CentOS Stream 8, Rocky / Alma 8, Debian 11
+
 ## 9.1.1 - *2022-02-08*
 
 - Remove delivery folder
