@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 9.1.1 - *2022-02-08*
 
 - Remove delivery folder
