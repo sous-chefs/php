@@ -1,6 +1,6 @@
 describe command('php -v') do
   its('exit_status') { should eq 0 }
-  its('stdout') { should match /PHP 8.0/ }
+  its('stdout') { should match /PHP 8/ }
 end
 
 pear_cmd = os.debian? ? 'pear' : 'php-pear'

@@ -14,11 +14,12 @@ verifier:
   name: inspec
 
 platforms:
+  - name: almalinux-8
   - name: amazonlinux-2
   - name: centos-7
-  - name: centos-8
-  - name: debian-9
+  - name: centos-stream-8
   - name: debian-10
+  - name: debian-11
   - name: ubuntu-18.04
   - name: ubuntu-20.04
 
@@ -40,5 +41,3 @@ suites:
   - name: source_install
     run_list:
       - recipe[test::source]
-    excludes:
-      - debian-9

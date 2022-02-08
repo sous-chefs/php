@@ -16,9 +16,9 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Platforms
 
-- Debian, Ubuntu
-- CentOS, Red Hat, Oracle, Scientific, Amazon Linux
-- Fedora
+- Ubuntu 18.04 / 20.04
+- Debian 10 / 11
+- CentOS 7+ (incl. Alma & Rocky)
 
 ### Chef
 
@@ -46,15 +46,15 @@ This cookbook includes resources for managing:
 
 ## Recipes
 
-### default
+### `php::default`
 
 Include the default recipe in a run list, to get `php`. By default `php` is installed from packages but this can be changed by using the `install_method` attribute.
 
-### package
+### `php::package`
 
 This recipe installs PHP from packages.
 
-### community_package
+### `php::community_package`
 
 This recipe installs PHP from one of two available community package repositories, depending on platform family. This provides the ability to install PHP versions that are no provided by the official distro repositories.
 
@@ -66,11 +66,9 @@ Please see `test/cookbooks/test/recipes/community.rb` for an example of how to u
 - Ubuntu - [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)
 - Debian - [Sury repo](https://deb.sury.org/)
 
-### source
+### `php::source`
 
 This recipe installs PHP from source.
-
-*Note:* Debian 9 is not supported for building from source.
 
 ## Usage
 

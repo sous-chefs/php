@@ -13,15 +13,15 @@ if platform_family?('rhel', 'amazon')
   lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
   node.default['php']['ext_dir'] = "/opt/remi/php80/root/#{lib_dir}/php/modules"
 elsif platform_family?('debian')
-  node.default['php']['packages']         = %w(php8.0 php8.0-cgi php8.0-cli php8.0-dev php-pear)
-  node.default['php']['conf_dir']         = '/etc/php/8.0/'
-  node.default['php']['ext_conf_dir']     = '/etc/php/8.0/mods-available'
-  node.default['php']['fpm_package']      = 'php8.0-fpm'
-  node.default['php']['fpm_service']      = 'php8.0-fpm'
-  node.default['php']['fpm_conf_dir']     = '/etc/php/8.0/fpm'
-  node.default['php']['fpm_pooldir']      = '/etc/php/8.0/fpm/pool.d'
-  node.default['php']['fpm_default_conf'] = '/etc/php/8.0/fpm/pool.d/www.conf'
-  node.default['php']['fpm_socket']       = '/var/run/php/php8.0-fpm.sock'
+  node.default['php']['packages']         = %w(php8.1 php8.1-cgi php8.1-cli php8.1-dev php-pear)
+  node.default['php']['conf_dir']         = '/etc/php/8.1/'
+  node.default['php']['ext_conf_dir']     = '/etc/php/8.1/mods-available'
+  node.default['php']['fpm_package']      = 'php8.1-fpm'
+  node.default['php']['fpm_service']      = 'php8.1-fpm'
+  node.default['php']['fpm_conf_dir']     = '/etc/php/8.1/fpm'
+  node.default['php']['fpm_pooldir']      = '/etc/php/8.1/fpm/pool.d'
+  node.default['php']['fpm_default_conf'] = '/etc/php/8.1/fpm/pool.d/www.conf'
+  node.default['php']['fpm_socket']       = '/var/run/php/php8.1-fpm.sock'
 end
 
 node.default['php']['install_method'] = 'community_package'
