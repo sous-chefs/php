@@ -16,7 +16,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Platforms
 
-- Ubuntu 18.04 / 20.04
+- Ubuntu 18.04 / 20.04 / 22.04
 - Debian 10 / 11
 - CentOS 7+ (incl. Alma & Rocky)
 

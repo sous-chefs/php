@@ -4,6 +4,10 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Add support for Ubuntu 22.04
+- Update tested platforms
+  - added: Ubuntu 22.04
+
 ## 9.1.4 - *2022-04-20*
 
 Standardise files with files in sous-chefs/repo-management

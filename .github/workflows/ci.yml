@@ -26,6 +26,7 @@ jobs:
           - rockylinux-8
           - ubuntu-1804
           - ubuntu-2004
+          - ubuntu-2204
         suite:
           - resource
           - resource-community
