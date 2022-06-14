@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 9.2.0 - *2022-06-14*
 
 - Add support for Ubuntu 22.04
