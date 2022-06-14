@@ -135,7 +135,7 @@ when 'debian'
     default['php']['fpm_default_conf'] = '/etc/php/7.2/fpm/pool.d/www.conf'
     default['php']['fpm_conf_dir']     = '/etc/php/7.2/fpm'
     default['php']['ext_conf_dir']     = '/etc/php/7.2/mods-available'
-  elsif platform?('ubuntu') && node['platform_version'].to_f >= 20.04
+  elsif platform?('ubuntu') && node['platform_version'].to_f == 20.04
     default['php']['version']          = '7.4.7'
     default['php']['checksum']         = 'a554a510190e726ebe7157fb00b4aceabdb50c679430510a3b93cbf5d7546e44'
     default['php']['conf_dir']         = '/etc/php/7.4/cli'
@@ -150,6 +150,21 @@ when 'debian'
     default['php']['enable_mod']       = '/usr/sbin/phpenmod'
     default['php']['disable_mod']      = '/usr/sbin/phpdismod'
     default['php']['ext_conf_dir']     = '/etc/php/7.4/mods-available'
+  elsif platform?('ubuntu') && node['platform_version'].to_f >= 22.04
+    default['php']['version']          = '8.1.7'
+    default['php']['checksum']         = '5f0b422a117633c86d48d028934b8dc078309d4247e7565ea34b2686189abdd8'
+    default['php']['conf_dir']         = '/etc/php/8.1/cli'
+    default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev libsqlite3-dev libonig-dev)
+    default['php']['packages']         = %w(php8.1-cgi php8.1 php8.1-dev php8.1-cli php-pear)
+    default['php']['fpm_package']      = 'php8.1-fpm'
+    default['php']['fpm_pooldir']      = '/etc/php/8.1/fpm/pool.d'
+    default['php']['fpm_service']      = 'php8.1-fpm'
+    default['php']['fpm_socket']       = '/var/run/php/php8.1-fpm.sock'
+    default['php']['fpm_default_conf'] = '/etc/php/8.1/fpm/pool.d/www.conf'
+    default['php']['fpm_conf_dir']     = '/etc/php/8.1/fpm'
+    default['php']['enable_mod']       = '/usr/sbin/phpenmod'
+    default['php']['disable_mod']      = '/usr/sbin/phpdismod'
+    default['php']['ext_conf_dir']     = '/etc/php/8.1/mods-available'
   end
 end
 
