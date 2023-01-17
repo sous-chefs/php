@@ -2,6 +2,9 @@
 driver:
   name: dokken
   privileged: true
+  cgroupns_host: true
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
 
 transport:
   name: dokken
