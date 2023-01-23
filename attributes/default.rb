@@ -61,7 +61,7 @@ when 'rhel', 'amazon'
   default['php']['fpm_package']       = 'php-fpm'
 
   default['php']['src_deps'] = if platform?('amazon') || node['platform_version'].to_i < 8
-                                 %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
+                                 %w(bzip2-devel libc-client-devel libcurl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
                                else # redhat does not name their packages with version on RHEL 6+
                                  %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel libmcrypt-devel libpng-devel openssl-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
                                end
