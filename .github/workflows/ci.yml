@@ -24,7 +24,6 @@ jobs:
       matrix:
         os:
           - almalinux-8
-          - amazonlinux-2
           - centos-7
           - centos-stream-8
           - debian-10
@@ -33,6 +32,34 @@ jobs:
           - ubuntu-1804
           - ubuntu-2004
           - ubuntu-2204
+        suite:
+          - resource
+          - resource-community
+          - resource-peclchannel
+          - source-install
+      fail-fast: false
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install Chef
+        uses: actionshub/chef-install@main
+      - name: Dokken
+        uses: actionshub/test-kitchen@main
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+        with:
+          suite: ${{ matrix.suite }}
+          os: ${{ matrix.os }}
+
+  integration-amazonlinux:
+    needs: lint-unit
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        os:
+          - amazonlinux-2
         suite:
           - resource
           - resource-community
