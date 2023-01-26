@@ -3,8 +3,8 @@ describe command('php -v') do
 end
 
 describe command('pear list-channels') do
-  its('stdout') { should match /pear\.php\.net/ }
-  its('stdout') { should match /pecl\.php\.net/ }
+  its('stdout') { should match(/pear\.php\.net/) }
+  its('stdout') { should match(/pecl\.php\.net/) }
 end
 
 describe command('php --ri sync') do
@@ -13,7 +13,7 @@ end
 
 unless os[:family] == 'redhat'
   describe command('php -i') do
-    its('stdout') { should match /50-sync/ }
+    its('stdout') { should match(/50-sync/) }
   end
 
   # Check if we didn't accidentally pull in Apache as a dependency (#311)

@@ -19,15 +19,17 @@
 # limitations under the License.
 #
 
-include_recipe "php::#{node['php']['install_method']}"
+::Chef::DSL::Recipe.include Php::Cookbook::Helpers
 
-# update the main channels
-node['php']['pear_channels'].each do |channel|
-  php_pear_channel channel do
-    binary node['php']['pear']
-    action :update
-    only_if { node['php']['pear_setup'] }
-  end
+php_install 'php' do
+  install_type 'source'
+  action :install
 end
 
-include_recipe 'php::ini'
+php_pear_channels.each do |channel|
+  php_pear_channel channel do
+    binary php_pear_path
+    action :update
+    only_if { php_pear_setup }
+  end
+end

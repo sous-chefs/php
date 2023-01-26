@@ -7,3 +7,4 @@ version           '1.0.0'
 
 depends 'php'
 depends 'apt'
+depends 'yum-epel'

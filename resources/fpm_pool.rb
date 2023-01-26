@@ -17,15 +17,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+# Author:: Chris Marchesi <cmarchesi@paybyphone.com>
+# Cookbook:: php
+# Resource:: fpm_pool
+#
+# Copyright:: 2015-2021, Chef Software, Inc <legal@chef.io>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
 unified_mode true
+include Php::Cookbook::Helpers
 
 property :pool_name, String, name_property: true
-property :listen, String, default: lazy { node['php']['fpm_socket'] }
-property :user, String, default: lazy { node['php']['fpm_user'] }
-property :group, String, default: lazy { node['php']['fpm_group'] }
-property :listen_user, String, default: lazy { node['php']['fpm_listen_user'] }
-property :listen_group, String, default: lazy { node['php']['fpm_listen_group'] }
+property :listen, String, default: lazy { php_fpm_socket }
+property :user, String, default: lazy { php_fpm_user }
+property :group, String, default: lazy { php_fpm_group }
+property :listen_user, String, default: lazy { php_fpm_listen_user }
+property :listen_group, String, default: lazy { php_fpm_listen_group }
+property :pool_dir, String, default: lazy { php_fpm_pooldir }
+property :service, String, default: lazy { php_fpm_service }
+property :default_conf, String, default: lazy { php_fpm_default_conf }
+property :fpm_package, String, default: lazy { php_fpm_package }
+property :install_type, String, equal_to: %w(package source), default: 'package'
 property :process_manager, String, default: 'dynamic'
 property :max_children, Integer, default: 5
 property :start_servers, Integer, default: 2
@@ -40,7 +65,7 @@ action :install do
   register_fpm_service
   # I wanted to have this as a function in itself, but doing this seems to
   # break testing suites?
-  template "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
+  template "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
     source 'fpm-pool.conf.erb'
     action :create
     cookbook 'php'
@@ -59,7 +84,7 @@ action :install do
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
     )
-    notifies :restart, "service[#{node['php']['fpm_service']}]"
+    notifies :restart, "service[#{new_resource.service}]"
   end
 end
 
@@ -67,7 +92,7 @@ action :uninstall do
   # Ensure the FPM pacakge is installed, and the service is registered
   register_fpm_service
   # Delete the FPM pool.
-  file "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
+  file "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
     action :delete
   end
 end
@@ -77,23 +102,27 @@ action_class do
     # Install the FPM pacakge for this platform, if it's available
     # Fail the run if it's an unsupported OS (FPM pacakge name not populated)
     # also, this is skipped for source
-    return if node['php']['install_method'] == 'source'
+    return if new_resource.install_type == 'source'
 
-    raise 'PHP-FPM package not found (you probably have an unsupported distro)' if node['php']['fpm_package'].nil?
+    raise 'PHP-FPM package not found (you probably have an unsupported distro)' if new_resource.fpm_package.nil?
 
-    file node['php']['fpm_default_conf'] do
+    file new_resource.default_conf do
       action :nothing
     end
 
-    package node['php']['fpm_package'] do
+    package new_resource.fpm_package do
       action :install
-      notifies :delete, "file[#{node['php']['fpm_default_conf']}]", :immediately
+      notifies :delete, "file[#{new_resource.default_conf}]", :immediately
     end
   end
 
   def register_fpm_service
-    service node['php']['fpm_service'] do
+    service new_resource.service do
       action :enable
     end
   end
+end
+
+action_class do
+  include Php::Cookbook::Helpers
 end

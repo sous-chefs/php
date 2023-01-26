@@ -20,6 +20,7 @@
 #
 
 unified_mode true
+include Php::Cookbook::Helpers
 
 property :channel_xml, String
 property :channel_name, String, name_property: true
@@ -68,7 +69,9 @@ action_class do
   # @return [Boolean] does the channel need to be updated
   def update_needed?
     begin
-      return true if shell_out("#{new_resource.binary} search -c #{new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+      if shell_out("#{new_resource.binary} search -c #{new_resource.channel_name} NNNNNN").stdout =~ /channel-update/
+        return true
+      end
     rescue Chef::Exceptions::CommandTimeout
       # CentOS can hang on 'pear search' if a channel needs updating
       Chef::Log.info("Timed out checking if channel-update needed...forcing update of pear channel #{new_resource.channel_name}")
@@ -85,4 +88,8 @@ action_class do
   rescue Mixlib::ShellOut::ShellCommandFailed
     false
   end
+end
+
+action_class do
+  include Php::Cookbook::Helpers
 end
