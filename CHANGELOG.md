@@ -4,30 +4,32 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Misc cleanup
+
 ## 9.2.1 - *2022-12-08*
 
-Standardise files with files in sous-chefs/repo-management
+- Standardise files with files in sous-chefs/repo-management
 
 ## 9.2.0 - *2022-06-14*
 
 - Add support for Ubuntu 22.04
 - Update tested platforms
-  - added: Ubuntu 22.04
+   - added: Ubuntu 22.04
 
 ## 9.1.4 - *2022-04-20*
 
-Standardise files with files in sous-chefs/repo-management
+- Standardise files with files in sous-chefs/repo-management
 
 ## 9.1.3 - *2022-02-17*
 
-Standardise files with files in sous-chefs/repo-management
+- Standardise files with files in sous-chefs/repo-management
 
 ## 9.1.2 - *2022-02-08*
 
 - Switch to using reusable CI workflow
 - Update tested platforms
-  - removed: CentOS 8, Debian 9
-  - added: CentOS Stream 8, Rocky / Alma 8, Debian 11
+   - removed: CentOS 8, Debian 9
+   - added: CentOS Stream 8, Rocky / Alma 8, Debian 11
 
 ## 9.1.1 - *2022-02-08*
 
@@ -36,7 +38,7 @@ Standardise files with files in sous-chefs/repo-management
 ## 9.1.0 - *2021-11-13*
 
 - Reenable community package recipe for CentOS 8
-  - Bumps `yum-remi-chef` dependency to >= 5.0.1
+   - Bumps `yum-remi-chef` dependency to >= 5.0.1
 
 ## 9.0.0 - *2021-09-08*
 
@@ -64,9 +66,9 @@ Standardise files with files in sous-chefs/repo-management
 ## 8.0.0 (2020-07-09)
 
 - Drop support for:
-  - Debian 8
-  - Ubuntu < 16.04
-  - Amazon Linux 1
+   - Debian 8
+   - Ubuntu < 16.04
+   - Amazon Linux 1
 - Set default PHP version to 7.2.x
 - Update Ubuntu 18.04 support to source build PHP 7.2
 - Update attributes for Debian 10

@@ -2,17 +2,17 @@
 driver:
   name: dokken
   privileged: true
-  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
+  cgroupns_host: true
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
 
 transport:
   name: dokken
 
 provisioner:
   name: dokken
+  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
   chef_license: accept-no-persist
-
-verifier:
-  name: inspec
 
 platforms:
   - name: almalinux-8
