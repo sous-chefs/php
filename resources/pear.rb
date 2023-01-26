@@ -19,6 +19,7 @@
 #
 
 unified_mode true
+include Php::Cookbook::Helpers
 
 property :package_name, String, name_property: true
 property :version, [String, nil]
@@ -29,6 +30,11 @@ property :zend_extensions, Array, default: []
 property :preferred_state, String, default: 'stable'
 property :binary, String, default: 'pear'
 property :priority, [String, nil]
+property :enable_mod, String, default: lazy { php_enable_mod }
+property :disable_mod, String, default: lazy { php_disable_mod }
+property :pecl, String, default: lazy { php_pecl }
+property :conf_dir, String, default: lazy { php_conf_dir }
+property :ext_conf, String, default: lazy { php_ext_conf_dir }
 
 def current_installed_version(new_resource)
   version_check_cmd = "#{new_resource.binary} -d"
@@ -52,12 +58,12 @@ def grep_for_version(stdout, package)
     # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
     # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
     version = m.split(/\s+/)[1].strip
-    version = if version.split(%r{/\//})[0] =~ /.\./
+    version = if version.split(%r{///})[0] =~ /.\./
                 # 1.1.4/(1.1.4 stable)
-                version.split(%r{/\//})[0]
+                version.split(%r{///})[0]
               else
                 # -n/a-/(1.0.0beta1 beta)
-                version.split(%r{/(.*)\/\((.*)/}).last.split(/\s/)[0]
+                version.split(%r{/(.*)/\((.*)/}).last.split(/\s/)[0]
               end
   end
   version
@@ -74,7 +80,9 @@ action :install do
   build_essential
 
   # If we specified a version, and it's not the current version, move to the specified version
-  install_version = new_resource.version unless new_resource.version.nil? || new_resource.version == current_resource.version
+  unless new_resource.version.nil? || new_resource.version == current_resource.version
+    install_version = new_resource.version
+  end
   # Check if the version we want is already installed
   versions_match = candidate_version == current_installed_version(new_resource)
 
@@ -152,7 +160,10 @@ action_class do
     command << " #{prefix_channel(new_resource.channel)}#{name}"
     command << "-#{version}" if version && !version.empty?
     pear_shell_out(command)
-    manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
+    if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions,
+                      new_resource.priority)
+    end
     enable_package(name)
   end
 
@@ -163,7 +174,10 @@ action_class do
     command << " #{prefix_channel(new_resource.channel)}#{name}"
     command << "-#{version}" if version && !version.empty?
     pear_shell_out(command)
-    manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions, new_resource.priority) if pecl?
+    if pecl?
+      manage_pecl_ini(name, :create, new_resource.directives, new_resource.zend_extensions,
+                      new_resource.priority)
+    end
     enable_package(name)
   end
 
@@ -178,14 +192,14 @@ action_class do
   end
 
   def enable_package(name)
-    execute "#{node['php']['enable_mod']} #{name}" do
-      only_if { platform?('ubuntu') && ::File.exist?(node['php']['enable_mod']) }
+    execute "#{new_resource.enable_mod} #{name}" do
+      only_if { platform?('ubuntu') && ::File.exist?(new_resource.enable_mod) }
     end
   end
 
   def disable_package(name)
-    execute "#{node['php']['disable_mod']} #{name}" do
-      only_if { platform?('ubuntu') && ::File.exist?(node['php']['disable_mod']) }
+    execute "#{new_resource.disable_mod} #{name}" do
+      only_if { platform?('ubuntu') && ::File.exist?(new_resource.disable_mod) }
     end
   end
 
@@ -210,11 +224,11 @@ action_class do
 
   def extension_dir
     @extension_dir ||= begin
-                         # Consider using "pecl config-get ext_dir". It is more cross-platform.
-                         # p = shell_out("php-config --extension-dir")
-                         p = shell_out("#{node['php']['pecl']} config-get ext_dir")
-                         p.stdout.strip
-                       end
+      # Consider using "pecl config-get ext_dir". It is more cross-platform.
+      # p = shell_out("php-config --extension-dir")
+      p = shell_out("#{new_resource.pecl} config-get ext_dir")
+      p.stdout.strip
+    end
   end
 
   def get_extension_files(name)
@@ -222,7 +236,7 @@ action_class do
 
     # use appropriate binary when listing pecl packages
     list_binary = if new_resource.channel == 'pecl.php.net'
-                    node['php']['pecl']
+                    new_resource.pecl
                   else
                     new_resource.binary
                   end
@@ -249,7 +263,7 @@ action_class do
           else
             false
           end
-        elsif grep_for_version(shell_out(node['php']['pecl'] + search_args).stdout, new_resource.package_name)
+        elsif grep_for_version(shell_out(new_resource.pecl + search_args).stdout, new_resource.package_name)
           true
         else
           raise "Package #{new_resource.package_name} not found in either PEAR or PECL."
@@ -272,14 +286,14 @@ action_class do
                  end
     ]
 
-    directory node['php']['ext_conf_dir'] do
+    directory new_resource.ext_conf do
       owner 'root'
       group 'root'
       mode '0755'
       recursive true
     end
 
-    template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
+    template "#{new_resource.ext_conf}/#{name}.ini" do
       source 'extension.ini.erb'
       cookbook 'php'
       owner 'root'
@@ -294,9 +308,13 @@ action_class do
       action action
     end
 
-    execute "#{node['php']['enable_mod']} #{name}" do
-      creates "#{node['php']['conf_dir']}/conf.d/#{name}"
+    execute "#{new_resource.enable_mod} #{name}" do
+      creates "#{new_resource.conf_dir}/conf.d/#{name}"
       only_if { platform_family? 'debian' }
     end
   end
+end
+
+action_class do
+  include Php::Cookbook::Helpers
 end
