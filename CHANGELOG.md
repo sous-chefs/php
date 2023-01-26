@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 9.2.2 - *2023-01-26*
 
 - Misc cleanup
