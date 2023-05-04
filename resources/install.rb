@@ -18,7 +18,7 @@ action :install do
     action :install
   end
 
-  if new_resource.community_package
+  if new_resource.community_packages
     if platform_family?('rhel', 'amazon')
       include_recipe 'yum-remi-chef::remi'
 
