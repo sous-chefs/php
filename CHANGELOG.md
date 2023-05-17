@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
-## Unreleased
+## 9.2.12 - *2023-05-17*
 
 ## 9.2.11 - *2023-05-03*
 
