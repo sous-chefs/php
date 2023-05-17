@@ -3,7 +3,7 @@ describe command('php -v') do
   its('stdout') { should match(/PHP 8/) }
 end
 
-pear_cmd = os.debian? ? 'pear' : 'php-pear'
+pear_cmd = os.debian? ? 'pear' : 'php80-pear'
 
 describe command("#{pear_cmd} list-channels") do
   its('stdout') { should match(/pear\.php\.net/) }

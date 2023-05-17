@@ -1,37 +1,64 @@
-::Chef::DSL::Recipe.include Php::Cookbook::Helpers
+yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
 php_install 'php' do
-  install_type 'package'
-  community_package true
+  if platform_family?('rhel', 'amazon')
+    packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
+  end
 end
 
-apt_update 'update'
+# README: The Remi repo intentionally avoids installing the binaries to
+#         the default paths. It comes with a /opt/remi/php80/enable profile
+#         which can be copied or linked into /etc/profiles.d to auto-load for
+#         operators in a real cookbook.
+# if platform_family?('rhel', 'amazon')
+#   link '/usr/bin/php' do
+#     to '/usr/bin/php80'
+#   end
+#
+#   link '/usr/bin/pear' do
+#     to '/usr/bin/php80-pear'
+#   end
+#
+#   link '/usr/bin/pecl' do
+#     to '/opt/remi/php80/root/bin/pecl'
+#   end
+#
+#   link '/etc/profile.d/php80-enable.sh' do
+#     to '/opt/remi/php80/enable'
+#   end
+# end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
-  action :install
+  listen '/var/run/php-test-fpm.sock'
+  pool_dir '/etc/opt/remi/php80/php-fpm.d'
+  fpm_package 'php80-php-fpm'
+  service 'php80-php-fpm'
+  default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
 end
 
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
-  binary php_pear_path
-  action :update
+  binary 'php80-pear'
 end
 
 # Install https://pear.php.net/package/HTTP2
 php_pear 'HTTP2' do
-  binary php_pear_path
+  binary 'php80-pear'
 end
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
-  binary php_pear_path
-  action :update
+  binary 'php80-pear'
 end
 
 # Install https://pecl.php.net/package/sync
 php_pear 'sync-binary' do
   package_name 'sync'
-  binary 'pecl'
+  pecl '/opt/remi/php80/root/bin/pecl'
+  channel 'pecl.php.net'
+  binary 'php80-pear'
   priority '50'
+  conf_dir '/etc/opt/remi/php80'
+  ext_conf '/etc/opt/remi/php80/php.d'
 end

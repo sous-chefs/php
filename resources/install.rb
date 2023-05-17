@@ -1,37 +1,11 @@
 unified_mode true
 include Php::Cookbook::Helpers
 
-property :version, String, default: lazy { php_version }
-property :configure_options, Array, default: lazy { php_configure_options }
-property :src_deps, Array, default: lazy { php_src_deps }
-property :src_recompile, [true, false], default: false
-property :url, String, default: lazy { php_url }
-property :checksum, String, default: lazy { php_checksum }
-property :installation_packages, Array, default: lazy { php_installation_packages }
-property :community_package, [true, false], default: false
-property :install_type, String, equal_to: %w(package source), default: 'package'
+property :packages, Array, default: lazy { php_installation_packages }
 
 action :install do
-  # if new_resource.install_type == 'package'
   package 'Install PHP Packages' do
-    package_name new_resource.installation_packages
-    action :install
-  end
-
-  if new_resource.community_packages
-    if platform_family?('rhel', 'amazon')
-      include_recipe 'yum-remi-chef::remi'
-
-    elsif platform?('ubuntu')
-      include_recipe 'ondrej_ppa_ubuntu'
-
-    elsif platform?('debian')
-      apt_repository 'sury-php' do
-        uri 'https://packages.sury.org/php/'
-        key 'https://packages.sury.org/php/apt.gpg'
-        components %w(main)
-      end
-    end
+    package_name new_resource.packages
   end
   # end
   # else

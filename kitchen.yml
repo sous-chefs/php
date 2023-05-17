@@ -6,8 +6,8 @@ provisioner:
   name: chef_infra
   product_name: chef
   chef_license: accept-no-persist
-  enforce_idempotency: true
-  multiple_converge: 2
+  #enforce_idempotency: true
+  #multiple_converge: 2
   deprecations_as_errors: true
 
 verifier:
