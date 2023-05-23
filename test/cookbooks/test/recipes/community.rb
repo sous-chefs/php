@@ -4,7 +4,11 @@ php_install 'php' do
   if platform_family?('rhel', 'amazon')
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
   end
+  communityPackages true
+  action :install
 end
+
+apt_update 'update'
 
 # README: The Remi repo intentionally avoids installing the binaries to
 #         the default paths. It comes with a /opt/remi/php80/enable profile
@@ -53,11 +57,12 @@ php_pear_channel 'pecl.php.net' do
 end
 
 # Install https://pecl.php.net/package/sync
-php_pear 'sync-binary' do
+pecl_method = node['pecl_method'] || 'binary'
+php_pear "sync-#{pecl_method}" do
   package_name 'sync'
   pecl '/opt/remi/php80/root/bin/pecl'
-  channel 'pecl.php.net'
-  binary 'php80-pear'
+  binary 'pecl' if pecl_method == 'binary'
+  channel 'pecl.php.net' if pecl_method == 'channel'
   priority '50'
   conf_dir '/etc/opt/remi/php80'
   ext_conf '/etc/opt/remi/php80/php.d'

@@ -2,12 +2,27 @@ unified_mode true
 include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
+property :communityPackages, [true, false], default: false
 
 action :install do
   package 'Install PHP Packages' do
     package_name new_resource.packages
+
+    if new_resource.communityPackages
+      if platform_family?('rhel', 'amazon')
+        include_recipe 'yum-remi-chef::remi'
+      elsif platform?('ubuntu')
+        include_recipe 'ondrej_ppa_ubuntu'
+      elsif platform?('debian')
+        # use sury repo for debian (https://deb.sury.org/)
+        apt_repository 'sury-php' do
+          uri 'https://packages.sury.org/php/'
+          key 'https://packages.sury.org/php/apt.gpg'
+          components %w(main)
+        end
+      end
+    end
   end
-  # end
   # else
 
   #   if platform?('debian') && node['platform_version'].to_i == 9
