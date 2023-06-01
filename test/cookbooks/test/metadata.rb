@@ -7,4 +7,3 @@ version           '1.0.0'
 
 depends 'php'
 depends 'yum-remi-chef', '>= 5.0.1'
-depends 'ondrej_ppa_ubuntu'
