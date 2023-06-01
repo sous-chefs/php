@@ -34,35 +34,49 @@ end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
-  listen '/var/run/php-test-fpm.sock'
-  pool_dir '/etc/opt/remi/php80/php-fpm.d'
-  fpm_package 'php80-php-fpm'
-  service 'php80-php-fpm'
-  default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
+  if platform_family?('rhel', 'amazon')
+    listen '/var/run/php-test-fpm.sock'
+    pool_dir '/etc/opt/remi/php80/php-fpm.d'
+    fpm_package 'php80-php-fpm'
+    service 'php80-php-fpm'
+    default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
+  end
+  action :install
 end
 
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
-  binary 'php80-pear'
+  if platform_family?('rhel', 'amazon')
+    binary 'php80-pear'
+  end
+  action :update
 end
 
 # Install https://pear.php.net/package/HTTP2
 php_pear 'HTTP2' do
-  binary 'php80-pear'
+  if platform_family?('rhel', 'amazon')
+    binary 'php80-pear'
+  end
+  action :install
 end
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
-  binary 'php80-pear'
+  if platform_family?('rhel', 'amazon')
+    binary 'php80-pear'
+  end
+  action :update
 end
 
 # Install https://pecl.php.net/package/sync
 pecl_method = node['pecl_method'] || 'binary'
 php_pear "sync-#{pecl_method}" do
+  if platform_family?('rhel', 'amazon')
+    conf_dir '/etc/opt/remi/php80'
+    ext_conf '/etc/opt/remi/php80/php.d'
+  end
   package_name 'sync'
   binary 'pecl' if pecl_method == 'binary'
   channel 'pecl.php.net' if pecl_method == 'channel'
   priority '50'
-  conf_dir '/etc/opt/remi/php80'
-  ext_conf '/etc/opt/remi/php80/php.d'
 end
