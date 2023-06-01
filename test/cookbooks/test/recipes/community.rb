@@ -14,23 +14,23 @@ apt_update 'update'
 #         the default paths. It comes with a /opt/remi/php80/enable profile
 #         which can be copied or linked into /etc/profiles.d to auto-load for
 #         operators in a real cookbook.
-# if platform_family?('rhel', 'amazon')
-#   link '/usr/bin/php' do
-#     to '/usr/bin/php80'
-#   end
-#
-#   link '/usr/bin/pear' do
-#     to '/usr/bin/php80-pear'
-#   end
-#
-#   link '/usr/bin/pecl' do
-#     to '/opt/remi/php80/root/bin/pecl'
-#   end
-#
-#   link '/etc/profile.d/php80-enable.sh' do
-#     to '/opt/remi/php80/enable'
-#   end
-# end
+if platform_family?('rhel', 'amazon')
+  link '/usr/bin/php' do
+    to '/usr/bin/php80'
+  end
+
+  link '/usr/bin/pear' do
+    to '/usr/bin/php80-pear'
+  end
+
+  link '/usr/bin/pecl' do
+    to '/opt/remi/php80/root/bin/pecl'
+  end
+
+  link '/etc/profile.d/php80-enable.sh' do
+    to '/opt/remi/php80/enable'
+  end
+end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
@@ -60,7 +60,6 @@ end
 pecl_method = node['pecl_method'] || 'binary'
 php_pear "sync-#{pecl_method}" do
   package_name 'sync'
-  pecl '/opt/remi/php80/root/bin/pecl'
   binary 'pecl' if pecl_method == 'binary'
   channel 'pecl.php.net' if pecl_method == 'channel'
   priority '50'
