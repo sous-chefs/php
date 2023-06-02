@@ -48,6 +48,8 @@ end
 php_pear_channel 'pear.php.net' do
   if platform_family?('rhel', 'amazon')
     binary 'php80-pear'
+  else
+    bianry '/usr/bin/pear'
   end
   action :update
 end
@@ -56,27 +58,28 @@ end
 php_pear 'HTTP2' do
   if platform_family?('rhel', 'amazon')
     binary 'php80-pear'
+  else
+    binary '/usr/bin/pear'
   end
-  action :install
 end
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
   if platform_family?('rhel', 'amazon')
     binary 'php80-pear'
+  else
+    binary '/usr/bin/pear'
   end
   action :update
 end
 
 # Install https://pecl.php.net/package/sync
-pecl_method = node['pecl_method'] || 'binary'
-php_pear "sync-#{pecl_method}" do
+php_pear "sync-binary" do
   if platform_family?('rhel', 'amazon')
     conf_dir '/etc/opt/remi/php80'
     ext_conf '/etc/opt/remi/php80/php.d'
   end
   package_name 'sync'
-  binary 'pecl' if pecl_method == 'binary'
-  channel 'pecl.php.net' if pecl_method == 'channel'
+  binary 'pecl'
   priority '50'
 end
