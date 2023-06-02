@@ -49,7 +49,7 @@ php_pear_channel 'pear.php.net' do
   if platform_family?('rhel', 'amazon')
     binary 'php80-pear'
   else
-    bianry '/usr/bin/pear'
+    binary '/usr/bin/pear'
   end
   action :update
 end
