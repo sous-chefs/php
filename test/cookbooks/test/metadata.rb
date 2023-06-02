@@ -6,5 +6,5 @@ description       'Test cookbook for the PHP cookbook'
 version           '1.0.0'
 
 depends 'php'
+depends 'apt'
 depends 'yum-remi-chef', '>= 5.0.1'
-depends 'ondrej_ppa_ubuntu'
