@@ -4,7 +4,7 @@ php_install 'php' do
   if platform_family?('rhel', 'amazon')
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
   end
-  community_packages true
+  community_package true
   action :install
 end
 
