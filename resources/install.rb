@@ -2,13 +2,13 @@ unified_mode true
 include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
-property :community_packages, [true, false], default: false
+property :community_package, [true, false], default: false
 
 action :install do
   package 'Install PHP Packages' do
     package_name new_resource.packages
 
-    if new_resource.community_packages
+    if new_resource.community_package
       if platform_family?('rhel', 'amazon')
         include_recipe 'yum-remi-chef::remi'
       elsif platform?('ubuntu')
