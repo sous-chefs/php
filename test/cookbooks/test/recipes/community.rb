@@ -74,7 +74,7 @@ php_pear_channel 'pecl.php.net' do
 end
 
 # Install https://pecl.php.net/package/sync
-php_pear "sync-binary" do
+php_pear 'sync-binary' do
   if platform_family?('rhel', 'amazon')
     conf_dir '/etc/opt/remi/php80'
     ext_conf '/etc/opt/remi/php80/php.d'
