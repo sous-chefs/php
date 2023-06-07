@@ -3,8 +3,6 @@ yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 php_install 'php' do
   if platform_family?('rhel', 'amazon')
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
-  else
-    packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
   end
   community_package true
   action :install
@@ -42,13 +40,7 @@ php_fpm_pool 'test-pool' do
     fpm_package 'php80-php-fpm'
     service 'php80-php-fpm'
     default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
-  else
-    listen '/var/run/php/php8.2-fpm.sock'
-    pool_dir '/etc/php/8.2/fpm/pool.d'
-    fpm_package 'php8.2-fpm'
-    service 'php8.2-fpm'
-    default_conf '/etc/php/8.2/fpm/pool.d/www.conf'
-  end
+ end
   action :install
 end
 
