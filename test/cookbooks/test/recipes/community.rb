@@ -1,5 +1,17 @@
 yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
+if platform_family?('debian')
+  packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
+  php_conf_dir         = '/etc/php/8.2/'
+  php_ext_conf_dir     = '/etc/php/8.2/mods-available'
+  php_fpm_package      = 'php8.2-fpm'
+  php_fpm_service      = 'php8.2-fpm'
+  php_fpm_conf_dir     = '/etc/php/8.2/fpm'
+  php_fpm_pooldir      = '/etc/php/8.2/fpm/pool.d'
+  php_fpm_default_conf = '/etc/php/8.2/fpm/pool.d/www.conf'
+  php_fpm_socket       = '/var/run/php/php8.2-fpm.sock'
+end
+
 php_install 'php' do
   if platform_family?('rhel', 'amazon')
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
