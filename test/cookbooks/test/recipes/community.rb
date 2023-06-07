@@ -40,7 +40,7 @@ php_fpm_pool 'test-pool' do
     fpm_package 'php80-php-fpm'
     service 'php80-php-fpm'
     default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
-   end
+  end
   action :install
 end
 
