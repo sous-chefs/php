@@ -2,6 +2,7 @@ if platform_family?('amazon')
   yum_remi_safe 'default' do
     baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
     mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
+    description 'Remi Safe Repository'
     action :create
   end
 end
