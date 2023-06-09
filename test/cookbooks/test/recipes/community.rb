@@ -3,6 +3,7 @@ if platform_family?('amazon')
     baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
     mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
     description 'Remi Safe Repository'
+    gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
     action :create
   end
 end
