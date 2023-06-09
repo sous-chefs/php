@@ -1,5 +1,11 @@
-yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
+if platform_family?('amazon')
+  yum_remi_safe 'default' do
+  baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
+  action :create
+end
 
+yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
+  
 php_install 'php' do
   if platform_family?('rhel', 'amazon')
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
