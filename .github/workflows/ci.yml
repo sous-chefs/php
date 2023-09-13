@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - amazonlinux-2023
+          - amazonlinux-2
         suite:
           - resource
           - resource-community
