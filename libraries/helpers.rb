@@ -438,7 +438,7 @@ module Php
       end
 
       def php_prefix_dir
-        '/urs/local'
+        '/usr/local'
       end
 
       def php_src_deps
