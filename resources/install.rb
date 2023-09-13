@@ -2,7 +2,7 @@ unified_mode true
 include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
-property :install_method, ['package', 'community_package', 'source'], default: lazy { php_install_method }
+property :install_method, %w(package community_package source), default: lazy { php_install_method }
 property :directives, Hash, default: lazy { php_directives }
 property :options, Array, default: lazy { php_configure_options }
 
@@ -23,9 +23,8 @@ action :install do
           components %w(main)
         end
       end
-    end
 
-    else if new_resource.install_method == 'source'
+    elsif new_resource.install_method == 'source'
       if platform?('debian') && node['platform_version'].to_i == 9
         Chef::Log.fatal 'Debian 9 is not supported when building from source'
       end
@@ -108,19 +107,18 @@ action :install do
         recursive true
       end
 
-    end
-
     else
       package 'Install PHP Packages' do
         package_name new_resource.packages
         options new_resource.options
       end
     end
-  # include_recipe 'php::package'
+    # include_recipe 'php::package'
     # package node['php']['packages'] do
-      # options node['php']['package_options']
+    # options node['php']['package_options']
     # end
     # include_recipe 'php::ini'
+  end
 
   php_config 'php-config' do
     action :install
