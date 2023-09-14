@@ -2,8 +2,7 @@ unified_mode true
 include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
-property :install_method, %w(package community_package source), default: lazy { php_install_method }
-property :directives, Hash, default: lazy { php_directives }
+property :install_method, %w(package community_package source), default: 'package'
 property :options, Array, default: lazy { php_configure_options }
 
 action :install do

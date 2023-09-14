@@ -5,8 +5,7 @@ property :fpm_service, String, default: lazy { php_fpm_service }
 property :fpm_ini_control, [true, false], default: false
 property :ini_template, String, default: 'php.ini.erb'
 property :ini_cookbook, String, default: 'php'
-property :directives, Hash, default: lazy { {} }
-property :use_community_package, [true, false], default: false
+property :directives, Hash, default: {}
 
 action :install do
   if new_resource.fpm_ini_control
@@ -23,7 +22,7 @@ action :install do
       mode '0644'
       manage_symlike_source true
       variables(directives: new_resource.directives)
-      notifies :restart, "service[#{new_resoruce.fpm_service}]"
+      notifies :restart, "service[#{new_resource.fpm_service}]"
       not_if { new_resource.fpm_conf_dir.nil? }
     end
   end
