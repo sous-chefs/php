@@ -4,7 +4,7 @@
 # Cookbook:: php
 # Recipe:: default
 #
-# Copyright:: 2009-2021, Chef Software, Inc.
+# Copyright:: 2009-2023, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,10 +21,7 @@
 
 ::Chef::DSL::Recipe.include Php::Cookbook::Helpers
 
-php_install 'php' do
-  install_type 'source'
-  action :install
-end
+php_install 'php'
 
 php_pear_channels.each do |channel|
   php_pear_channel channel do
@@ -33,3 +30,5 @@ php_pear_channels.each do |channel|
     only_if { php_pear_setup }
   end
 end
+
+php_ini 'ini'

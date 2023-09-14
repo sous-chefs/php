@@ -110,10 +110,6 @@ module Php
            --enable-mbstring)
       end
 
-      def php_directives
-        {}
-      end
-
       def php_disable_mod
         '/usr/sbin/phpdismod'
       end
@@ -377,22 +373,6 @@ module Php
         when 'debian'
           'www-data'
         end
-      end
-
-      def php_ini_cookbook
-        'php'
-      end
-
-      def php_fpm_ini_control
-        false
-      end
-
-      def php_ini_template
-        'php.ini.erb'
-      end
-
-      def php_install_method
-        'package'
       end
 
       def php_installation_packages
