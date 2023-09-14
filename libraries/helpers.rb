@@ -78,15 +78,15 @@ module Php
         end
       end
 
-      def php_configure_options
+      def php_configure_options(install_method)
         %W(--prefix=#{php_prefix_dir}
            --with-libdir=#{php_lib_dir}
            --with-config-file-path=#{php_conf_dir}
            --with-config-file-scan-dir=#{php_ext_conf_dir}
            --with-pear
            --enable-fpm
-           --with-fpm-user=#{php_fpm_user}
-           --with-fpm-group=#{php_fpm_group}
+           --with-fpm-user=#{php_fpm_user(install_method)}
+           --with-fpm-group=#{php_fpm_group(install_method)}
            --with-zlib
            --with-openssl
            --with-kerberos
@@ -211,10 +211,10 @@ module Php
         end
       end
 
-      def php_fpm_group
+      def php_fpm_group(install_method)
         case node['platform_family']
         when 'rhel', 'amazon'
-          if php_install_method == 'package'
+          if install_method == 'package'
             'apache'
           else
             'nobody'
@@ -224,10 +224,10 @@ module Php
         end
       end
 
-      def php_fpm_listen_group
+      def php_fpm_listen_group(install_method)
         case node['platform_family']
         when 'rhel', 'amazon'
-          if php_install_method == 'package'
+          if install_method == 'package'
             'apache'
           else
             'nobody'
@@ -237,10 +237,10 @@ module Php
         end
       end
 
-      def php_fpm_listen_user
+      def php_fpm_listen_user(install_method)
         case node['platform_family']
         when 'rhel', 'amazon'
-          if php_install_method == 'package'
+          if install_method == 'package'
             'apache'
           else
             'nobody'
@@ -362,10 +362,10 @@ module Php
         end
       end
 
-      def php_fpm_user
+      def php_fpm_user(install_method)
         case node['platform_family']
         when 'rhel', 'amazon'
-          if php_install_method == 'package'
+          if install_method == 'package'
             'apache'
           else
             'nobody'
