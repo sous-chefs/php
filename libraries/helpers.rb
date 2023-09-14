@@ -78,37 +78,37 @@ module Php
         end
       end
 
-      def php_configure_options(install_method)
-        %W(--prefix=#{php_prefix_dir}
-           --with-libdir=#{php_lib_dir}
-           --with-config-file-path=#{php_conf_dir}
-           --with-config-file-scan-dir=#{php_ext_conf_dir}
-           --with-pear
-           --enable-fpm
-           --with-fpm-user=#{php_fpm_user(install_method)}
-           --with-fpm-group=#{php_fpm_group(install_method)}
-           --with-zlib
-           --with-openssl
-           --with-kerberos
-           --with-bz2
-           --with-curl
-           --enable-ftp
-           --enable-zip
-           --enable-exif
-           --with-gd
-           --enable-gd-native-ttf
-           --with-gettext
-           --with-gmp
-           --with-mhash
-           --with-iconv
-           --with-imap
-           --with-imap-ssl
-           --enable-sockets
-           --enable-soap
-           --with-xmlrpc
-           --with-mcrypt
-           --enable-mbstring)
-      end
+      # def php_configure_options(install_method)
+      #   %W(--prefix=#{php_prefix_dir}
+      #      --with-libdir=#{php_lib_dir}
+      #      --with-config-file-path=#{php_conf_dir}
+      #      --with-config-file-scan-dir=#{php_ext_conf_dir}
+      #      --with-pear
+      #      --enable-fpm
+      #      --with-fpm-user=#{php_fpm_user(install_method)}
+      #      --with-fpm-group=#{php_fpm_group(install_method)}
+      #      --with-zlib
+      #      --with-openssl
+      #      --with-kerberos
+      #      --with-bz2
+      #      --with-curl
+      #      --enable-ftp
+      #      --enable-zip
+      #      --enable-exif
+      #      --with-gd
+      #      --enable-gd-native-ttf
+      #      --with-gettext
+      #      --with-gmp
+      #      --with-mhash
+      #      --with-iconv
+      #      --with-imap
+      #      --with-imap-ssl
+      #      --enable-sockets
+      #      --enable-soap
+      #      --with-xmlrpc
+      #      --with-mcrypt
+      #      --enable-mbstring)
+      # end
 
       def php_disable_mod
         '/usr/sbin/phpdismod'
