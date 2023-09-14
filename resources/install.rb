@@ -7,9 +7,6 @@ property :install_method, %w(package community_package source), default: 'packag
 property :options, [ String, Array ]
 
 action :install do
-  package 'Install PHP Packages' do
-    package_name new_resource.packages
-
     if new_resource.install_method == 'community_package'
       if platform_family?('rhel', 'amazon')
         include_recipe 'yum-remi-chef::remi'
@@ -107,11 +104,9 @@ action :install do
     #     recursive true
     #   end
 
-    else
-      package 'Install PHP Packages' do
-        package_name new_resource.packages
-        options new_resource.options
-      end
+    package 'Install PHP Packages' do
+      package_name new_resource.packages
+      options new_resource.options
     end
   end
 
