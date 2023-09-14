@@ -16,7 +16,7 @@ php_install 'php' do
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
   end
-  community_package true
+  install_method 'community_package'
   action :install
 end
 
@@ -62,12 +62,13 @@ php_fpm_pool 'test-pool' do
   action :install
 end
 
+# TODO: Is it necessary to specify separate binaries,
+# or is there a way to follow symlinks?
+
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
   if platform_family?('rhel', 'amazon')
-    binary 'php80-pear'
-  else
-    binary '/usr/bin/pear'
+    binary '/usr/bin/php80-pear'
   end
   action :update
 end
@@ -75,18 +76,14 @@ end
 # Install https://pear.php.net/package/HTTP2
 php_pear 'HTTP2' do
   if platform_family?('rhel', 'amazon')
-    binary 'php80-pear'
-  else
-    binary '/usr/bin/pear'
+    binary '/usr/bin/php80-pear'
   end
 end
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
   if platform_family?('rhel', 'amazon')
-    binary 'php80-pear'
-  else
-    binary '/usr/bin/pear'
+    binary '/usr/bin/php80-pear'
   end
   action :update
 end
