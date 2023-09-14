@@ -29,18 +29,14 @@ property :binary, String, default: 'pear'
 action :discover do
   unless exists?
     Chef::Log.info("Discovering pear channel #{new_resource}")
-    execute "#{new_resource.binary} channel-discover #{new_resource.channel_name}" do
-      action :run
-    end
+    execute "#{new_resource.binary} channel-discover #{new_resource.channel_name}"
   end
 end
 
 action :add do
   unless exists?
     Chef::Log.info("Adding pear channel #{new_resource} from #{new_resource.channel_xml}")
-    execute "#{new_resource.binary} channel-add #{new_resource.channel_xml}" do
-      action :run
-    end
+    execute "#{new_resource.binary} channel-add #{new_resource.channel_xml}"
   end
 end
 
@@ -56,9 +52,7 @@ end
 action :remove do
   if exists?
     Chef::Log.info("Deleting pear channel #{new_resource}")
-    execute "#{new_resource.binary} channel-delete #{new_resource.channel_name}" do
-      action :run
-    end
+    execute "#{new_resource.binary} channel-delete #{new_resource.channel_name}"
   end
 end
 
