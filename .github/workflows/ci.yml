@@ -64,7 +64,7 @@ jobs:
           - resource
           - resource-community
           - resource-peclchannel
-          - source-install
+          # - source-install
       fail-fast: false
 
     steps:

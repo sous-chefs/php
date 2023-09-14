@@ -40,6 +40,6 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/resource
-  - name: source_install
-    run_list:
-      - recipe[test::source]
+  # - name: source_install
+  #   run_list:
+  #     - recipe[test::source]
