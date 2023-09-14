@@ -3,6 +3,7 @@ include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
 property :install_method, %w(package community_package source), default: 'package'
+# property :recompile, [true, false], default: false
 property :options, Array, default: lazy { php_configure_options }
 
 action :install do
@@ -29,7 +30,7 @@ action :install do
     #   end
     #   ext_dir_prefix = php_ext_dir ? "EXTENSION_DIR=#{php_ext_dir}" : ''
 
-    #   php_exists = if php_src_recompile
+    #   php_exists = if new_resource.recompile
     #                  false
     #                else
     #                  "$(which #{php_bin}) --version | grep #{php_version}"
@@ -77,7 +78,7 @@ action :install do
     #   execute 'clean build' do
     #     cwd "#{Chef::Config[:file_cache_path]}/php#{php_version}"
     #     command 'make clean'
-    #     only_if { php_src_recompile }
+    #     only_if { new_resource.recompile }
     #   end
 
     #   execute 'configure php' do
@@ -106,12 +107,12 @@ action :install do
     #     recursive true
     #   end
 
-    # else
-    #   package 'Install PHP Packages' do
-    #     package_name new_resource.packages
-    #     options new_resource.options
-    #   end
-    # end
+    else
+      package 'Install PHP Packages' do
+        package_name new_resource.packages
+        options new_resource.options
+      end
+    end
 
     # include_recipe 'php::package'
     # package node['php']['packages'] do
@@ -120,9 +121,7 @@ action :install do
     # include_recipe 'php::ini'
   end
 
-  php_config 'php-config' do
-    action :install
-  end
+  php_ini 'ini'
 end
 
 action_class do

@@ -23,6 +23,7 @@
 
 php_install 'php'
 
+# TODO: make php_pear_channels configurable
 php_pear_channels.each do |channel|
   php_pear_channel channel do
     binary php_pear_path
