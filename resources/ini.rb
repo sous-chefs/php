@@ -21,7 +21,10 @@ action :install do
       group node['root_group']
       mode '0644'
       manage_symlike_source true
-      variables(directives: new_resource.directives)
+      variables(
+        directives: new_resource.directives,
+        php_ext_dir: php_ext_dir
+      )
       notifies :restart, "service[#{new_resource.fpm_service}]"
       not_if { new_resource.fpm_conf_dir.nil? }
     end
@@ -34,7 +37,10 @@ action :install do
     group node['root_group']
     mode '0644'
     manage_symlink_source true
-    variables(directives: new_resource.directives)
+    variables(
+      directives: new_resource.directives,
+      php_ext_dir: php_ext_dir
+    )
   end
 end
 
