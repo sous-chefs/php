@@ -44,11 +44,11 @@ property :additional_config, Hash, default: {}
 property :chdir, String, default: '/'
 property :default_conf, String, default: lazy { php_fpm_default_conf }
 property :fpm_package, String, default: lazy { php_fpm_package }
-property :group, String, default: lazy { php_fpm_group(new_resource.install_type) }
+property :group, String, default: lazy { php_fpm_group(install_type) }
 property :install_type, String, equal_to: %w(package source), default: 'package'
 property :listen, String, default: lazy { php_fpm_socket }
-property :listen_group, String, default: lazy { php_fpm_listen_group(new_resource.install_type) }
-property :listen_user, String, default: lazy { php_fpm_listen_user(new_resource.install_type) }
+property :listen_group, String, default: lazy { php_fpm_listen_group(install_type) }
+property :listen_user, String, default: lazy { php_fpm_listen_user(install_type) }
 property :max_children, Integer, default: 5
 property :max_spare_servers, Integer, default: 3
 property :min_spare_servers, Integer, default: 1
@@ -57,7 +57,7 @@ property :pool_name, String, name_property: true
 property :process_manager, String, default: 'dynamic'
 property :service, String, default: lazy { php_fpm_service }
 property :start_servers, Integer, default: 2
-property :user, String, default: lazy { php_fpm_user(new_resource.install_type) }
+property :user, String, default: lazy { php_fpm_user(install_type) }
 
 action :install do
   # Ensure the FPM pacakge is installed, and the service is registered
