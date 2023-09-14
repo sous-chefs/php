@@ -9,7 +9,7 @@ apt_update 'update'
 #     action :create
 #   end
 # end
-# 
+#
 # yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
 php_install 'php' do

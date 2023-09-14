@@ -7,19 +7,19 @@ property :install_method, %w(package community_package source), default: 'packag
 property :options, [ String, Array ]
 
 action :install do
-    if new_resource.install_method == 'community_package'
-      if platform_family?('rhel', 'amazon')
-        include_recipe 'yum-remi-chef::remi'
-      elsif platform?('ubuntu')
-        include_recipe 'ondrej_ppa_ubuntu'
-      elsif platform?('debian')
-        # use sury repo for debian (https://deb.sury.org/)
-        apt_repository 'sury-php' do
-          uri 'https://packages.sury.org/php/'
-          key 'https://packages.sury.org/php/apt.gpg'
-          components %w(main)
-        end
+  if new_resource.install_method == 'community_package'
+    if platform_family?('rhel', 'amazon')
+      include_recipe 'yum-remi-chef::remi'
+    elsif platform?('ubuntu')
+      include_recipe 'ondrej_ppa_ubuntu'
+    elsif platform?('debian')
+      # use sury repo for debian (https://deb.sury.org/)
+      apt_repository 'sury-php' do
+        uri 'https://packages.sury.org/php/'
+        key 'https://packages.sury.org/php/apt.gpg'
+        components %w(main)
       end
+    end
 
     # elsif new_resource.install_method == 'source'
     #   if platform?('debian') && node['platform_version'].to_i == 9
