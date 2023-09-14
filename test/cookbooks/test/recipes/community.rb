@@ -1,14 +1,16 @@
-if platform_family?('amazon')
-  yum_remi_safe 'default' do
-    baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
-    mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
-    description 'Remi Safe Repository'
-    gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
-    action :create
-  end
-end
+apt_update 'update'
 
-yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
+# if platform_family?('amazon')
+#   yum_remi_safe 'default' do
+#     baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
+#     mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
+#     description 'Remi Safe Repository'
+#     gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
+#     action :create
+#   end
+# end
+# 
+# yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
 php_install 'php' do
   if platform_family?('rhel', 'amazon')
@@ -17,10 +19,7 @@ php_install 'php' do
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
   end
   install_method 'community_package'
-  action :install
 end
-
-apt_update 'update'
 
 # README: The Remi repo intentionally avoids installing the binaries to
 #         the default paths. It comes with a /opt/remi/php80/enable profile
