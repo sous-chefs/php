@@ -4,7 +4,7 @@ include Php::Cookbook::Helpers
 property :packages, Array, default: lazy { php_installation_packages }
 property :install_method, %w(package community_package source), default: 'package'
 # property :recompile, [true, false], default: false
-property :options, Array, default: lazy { php_configure_options(install_method) }
+property :options, [ String, Array ]
 
 action :install do
   package 'Install PHP Packages' do
@@ -113,12 +113,6 @@ action :install do
         options new_resource.options
       end
     end
-
-    # include_recipe 'php::package'
-    # package node['php']['packages'] do
-    # options node['php']['package_options']
-    # end
-    # include_recipe 'php::ini'
   end
 
   php_ini 'ini'
