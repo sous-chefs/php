@@ -27,7 +27,7 @@ action :install do
     end
   end
 
-  template "#{new_resource.conf_dir}/php.ini" do
+  template "#{php_conf_dir}/php.ini" do
     source new_resource.ini_template
     cookbook new_resource.ini_cookbook
     owner 'root'
