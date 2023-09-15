@@ -20,6 +20,7 @@ action :install do
         components %w(main)
       end
     end
+  end
 
     # elsif new_resource.install_method == 'source'
     #   if platform?('debian') && node['platform_version'].to_i == 9
@@ -104,10 +105,9 @@ action :install do
     #     recursive true
     #   end
 
-    package 'Install PHP Packages' do
-      package_name new_resource.packages
-      options new_resource.options
-    end
+  package 'Install PHP Packages' do
+    package_name new_resource.packages
+    options new_resource.options
   end
 
   php_ini 'ini'
