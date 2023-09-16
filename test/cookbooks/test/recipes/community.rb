@@ -1,5 +1,15 @@
 apt_update 'update'
 
+# Set constants
+if platform_family?('rhel', 'amazon')
+  fpm_service 'php80-php-fpm'
+  conf_dir '/etc/opt/remi/php80'
+else
+  fpm_service 'php8.2-fpm'
+  conf_dir '/etc/php/8.2/'
+end
+
+# Start of the old community_package recipe ---
 if platform_family?('rhel', 'amazon')
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
@@ -24,13 +34,20 @@ end
 #
 # yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
-php_install 'php' do
+php_install 'Install PHP from community repo' do
+  fpm_ini_control true
   if platform_family?('rhel', 'amazon')
+    lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
+
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
+    fpm_service fpm_service
+    conf_dir conf_dir
+    ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
+    conf_dir conf_dir
+    fpm_conf_dir '/etc/php/8.2/fpm'
   end
-  install_method 'community_package'
 end
 
 # README: The Remi repo intentionally avoids installing the binaries to
@@ -61,25 +78,26 @@ php_fpm_pool 'test-pool' do
     listen '/var/run/php-test-fpm.sock'
     pool_dir '/etc/opt/remi/php80/php-fpm.d'
     fpm_package 'php80-php-fpm'
-    service 'php80-php-fpm'
     default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
+    service fpm_service
   else
     listen '/var/run/php/php8.2-fpm.sock'
     pool_dir '/etc/php/8.2/fpm/pool.d'
     fpm_package 'php8.2-fpm'
-    service 'php8.2-fpm'
     default_conf '/etc/php/8.2/fpm/pool.d/www.conf'
+    service fpm_service
   end
-  action :install
 end
 
 # TODO: Is it necessary to specify separate binaries,
 # or is there a way to follow symlinks?
 
+pear '/usr/bin/php80-pear'
+
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
   if platform_family?('rhel', 'amazon')
-    binary '/usr/bin/php80-pear'
+    binary pear
   end
   action :update
 end
@@ -87,14 +105,14 @@ end
 # Install https://pear.php.net/package/HTTP2
 php_pear 'HTTP2' do
   if platform_family?('rhel', 'amazon')
-    binary '/usr/bin/php80-pear'
+    binary pear
   end
 end
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
   if platform_family?('rhel', 'amazon')
-    binary '/usr/bin/php80-pear'
+    binary pear
   end
   action :update
 end
@@ -102,11 +120,11 @@ end
 # Install https://pecl.php.net/package/sync
 php_pear 'sync-binary' do
   if platform_family?('rhel', 'amazon')
-    conf_dir '/etc/opt/remi/php80'
-    ext_conf '/etc/opt/remi/php80/php.d'
+    conf_dir conf_dir
+    ext_conf_dir '/etc/opt/remi/php80/php.d'
   else
-    conf_dir '/etc/php/8.2/'
-    ext_conf '/etc/php/8.2/mods-available'
+    conf_dir conf_dir
+    ext_conf_dir '/etc/php/8.2/mods-available'
   end
   package_name 'sync'
   binary 'pecl'
