@@ -375,6 +375,14 @@ module Php
         end
       end
 
+      def php_ini_template
+        'php.ini.erb'
+      end
+
+      def php_ini_cookbook
+        'php'
+      end
+
       def php_installation_packages
         case node['platform_family']
         when 'rhel', 'amazon'

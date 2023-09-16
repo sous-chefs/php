@@ -34,7 +34,7 @@ property :enable_mod, String, default: lazy { php_enable_mod }
 property :disable_mod, String, default: lazy { php_disable_mod }
 property :pecl, String, default: lazy { php_pecl }
 property :conf_dir, String, default: lazy { php_conf_dir }
-property :ext_conf, String, default: lazy { php_ext_conf_dir }
+property :ext_conf_dir, String, default: lazy { php_ext_conf_dir }
 
 def current_installed_version(new_resource)
   version_check_cmd = "#{new_resource.binary} -d"
@@ -286,14 +286,14 @@ action_class do
                  end
     ]
 
-    directory new_resource.ext_conf do
+    directory new_resource.ext_conf_dir do
       owner 'root'
       group 'root'
       mode '0755'
       recursive true
     end
 
-    template "#{new_resource.ext_conf}/#{name}.ini" do
+    template "#{new_resource.ext_conf_dir}/#{name}.ini" do
       source 'extension.ini.erb'
       cookbook 'php'
       owner 'root'
