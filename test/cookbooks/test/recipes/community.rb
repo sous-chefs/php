@@ -1,13 +1,15 @@
-apt_update 'update'
-
 # Set constants
+set_fpm_service = nil
+set_conf_dir = nil
 if platform_family?('rhel', 'amazon')
-  fpm_service = 'php80-php-fpm'
-  conf_dir = '/etc/opt/remi/php80'
+  set_fpm_service = 'php80-php-fpm'
+  set_conf_dir = '/etc/opt/remi/php80'
 else
-  fpm_service = 'php8.2-fpm'
-  conf_dir = '/etc/php/8.2/'
+  set_fpm_service = 'php8.2-fpm'
+  set_conf_dir = '/etc/php/8.2/'
 end
+
+apt_update 'update'
 
 # Start of the old community_package recipe ---
 if platform_family?('rhel', 'amazon')
@@ -36,18 +38,20 @@ end
 
 php_install 'Install PHP from community repo' do
   fpm_ini_control true
-  conf_dir conf_dir
+  conf_dir set_conf_dir
   if platform_family?('rhel', 'amazon')
     lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
-    fpm_service fpm_service
+    fpm_service set_fpm_service
     ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
     fpm_conf_dir '/etc/php/8.2/fpm'
   end
 end
+
+# End of old community_package recipe ---
 
 # README: The Remi repo intentionally avoids installing the binaries to
 #         the default paths. It comes with a /opt/remi/php80/enable profile
@@ -73,7 +77,7 @@ end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
-  service fpm_service
+  service set_fpm_service
   if platform_family?('rhel', 'amazon')
     listen '/var/run/php-test-fpm.sock'
     pool_dir '/etc/opt/remi/php80/php-fpm.d'
@@ -117,7 +121,7 @@ end
 
 # Install https://pecl.php.net/package/sync
 php_pear 'sync-binary' do
-  conf_dir conf_dir
+  conf_dir set_conf_dir
   if platform_family?('rhel', 'amazon')
     ext_conf_dir '/etc/opt/remi/php80/php.d'
   else
