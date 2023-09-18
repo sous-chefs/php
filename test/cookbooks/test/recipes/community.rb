@@ -36,16 +36,15 @@ end
 
 php_install 'Install PHP from community repo' do
   fpm_ini_control true
+  conf_dir conf_dir
   if platform_family?('rhel', 'amazon')
     lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
     fpm_service fpm_service
-    conf_dir conf_dir
     ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
-    conf_dir conf_dir
     fpm_conf_dir '/etc/php/8.2/fpm'
   end
 end
@@ -74,18 +73,17 @@ end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
+  service fpm_service
   if platform_family?('rhel', 'amazon')
     listen '/var/run/php-test-fpm.sock'
     pool_dir '/etc/opt/remi/php80/php-fpm.d'
     fpm_package 'php80-php-fpm'
     default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
-    service fpm_service
   else
     listen '/var/run/php/php8.2-fpm.sock'
     pool_dir '/etc/php/8.2/fpm/pool.d'
     fpm_package 'php8.2-fpm'
     default_conf '/etc/php/8.2/fpm/pool.d/www.conf'
-    service fpm_service
   end
 end
 
@@ -119,11 +117,10 @@ end
 
 # Install https://pecl.php.net/package/sync
 php_pear 'sync-binary' do
+  conf_dir conf_dir
   if platform_family?('rhel', 'amazon')
-    conf_dir conf_dir
     ext_conf_dir '/etc/opt/remi/php80/php.d'
   else
-    conf_dir conf_dir
     ext_conf_dir '/etc/php/8.2/mods-available'
   end
   package_name 'sync'
