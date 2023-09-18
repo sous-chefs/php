@@ -47,6 +47,7 @@ php_install 'Install PHP from community repo' do
     ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
+    fpm_service set_fpm_service
     fpm_conf_dir '/etc/php/8.2/fpm'
   end
 end
