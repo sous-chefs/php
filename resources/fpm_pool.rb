@@ -89,7 +89,7 @@ action :install do
 end
 
 action :uninstall do
-  # Ensure the FPM pacakge is installed, and the service is registered
+  # Ensure the FPM package is installed, and the service is registered
   register_fpm_service
   # Delete the FPM pool.
   file "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
@@ -100,7 +100,7 @@ end
 action_class do
   def install_fpm_package
     # Install the FPM package for this platform, if it's available
-    # Fail the run if it's an unsupported OS (FPM pacakge name not populated)
+    # Fail the run if it's an unsupported OS (FPM package name not populated)
     # also, this is skipped for source
     return if new_resource.install_type == 'source'
 
