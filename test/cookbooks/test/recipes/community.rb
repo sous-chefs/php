@@ -1,13 +1,10 @@
 # Set constants
-set_fpm_service = nil
 set_conf_dir = nil
-if platform_family?('rhel', 'amazon')
-  set_fpm_service = 'php80-php-fpm'
-  set_conf_dir = '/etc/opt/remi/php80'
-else
-  set_fpm_service = 'php8.2-fpm'
-  set_conf_dir = '/etc/php/8.2/'
-end
+set_conf_dir = if platform_family?('rhel', 'amazon')
+                 '/etc/opt/remi/php80'
+               else
+                 '/etc/php/8.2/'
+               end
 
 apt_update 'update'
 
@@ -37,18 +34,14 @@ end
 # yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
 
 php_install 'Install PHP from community repo' do
-  fpm_ini_control true
   conf_dir set_conf_dir
   if platform_family?('rhel', 'amazon')
     lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
     packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
-    fpm_service set_fpm_service
     ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
     packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
-    fpm_service set_fpm_service
-    fpm_conf_dir '/etc/php/8.2/fpm'
   end
 end
 
@@ -78,13 +71,16 @@ end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
-  service set_fpm_service
+  fpm_ini_control true
   if platform_family?('rhel', 'amazon')
+    service 'php80-php-fpm'
     listen '/var/run/php-test-fpm.sock'
     pool_dir '/etc/opt/remi/php80/php-fpm.d'
     fpm_package 'php80-php-fpm'
     default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
   else
+    service 'php8.2-fpm'
+    fpm_conf_dir '/etc/php/8.2/fpm'
     listen '/var/run/php/php8.2-fpm.sock'
     pool_dir '/etc/php/8.2/fpm/pool.d'
     fpm_package 'php8.2-fpm'
