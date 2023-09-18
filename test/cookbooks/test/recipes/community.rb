@@ -2,11 +2,11 @@ apt_update 'update'
 
 # Set constants
 if platform_family?('rhel', 'amazon')
-  fpm_service 'php80-php-fpm'
-  conf_dir '/etc/opt/remi/php80'
+  fpm_service = 'php80-php-fpm'
+  conf_dir = '/etc/opt/remi/php80'
 else
-  fpm_service 'php8.2-fpm'
-  conf_dir '/etc/php/8.2/'
+  fpm_service = 'php8.2-fpm'
+  conf_dir = '/etc/php/8.2/'
 end
 
 # Start of the old community_package recipe ---
@@ -90,7 +90,7 @@ end
 # TODO: Is it necessary to specify separate binaries,
 # or is there a way to follow symlinks?
 
-pear '/usr/bin/php80-pear'
+pear = '/usr/bin/php80-pear'
 
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
