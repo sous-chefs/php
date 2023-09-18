@@ -59,10 +59,30 @@ property :service, String, default: lazy { php_fpm_service }
 property :start_servers, Integer, default: 2
 property :user, String, default: lazy { php_fpm_user(install_type) }
 
+property :fpm_ini_control, [true, false], default: false
+property :fpm_conf_dir, String, default: lazy { php_fpm_conf_dir }
+property :ini_template, String, default: lazy { php_ini_template }
+property :ini_cookbook, String, default: lazy { php_ini_cookbook }
+property :directives, Hash, default: {}
+property :ext_dir, String, default: lazy { php_ext_dir }
+
 action :install do
-  # Ensure the FPM pacakge is installed, and the service is registered
+  # Ensure the FPM package is installed, and the service is registered
   install_fpm_package
   register_fpm_service
+
+  if new_resource.fpm_ini_control
+    php_ini 'fpm_ini' do
+      conf_dir new_resource.fpm_conf_dir
+      ini_template new_resource.ini_template
+      ini_cookbook new_resource.ini_cookbook
+      directives new_resource.directives
+      ext_dir new_resource.ext_dir
+      notifies :restart, "service[#{new_resource.service}]"
+      not_if { new_resource.fpm_conf_dir.nil? }
+    end
+  end
+
   # I wanted to have this as a function in itself, but doing this seems to
   # break testing suites?
   template "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
