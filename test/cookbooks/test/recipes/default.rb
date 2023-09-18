@@ -3,9 +3,7 @@ apt_update 'update'
 php_install 'php'
 
 # Create a test pool
-php_fpm_pool 'test-pool' do
-  action :install
-end
+php_fpm_pool 'test-pool'
 
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do

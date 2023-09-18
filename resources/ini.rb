@@ -13,9 +13,9 @@ property :conf_dir, String, default: lazy { php_conf_dir }
 action :install do
   if new_resource.fpm_ini_control
 
-    service new_resource.fpm_service do
-      action :enable
-    end
+    # service new_resource.fpm_service do
+    #   action :enable
+    # end
 
     template "#{new_resource.fpm_conf_dir}/php.ini" do
       source new_resource.ini_template
@@ -23,7 +23,7 @@ action :install do
       owner 'root'
       group node['root_group']
       mode '0644'
-      manage_symlike_source true
+      manage_symlink_source true
       variables(
         directives: new_resource.directives,
         php_ext_dir: new_resource.ext_dir
