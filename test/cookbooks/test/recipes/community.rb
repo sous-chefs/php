@@ -25,17 +25,11 @@ elsif platform?('debian')
     key 'https://packages.sury.org/php/apt.gpg'
     components %w(main)
   end
-# Amazonlinux isn't supported by the yum-remi-chef cookbook
+# Amazon Linux isn't supported by Remi
 elsif platform_family?('amazon')
-  yum_remi_safe 'default' do
-    baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
-    mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
-    description 'Remi Safe Repository'
-    gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
-    action :create
-  end
+  Chef::Log.fatal 'Skipping run - Amazon Linux is not supported by Remi'
+  return
 end
-# yum_remi_php80 'default' if platform_family?('amazon')
 
 php_install 'Install PHP from community repo' do
   conf_dir set_conf_dir

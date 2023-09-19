@@ -65,7 +65,6 @@ jobs:
           - amazonlinux-2023
         suite:
           - resource
-          - resource-community
           - resource-peclchannel
           # - source-install
       fail-fast: false

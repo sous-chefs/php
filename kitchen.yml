@@ -34,6 +34,7 @@ suites:
       - recipe[test::community]
     excludes:
       - ubuntu-18.04
+      - amazonlinux-2023
   - name: resource_peclchannel
     run_list:
       - recipe[test::default]
