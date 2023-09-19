@@ -74,6 +74,7 @@ php_fpm_pool 'test-pool' do
   fpm_ini_control true
   if platform_family?('rhel', 'amazon')
     service 'php80-php-fpm'
+    fpm_conf_dir '/etc/opt/remi/php80/php-fpm.d'
     listen '/var/run/php-test-fpm.sock'
     pool_dir '/etc/opt/remi/php80/php-fpm.d'
     fpm_package 'php80-php-fpm'

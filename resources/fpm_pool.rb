@@ -52,8 +52,10 @@ property :listen_user, String, default: lazy { php_fpm_listen_user(install_type)
 property :max_children, Integer, default: 5
 property :max_spare_servers, Integer, default: 3
 property :min_spare_servers, Integer, default: 1
-property :pool_dir, String, default: lazy { php_fpm_pooldir }
+property :pool_cookbook, String, default: lazy { php_fpm_pool_cookbook }
+property :pool_dir, String, default: lazy { php_fpm_pool_dir }
 property :pool_name, String, name_property: true
+property :pool_template, String, default: lazy { php_fpm_pool_template }
 property :process_manager, String, default: 'dynamic'
 property :service, String, default: lazy { php_fpm_service }
 property :start_servers, Integer, default: 2
@@ -86,9 +88,9 @@ action :install do
   # I wanted to have this as a function in itself, but doing this seems to
   # break testing suites?
   template "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
-    source 'fpm-pool.conf.erb'
+    source new_resource.pool_template
     action :create
-    cookbook 'php'
+    cookbook new_resource.pool_cookbook
     variables(
       fpm_pool_name: new_resource.pool_name,
       fpm_pool_user: new_resource.user,
@@ -141,8 +143,4 @@ action_class do
       action :enable
     end
   end
-end
-
-action_class do
-  include Php::Cookbook::Helpers
 end

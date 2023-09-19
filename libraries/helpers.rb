@@ -278,7 +278,7 @@ module Php
         end
       end
 
-      def php_fpm_pooldir
+      def php_fpm_pool_dir
         case node['platform_family']
         when 'rhel', 'amazon'
           '/etc/php-fpm.d'
@@ -304,6 +304,14 @@ module Php
             '/etc/php/7.0/fpm/pool.d'
           end
         end
+      end
+
+      def php_fpm_pool_cookbook
+        'php'
+      end
+
+      def php_fpm_pool_template
+        'fpm-pool.conf.erb'
       end
 
       def php_fpm_service
