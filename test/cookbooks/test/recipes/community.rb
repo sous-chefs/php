@@ -9,7 +9,7 @@ set_conf_dir = if platform_family?('rhel', 'amazon')
 apt_update 'update'
 
 # Start of the old community_package recipe ---
-if platform_family?('rhel', 'amazon')
+if platform_family?('rhel')
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
   # ondrej no longer supports Ubuntu <20.04
@@ -25,18 +25,17 @@ elsif platform?('debian')
     key 'https://packages.sury.org/php/apt.gpg'
     components %w(main)
   end
+# Amazonlinux isn't supported by the yum-remi-chef cookbook
+elsif platform_family?('amazon')
+  yum_remi_safe 'default' do
+    baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
+    mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
+    description 'Remi Safe Repository'
+    gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
+    action :create
+  end
 end
-# if platform_family?('amazon')
-#   yum_remi_safe 'default' do
-#     baseurl 'http://rpms.famillecollet.com/enterprise/$releasever/remi-safe/$basearch/'
-#     mirrorlist 'http://rpms.famillecollet.com/enterprise/$releasever/remi/mirror'
-#     description 'Remi Safe Repository'
-#     gpgkey 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
-#     action :create
-#   end
-# end
-#
-# yum_remi_php80 'default' if platform_family?('rhel', 'amazon')
+# yum_remi_php80 'default' if platform_family?('amazon')
 
 php_install 'Install PHP from community repo' do
   conf_dir set_conf_dir
