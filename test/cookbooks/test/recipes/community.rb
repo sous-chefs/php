@@ -12,6 +12,11 @@ apt_update 'update'
 if platform_family?('rhel', 'amazon')
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
+  # ondrej no longer supports Ubuntu <20.04
+  if platform_version.to_i < 20
+    Chef::Log.fatal 'Skipping run - Ubuntu <20.04 is not supported by the ondrej ppa'
+    return
+  end
   include_recipe 'ondrej_ppa_ubuntu'
 elsif platform?('debian')
   # use sury repo for debian (https://deb.sury.org/)
