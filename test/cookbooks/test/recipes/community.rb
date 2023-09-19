@@ -87,31 +87,16 @@ php_fpm_pool 'test-pool' do
   end
 end
 
-# TODO: Is it necessary to specify separate binaries,
-# or is there a way to follow symlinks?
-
-pear = '/usr/bin/php80-pear'
-
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
-  if platform_family?('rhel', 'amazon')
-    binary pear
-  end
   action :update
 end
 
 # Install https://pear.php.net/package/HTTP2
-php_pear 'HTTP2' do
-  if platform_family?('rhel', 'amazon')
-    binary pear
-  end
-end
+php_pear 'HTTP2'
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
-  if platform_family?('rhel', 'amazon')
-    binary pear
-  end
   action :update
 end
 
