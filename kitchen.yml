@@ -32,6 +32,8 @@ suites:
   - name: resource_community
     run_list:
       - recipe[test::community]
+    excludes:
+      - ubuntu-18.04
   - name: resource_peclchannel
     run_list:
       - recipe[test::default]

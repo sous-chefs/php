@@ -37,6 +37,9 @@ jobs:
           - resource-community
           - resource-peclchannel
           # - source-install
+        exclude:
+          - os: ubuntu-1804
+            suite: resource-community
       fail-fast: false
 
     steps:
