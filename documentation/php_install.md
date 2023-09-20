@@ -28,4 +28,4 @@ php_install 'php' do
 end
 ```
 
-See [`test/cookbooks/test/recipes/community.rb`](https://github.com/sous-chefs/php/tree/master/test/cookbooks/test/recipes/community.rb) for an example for installing from a community repository.
+See [`test/cookbooks/test/recipes/community.rb`](https://github.com/sous-chefs/php/tree/main/test/cookbooks/test/recipes/community.rb) for an example for installing from a community repository.
