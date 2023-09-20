@@ -1,6 +1,6 @@
 # `php_fpm_pool`
 
-Installs the `php-fpm` package appropriate for your platform and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such, YMMV if you are using source).
+Installs the `php-fpm` package appropriate for your platform and configures a FPM pool for you. Currently only supported in Debian-family operating systems and CentOS 7 (or at least tested with such).
 
 Please consider FPM functionally pre-release, and test it thoroughly in your environment before using it in production
 <!-- markdown-link-check-disable -->

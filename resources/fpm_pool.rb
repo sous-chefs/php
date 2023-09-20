@@ -44,11 +44,10 @@ property :additional_config, Hash, default: {}
 property :chdir, String, default: '/'
 property :default_conf, String, default: lazy { php_fpm_default_conf }
 property :fpm_package, String, default: lazy { php_fpm_package }
-property :group, String, default: lazy { php_fpm_group(install_type) }
-property :install_type, String, equal_to: %w(package source), default: 'package'
+property :group, String, default: lazy { php_fpm_group }
 property :listen, String, default: lazy { php_fpm_socket }
-property :listen_group, String, default: lazy { php_fpm_listen_group(install_type) }
-property :listen_user, String, default: lazy { php_fpm_listen_user(install_type) }
+property :listen_group, String, default: lazy { php_fpm_listen_group }
+property :listen_user, String, default: lazy { php_fpm_listen_user }
 property :max_children, Integer, default: 5
 property :max_spare_servers, Integer, default: 3
 property :min_spare_servers, Integer, default: 1
@@ -59,7 +58,7 @@ property :pool_template, String, default: lazy { php_fpm_pool_template }
 property :process_manager, String, default: 'dynamic'
 property :service, String, default: lazy { php_fpm_service }
 property :start_servers, Integer, default: 2
-property :user, String, default: lazy { php_fpm_user(install_type) }
+property :user, String, default: lazy { php_fpm_user }
 
 property :fpm_ini_control, [true, false], default: false
 property :fpm_conf_dir, String, default: lazy { php_fpm_conf_dir }
@@ -123,8 +122,6 @@ action_class do
   def install_fpm_package
     # Install the FPM package for this platform, if it's available
     # Fail the run if it's an unsupported OS (FPM package name not populated)
-    # also, this is skipped for source
-    return if new_resource.install_type == 'source'
 
     raise 'PHP-FPM package not found (you probably have an unsupported distro)' if new_resource.fpm_package.nil?
 

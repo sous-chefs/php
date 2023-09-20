@@ -18,38 +18,6 @@ module Php
         end
       end
 
-      def php_bin
-        'php'
-      end
-
-      def php_checksum
-        case node['platform_family']
-        when 'rhel', 'amazon'
-          '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c'
-        when 'debian'
-          case node['platform']
-          when 'debian'
-            case node['platform_version'].to_i
-            when 10
-              '809126b46d62a1a06c2d5a0f9d7ba61aba40e165f24d2d185396d0f9646d3280'
-            else # >= 11
-              '564fd5bc9850370db0cb4058d9087f2f40177fa4921ce698a375416db9ab43ca'
-            end
-          when 'ubuntu'
-            case node['platform_version'].to_f
-            when 18.04
-              '796837831ccebf00dc15921ed327cfbac59177da41b33044d9a6c7134cdd250c'
-            when 20.04
-              'a554a510190e726ebe7157fb00b4aceabdb50c679430510a3b93cbf5d7546e44'
-            else # >= 22.04
-              '5f0b422a117633c86d48d028934b8dc078309d4247e7565ea34b2686189abdd8'
-            end
-          else
-            'f6cdac2fd37da0ac0bbcee0187d74b3719c2f83973dfe883d5cde81c356fe0a8'
-          end
-        end
-      end
-
       def php_conf_dir
         case node['platform_family']
         when 'rhel', 'amazon'
@@ -77,38 +45,6 @@ module Php
           end
         end
       end
-
-      # def php_configure_options(install_method)
-      #   %W(--prefix=#{php_prefix_dir}
-      #      --with-libdir=#{php_lib_dir}
-      #      --with-config-file-path=#{php_conf_dir}
-      #      --with-config-file-scan-dir=#{php_ext_conf_dir}
-      #      --with-pear
-      #      --enable-fpm
-      #      --with-fpm-user=#{php_fpm_user(install_method)}
-      #      --with-fpm-group=#{php_fpm_group(install_method)}
-      #      --with-zlib
-      #      --with-openssl
-      #      --with-kerberos
-      #      --with-bz2
-      #      --with-curl
-      #      --enable-ftp
-      #      --enable-zip
-      #      --enable-exif
-      #      --with-gd
-      #      --enable-gd-native-ttf
-      #      --with-gettext
-      #      --with-gmp
-      #      --with-mhash
-      #      --with-iconv
-      #      --with-imap
-      #      --with-imap-ssl
-      #      --enable-sockets
-      #      --enable-soap
-      #      --with-xmlrpc
-      #      --with-mcrypt
-      #      --enable-mbstring)
-      # end
 
       def php_disable_mod
         '/usr/sbin/phpdismod'
@@ -211,40 +147,28 @@ module Php
         end
       end
 
-      def php_fpm_group(install_method)
+      def php_fpm_group
         case node['platform_family']
         when 'rhel', 'amazon'
-          if install_method == 'package'
-            'apache'
-          else
-            'nobody'
-          end
+          'apache'
         when 'debian'
           'www-data'
         end
       end
 
-      def php_fpm_listen_group(install_method)
+      def php_fpm_listen_group
         case node['platform_family']
         when 'rhel', 'amazon'
-          if install_method == 'package'
-            'apache'
-          else
-            'nobody'
-          end
+          'apache'
         when 'debian'
           'www-data'
         end
       end
 
-      def php_fpm_listen_user(install_method)
+      def php_fpm_listen_user
         case node['platform_family']
         when 'rhel', 'amazon'
-          if install_method == 'package'
-            'apache'
-          else
-            'nobody'
-          end
+          'apache'
         when 'debian'
           'www-data'
         end
@@ -370,14 +294,10 @@ module Php
         end
       end
 
-      def php_fpm_user(install_method)
+      def php_fpm_user
         case node['platform_family']
         when 'rhel', 'amazon'
-          if install_method == 'package'
-            'apache'
-          else
-            'nobody'
-          end
+          'apache'
         when 'debian'
           'www-data'
         end
@@ -417,75 +337,8 @@ module Php
         end
       end
 
-      def php_pear_path
-        '/usr/bin/pear'
-      end
-
-      def php_pear_channels
-        [
-          'pear.php.net',
-          'pecl.php.net',
-        ]
-      end
-
-      def php_pear_setup
-        true
-      end
-
       def php_pecl
         'pecl'
-      end
-
-      def php_prefix_dir
-        '/usr/local'
-      end
-
-      def php_src_deps
-        case node['platform_family']
-        when 'amazon'
-          %w(bzip2-devel libc-client-devel libcurl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel
-             libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
-        when 'rhel'
-          case node['platform_version'].to_i
-          when 7
-            %w(bzip2-devel libc-client-devel curl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel
-               libmcrypt-devel libpng-devel openssl-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
-          else # >= 8
-            %w(bzip2-devel libc-client-devel libcurl-devel freetype-devel gmp-devel libjpeg-devel krb5-devel
-               libmcrypt-devel libpng-devel openssl-devel t1lib-devel libxml2-devel libxslt-devel zlib-devel mhash-devel)
-          end
-        when 'debian'
-          case node['platform']
-          when 'debian'
-            case node['platform_version'].to_i
-            when 10
-              %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-turbo-dev
-                 libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev file re2c libzip-dev)
-            else # >= 11
-              %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-turbo-dev
-                 libkrb5-dev libmcrypt-dev libonig-dev libpng-dev libsqlite3-dev libssl-dev pkg-config libxml2-dev file re2c libzip-dev)
-            end
-          when 'ubuntu'
-            case node['platform_version'].to_f
-            when 18.04
-              %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev
-                 libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
-            when 20.04
-              %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev
-                 libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev libsqlite3-dev libonig-dev)
-            else # >= 22.04
-              %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev
-                 libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev libsqlite3-dev libonig-dev)
-            end
-          else
-            %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg-dev libkrb5-dev
-               libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev)
-          end
-        end
-      end
-
-      def php_src_recompile
-        false
       end
 
       def php_version
@@ -514,10 +367,6 @@ module Php
             '7.0.4'
           end
         end
-      end
-
-      def php_url
-        'https://www.php.net/distributions'
       end
     end
   end
