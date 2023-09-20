@@ -29,17 +29,20 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 This cookbook includes resources for managing:
 
-- [php_ini](https://github.com/sous-chefs/php/tree/master/documentation/php_ini.md)
-- [php_install](https://github.com/sous-chefs/php/tree/master/documentation/php_install.md)
-- [php_pear](https://github.com/sous-chefs/php/tree/master/documentation/php_pear.md)
-- [php_pear_channel](https://github.com/sous-chefs/php/tree/master/documentation/php_pear_channel.md)
-- [php_fpm_pool](https://github.com/sous-chefs/php/tree/master/documentation/php_fpm_pool.md)
+<!-- markdown-link-check-disable-next-line -->
+- [php_ini](https://github.com/sous-chefs/php/tree/main/documentation/php_ini.md)
+<!-- markdown-link-check-disable-next-line -->
+- [php_install](https://github.com/sous-chefs/php/tree/main/documentation/php_install.md)
+- [php_pear](https://github.com/sous-chefs/php/tree/main/documentation/php_pear.md)
+- [php_pear_channel](https://github.com/sous-chefs/php/tree/main/documentation/php_pear_channel.md)
+- [php_fpm_pool](https://github.com/sous-chefs/php/tree/main/documentation/php_fpm_pool.md)
 
 ## Usage
 
-Simply use the `php_install` resource wherever you would like PHP installed from a package. By default, it will install from the platform's package manager (see [`libraries/helpers.rb`](https://github.com/sous-chefs/php/tree/master/libraries/helpers.rb) to see the default packages list for each platoform).
+<!-- markdown-link-check-disable-next-line -->
+Simply use the `php_install` resource wherever you would like PHP installed from a package. By default, it will install from the platform's package manager (see [`libraries/helpers.rb`](https://github.com/sous-chefs/php/tree/main/libraries/helpers.rb) to see the default packages list for each platoform).
 
-Please see [`test/cookbooks/test/recipes/community.rb`](https://github.com/sous-chefs/php/tree/master/test/cookbooks/test/recipes/community.rb) for an example of using the `php_install` resource to install the desired version of PHP & its supporting packages from a community repository, and please refer to the documentation on these community repositories:
+Please see [`test/cookbooks/test/recipes/community.rb`](https://github.com/sous-chefs/php/tree/main/test/cookbooks/test/recipes/community.rb) for an example of using the `php_install` resource to install the desired version of PHP & its supporting packages from a community repository, and please refer to the documentation on these community repositories:
 
 - RHEL/CentOS - [Remi’s RPM repository](https://rpms.remirepo.net)
 - Ubuntu - [Ondřej Surý PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php)

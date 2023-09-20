@@ -28,6 +28,7 @@ end
 ```
 
 Add a `php.ini` file to the `/etc/php-fpm.d` directory
+
 ```ruby
 php_ini 'fpm.d' do
   conf_dir '/etc/php-fpm.d'
@@ -36,6 +37,7 @@ end
 ```
 
 Remove a `php.ini` file from the `/etc/php-fpm.d` directory
+
 ```ruby
 php_ini 'fpm.d' do
   conf_dir '/etc/php-fpm.d'

@@ -4,10 +4,10 @@
 # Changelog must be updated for each pull request that changes code.
 # Warnings will be issued for:
 #    Pull request with more than 400 lines of code changed
-#    Pull reqest that change more than 5 lines without test changes
+#    Pull request that changes more than 5 lines without test changes
 # Failures will be issued for:
 #    Pull request without summary
-#    Pull requests with code changes without changelog entry
+#    Pull request with code changes without changelog entry
 
 def code_changes?
   code = %w(libraries attributes recipes resources files templates)
