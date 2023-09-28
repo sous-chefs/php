@@ -12,7 +12,7 @@ action :add do
     source new_resource.ini_template
     cookbook new_resource.ini_cookbook
     owner 'root'
-    group node['root_group']
+    group 'root'
     mode '0644'
     manage_symlink_source true
     variables(
