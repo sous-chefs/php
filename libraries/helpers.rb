@@ -315,9 +315,11 @@ module Php
         case node['platform_family']
         when 'rhel'
           %w(php php-devel php-cli php-pear)
-        # Amazon defaults to latest version of `php`, which is ahead of `php-devel and php-cli
+        # Sometimes Amazon will default to different versions for each package,
+        # so versions are pinned here to avoid packages getting ahead of each
+        # other
         when 'amazon'
-          %w(php8.1 php-devel php-cli php-pear)
+          %w(php8.2 php8.2-devel php8.2-cli php-pear)
         when 'debian'
           case node['platform']
           when 'debian'
