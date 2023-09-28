@@ -1,23 +1,6 @@
-# frozen_string_literal: true
-
 module Php
   module Cookbook
     module Helpers
-      def php_lib_dir
-        arch = node['kernel']['machine']
-
-        case node['platform_family']
-        when 'rhel', 'amazon'
-          if arch =~ /x86_64/
-            'lib64/php'
-          else
-            'lib/php'
-          end
-        when 'debian'
-          'lib'
-        end
-      end
-
       def php_conf_dir
         case node['platform_family']
         when 'rhel', 'amazon'
@@ -83,12 +66,7 @@ module Php
       end
 
       def php_ext_dir
-        case node['platform_family']
-        when 'rhel', 'amazon'
-          "/usr/#{php_lib_dir}/modules"
-        when 'debian'
-          "/usr/#{php_lib_dir}/php/#{php_version}/modules"
-        end
+        '/usr/lib64/php/modules'
       end
 
       def php_fpm_conf_dir
