@@ -29,13 +29,11 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 This cookbook includes resources for managing:
 
-<!-- markdown-link-check-disable-next-line -->
-- [php_ini](https://github.com/sous-chefs/php/tree/main/documentation/php_ini.md)
-<!-- markdown-link-check-disable-next-line -->
-- [php_install](https://github.com/sous-chefs/php/tree/main/documentation/php_install.md)
-- [php_pear](https://github.com/sous-chefs/php/tree/main/documentation/php_pear.md)
-- [php_pear_channel](https://github.com/sous-chefs/php/tree/main/documentation/php_pear_channel.md)
-- [php_fpm_pool](https://github.com/sous-chefs/php/tree/main/documentation/php_fpm_pool.md)
+- [php_ini](documentation/php_ini.md)
+- [php_install](documentation/php_install.md)
+- [php_pear](documentation/php_pear.md)
+- [php_pear_channel](documentation/php_pear_channel.md)
+- [php_fpm_pool](documentation/php_fpm_pool.md)
 
 ## Usage
 
