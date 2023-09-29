@@ -154,8 +154,10 @@ module Php
 
       def php_version
         case node['platform_family']
-        when 'rhel', 'amazon'
+        when 'rhel'
           '7.2'
+        when 'amazon'
+          '8.2'
         when 'debian'
           case node['platform']
           when 'debian'
