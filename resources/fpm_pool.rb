@@ -19,7 +19,6 @@
 #
 
 unified_mode true
-include Php::Cookbook::Helpers
 
 property :additional_config, Hash, default: {}
 property :chdir, String, default: '/'

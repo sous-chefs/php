@@ -184,3 +184,6 @@ module Php
     end
   end
 end
+
+Chef::DSL::Recipe.include Php::Cookbook::Helpers
+Chef::Resource.include Php::Cookbook::Helpers

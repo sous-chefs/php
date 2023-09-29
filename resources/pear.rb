@@ -19,7 +19,6 @@
 #
 
 unified_mode true
-include Php::Cookbook::Helpers
 
 property :package_name, String, name_property: true
 property :version, [String, nil]
@@ -313,8 +312,4 @@ action_class do
       only_if { platform_family? 'debian' }
     end
   end
-end
-
-action_class do
-  include Php::Cookbook::Helpers
 end

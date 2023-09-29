@@ -1,5 +1,4 @@
 unified_mode true
-include Php::Cookbook::Helpers
 
 property :packages, Array, default: lazy { php_installation_packages }
 property :options, [ String, Array ]

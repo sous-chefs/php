@@ -20,7 +20,6 @@
 #
 
 unified_mode true
-include Php::Cookbook::Helpers
 
 property :channel_xml, String
 property :channel_name, String, name_property: true
@@ -82,8 +81,4 @@ action_class do
   rescue Mixlib::ShellOut::ShellCommandFailed
     false
   end
-end
-
-action_class do
-  include Php::Cookbook::Helpers
 end
