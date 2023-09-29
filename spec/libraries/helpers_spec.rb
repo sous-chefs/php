@@ -26,7 +26,7 @@ RSpec.describe Php::Cookbook::Helpers do
       let(:platform_family) { 'amazon' }
       let(:platform) { nil }
       let(:platform_version) { nil }
-      it { expect(subject.php_version).to eq '7.2' }
+      it { expect(subject.php_version).to eq '8.2' }
     end
 
     context 'debian' do
