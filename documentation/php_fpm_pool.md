@@ -16,7 +16,7 @@ More info: <https://www.php.net/manual/en/install.fpm.php>
 | Name                | Type            | Default                              | Description                                                                           |
 | ------------------- | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- |
 | `pool_name`         | `String`        | The name of the FPM pool             |                                                                                       |
-| `listen`            | `String`        | Default: `/var/run/php5-fpm.sock`    | The listen address                                                                    |
+| `listen`            | `String`        | `/var/run/php<version>-fpm.sock` (RHEL & Amazon) or `/var/run/php/php<version>-fpm.sock` (Debian) | The listen address |
 | `user`              | `String`        | The webserver user for your distro.  | The user to run the FPM under                                                         |
 | `group`             | `String`        | The webserver group for your distro. | The group to run the FPM under                                                        |
 | `process_manager`   | `String`        | `dynamic`                            | Process manager to use - see <https://www.php.net/manual/en/install.fpm.configuration.php> |
