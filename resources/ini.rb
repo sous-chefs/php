@@ -1,5 +1,4 @@
 unified_mode true
-include Php::Cookbook::Helpers
 
 property :conf_dir, String, default: lazy { php_conf_dir }
 property :ini_template, String, default: lazy { php_ini_template }
