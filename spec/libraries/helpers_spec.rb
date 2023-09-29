@@ -19,14 +19,14 @@ RSpec.describe Php::Cookbook::Helpers do
       let(:platform_family) { 'rhel' }
       let(:platform) { nil }
       let(:platform_version) { nil }
-      it { expect(subject.php_version).to eq '7.2.31' }
+      it { expect(subject.php_version).to eq '7.2' }
     end
 
     context 'amazon' do
       let(:platform_family) { 'amazon' }
       let(:platform) { nil }
       let(:platform_version) { nil }
-      it { expect(subject.php_version).to eq '7.2.31' }
+      it { expect(subject.php_version).to eq '7.2' }
     end
 
     context 'debian' do
@@ -35,31 +35,31 @@ RSpec.describe Php::Cookbook::Helpers do
       context 'debian 10' do
         let(:platform) { 'debian' }
         let(:platform_version) { '10' }
-        it { expect(subject.php_version).to eq '7.3.19' }
+        it { expect(subject.php_version).to eq '7.3' }
       end
 
       context 'debian 11' do
         let(:platform) { 'debian' }
         let(:platform_version) { '11' }
-        it { expect(subject.php_version).to eq '7.4.27' }
+        it { expect(subject.php_version).to eq '7.4' }
       end
 
       context 'ubuntu 18.04' do
         let(:platform) { 'ubuntu' }
         let(:platform_version) { '18.04' }
-        it { expect(subject.php_version).to eq '7.2.31' }
+        it { expect(subject.php_version).to eq '7.2' }
       end
 
       context 'ubuntu 20.04' do
         let(:platform) { 'ubuntu' }
         let(:platform_version) { '20.04' }
-        it { expect(subject.php_version).to eq '7.4.7' }
+        it { expect(subject.php_version).to eq '7.4' }
       end
 
       context 'ubuntu 22.04' do
         let(:platform) { 'ubuntu' }
         let(:platform_version) { '22.04' }
-        it { expect(subject.php_version).to eq '8.1.7' }
+        it { expect(subject.php_version).to eq '8.1' }
       end
     end
   end
