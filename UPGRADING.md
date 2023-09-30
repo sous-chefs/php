@@ -1,6 +1,6 @@
 # Upgrading
 
-Recipes have been removed and replaced with custom resources:
+The `default` and `ini` recipes have been removed and replaced with custom resources:
 
 - default --> php_install
 - ini     --> php_ini
@@ -31,7 +31,7 @@ Installing from community repos is no longer built in to the cookbook. The `php_
 
 ## Source Install
 
-Installing from source is no longer built in to the cookbook. Users should manage installation from source on their own.
+Installing from source is no longer built in to the cookbook. Users should manage installation from source on their own. The original recipe can be referenced [here](https://github.com/sous-chefs/php/blob/9.2.16/recipes/source.rb) to help with the switch.
 
 ## .ini Configuration
 
