@@ -6,6 +6,13 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 Standardise files with files in sous-chefs/repo-management
 
+- Convert cookbook to resource-based by replacing recipes and attributes
+- Add custom resources php_install and php_ini
+- Drop direct support for installation from community repos and source
+- Fix failing Actions
+  - Exclude Amazon Linux and Ubuntu 18.04 from community install tests because
+    they aren't supported by the community repos
+
 ## 9.2.18 - *2024-05-03*
 
 ## 9.2.17 - *2024-05-03*
