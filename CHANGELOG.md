@@ -4,6 +4,14 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Convert cookbook to resource-based by replacing recipes and attributes
+- Add custom resources php_install and php_ini
+- Drop direct support for installation from community repos and source
+- Fix failing Actions
+  - Add support for Amazon Linux 2023 and drop Amazon Linux 2
+  - Exclude Amazon Linux and Ubuntu 18.04 from community install tests because
+    they aren't supported by the community repos
+
 ## 9.2.16 - *2023-09-28*
 
 ## 9.2.15 - *2023-09-04*
