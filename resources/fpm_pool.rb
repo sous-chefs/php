@@ -31,7 +31,7 @@ property :listen_user, String, default: lazy { php_fpm_listen_user }
 property :max_children, Integer, default: 5
 property :max_spare_servers, Integer, default: 3
 property :min_spare_servers, Integer, default: 1
-property :pool_cookbook, String, default: lazy { php_fpm_pool_cookbook }
+property :pool_cookbook, String, default: 'php'
 property :pool_dir, String, default: lazy { php_fpm_pool_dir }
 property :pool_name, String, name_property: true
 property :pool_template, String, default: lazy { php_fpm_pool_template }
@@ -43,7 +43,7 @@ property :user, String, default: lazy { php_fpm_user }
 property :fpm_ini_control, [true, false], default: false
 property :fpm_conf_dir, String, default: lazy { php_fpm_conf_dir }
 property :ini_template, String, default: lazy { php_ini_template }
-property :ini_cookbook, String, default: lazy { php_ini_cookbook }
+property :ini_cookbook, String, default: 'php'
 property :directives, Hash, default: {}
 property :ext_dir, String, default: lazy { php_ext_dir }
 

@@ -88,10 +88,6 @@ module Php
         end
       end
 
-      def php_fpm_pool_cookbook
-        'php'
-      end
-
       def php_fpm_pool_template
         'fpm-pool.conf.erb'
       end
@@ -123,10 +119,6 @@ module Php
 
       def php_ini_template
         'php.ini.erb'
-      end
-
-      def php_ini_cookbook
-        'php'
       end
 
       def php_installation_packages

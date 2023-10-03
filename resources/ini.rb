@@ -2,7 +2,7 @@ unified_mode true
 
 property :conf_dir, String, default: lazy { php_conf_dir }
 property :ini_template, String, default: lazy { php_ini_template }
-property :ini_cookbook, String, default: lazy { php_ini_cookbook }
+property :ini_cookbook, String, default: 'php'
 property :directives, Hash, default: {}
 property :ext_dir, String, default: lazy { php_ext_dir }
 
