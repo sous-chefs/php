@@ -45,7 +45,7 @@ The following table lists the resources and properties that attributes have been
 | ['src_deps']          | Removed                                      |                              |
 | ['src_recompile']     | Removed                                      |                              |
 | ['url']               | Removed                                      |                              |
-| ['version']           | Helper                                       | php_version                  |
+| ['version']           | Helper - versions now follow X.X format      | php_version                  |
 
 Attributes specific to recipes or installing from source were removed.
 
