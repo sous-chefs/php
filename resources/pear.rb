@@ -241,7 +241,7 @@ action_class do
                   end
 
     p = shell_out("#{list_binary} list-files #{name}")
-    p.stdout.each_line.grep(/^src\s+.*\.so$/i).each do |line|
+    p.stdout.each_line.grep(/^(src|ext)\s+.*\.so$/i).each do |line|
       files << line.split[1]
     end
 
