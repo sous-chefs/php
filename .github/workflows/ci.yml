@@ -36,7 +36,9 @@ jobs:
           - resource
           - resource-community
           - resource-peclchannel
-          - source-install
+        exclude:
+          - os: ubuntu-1804
+            suite: resource-community
       fail-fast: false
 
     steps:
@@ -59,12 +61,10 @@ jobs:
     strategy:
       matrix:
         os:
-          - amazonlinux-2
+          - amazonlinux-2023
         suite:
           - resource
-          - resource-community
           - resource-peclchannel
-          - source-install
       fail-fast: false
 
     steps:

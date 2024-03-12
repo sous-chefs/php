@@ -1,34 +1,49 @@
-node.default['php']['fpm_ini_control'] = false
-
-if platform_family?('rhel', 'amazon')
-  node.default['php']['packages']         = %w(php80 php80-php-devel php80-php-cli php80-php-pear)
-  node.default['php']['conf_dir']         = '/etc/opt/remi/php80'
-  node.default['php']['ext_conf_dir']     = '/etc/opt/remi/php80/php.d'
-  node.default['php']['fpm_package']      = 'php80-php-fpm'
-  node.default['php']['fpm_service']      = 'php80-php-fpm'
-  node.default['php']['fpm_pooldir']      = '/etc/opt/remi/php80/php-fpm.d'
-  node.default['php']['fpm_default_conf'] = '/etc/opt/remi/php80/php-fpm.d/www.conf'
-  node.default['php']['pear']             = '/usr/bin/php80-pear'
-
-  lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
-  node.default['php']['ext_dir'] = "/opt/remi/php80/root/#{lib_dir}/php/modules"
-elsif platform_family?('debian')
-  node.default['php']['packages']         = %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
-  node.default['php']['conf_dir']         = '/etc/php/8.2/'
-  node.default['php']['ext_conf_dir']     = '/etc/php/8.2/mods-available'
-  node.default['php']['fpm_package']      = 'php8.2-fpm'
-  node.default['php']['fpm_service']      = 'php8.2-fpm'
-  node.default['php']['fpm_conf_dir']     = '/etc/php/8.2/fpm'
-  node.default['php']['fpm_pooldir']      = '/etc/php/8.2/fpm/pool.d'
-  node.default['php']['fpm_default_conf'] = '/etc/php/8.2/fpm/pool.d/www.conf'
-  node.default['php']['fpm_socket']       = '/var/run/php/php8.2-fpm.sock'
-end
-
-node.default['php']['install_method'] = 'community_package'
+# Set constants
+set_conf_dir = nil
+set_conf_dir = if platform_family?('rhel', 'amazon')
+                 '/etc/opt/remi/php80'
+               else
+                 '/etc/php/8.2'
+               end
 
 apt_update 'update'
 
-include_recipe 'php'
+# Start of the old community_package recipe ---
+if platform_family?('rhel')
+  include_recipe 'yum-remi-chef::remi'
+elsif platform?('ubuntu')
+  # ondrej no longer supports Ubuntu <20.04
+  if platform_version.to_i < 20
+    Chef::Log.fatal 'Skipping run - Ubuntu <20.04 is not supported by the ondrej ppa'
+    return
+  end
+  include_recipe 'ondrej_ppa_ubuntu'
+elsif platform?('debian')
+  # use sury repo for debian (https://deb.sury.org/)
+  apt_repository 'sury-php' do
+    uri 'https://packages.sury.org/php/'
+    key 'https://packages.sury.org/php/apt.gpg'
+    components %w(main)
+  end
+# Amazon Linux isn't supported by Remi
+elsif platform_family?('amazon')
+  Chef::Log.fatal 'Skipping run - Amazon Linux is not supported by Remi'
+  return
+end
+
+php_install 'Install PHP from community repo' do
+  conf_dir set_conf_dir
+  if platform_family?('rhel', 'amazon')
+    lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
+
+    packages %w(php80 php80-php-devel php80-php-cli php80-php-xml php80-php-pear)
+    ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
+  else
+    packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php8.2-xml php-pear)
+  end
+end
+
+# End of old community_package recipe ---
 
 # README: The Remi repo intentionally avoids installing the binaries to
 #         the default paths. It comes with a /opt/remi/php80/enable profile
@@ -39,7 +54,7 @@ if platform_family?('rhel', 'amazon')
     to '/usr/bin/php80'
   end
 
-  link '/usr/bin/php-pear' do
+  link '/usr/bin/pear' do
     to '/usr/bin/php80-pear'
   end
 
@@ -54,28 +69,45 @@ end
 
 # Create a test pool
 php_fpm_pool 'test-pool' do
-  action :install
+  fpm_ini_control true
+  if platform_family?('rhel', 'amazon')
+    service 'php80-php-fpm'
+    fpm_conf_dir '/etc/opt/remi/php80/php-fpm.d'
+    listen '/var/run/php-test-fpm.sock'
+    pool_dir '/etc/opt/remi/php80/php-fpm.d'
+    fpm_package 'php80-php-fpm'
+    default_conf '/etc/opt/remi/php80/php-fpm.d/www.conf'
+  else
+    service 'php8.2-fpm'
+    fpm_conf_dir '/etc/php/8.2/fpm'
+    listen '/var/run/php/php8.2-fpm.sock'
+    pool_dir '/etc/php/8.2/fpm/pool.d'
+    fpm_package 'php8.2-fpm'
+    default_conf '/etc/php/8.2/fpm/pool.d/www.conf'
+  end
 end
 
 # Add PEAR channel
 php_pear_channel 'pear.php.net' do
-  binary node['php']['pear']
   action :update
 end
 
 # Install https://pear.php.net/package/HTTP2
-php_pear 'HTTP2' do
-  binary node['php']['pear']
-end
+php_pear 'HTTP2'
 
 # Add PECL channel
 php_pear_channel 'pecl.php.net' do
-  binary node['php']['pear']
   action :update
 end
 
 # Install https://pecl.php.net/package/sync
 php_pear 'sync-binary' do
+  conf_dir set_conf_dir
+  if platform_family?('rhel', 'amazon')
+    ext_conf_dir '/etc/opt/remi/php80/php.d'
+  else
+    ext_conf_dir '/etc/php/8.2/mods-available'
+  end
   package_name 'sync'
   binary 'pecl'
   priority '50'

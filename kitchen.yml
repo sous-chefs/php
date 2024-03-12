@@ -32,6 +32,9 @@ suites:
   - name: resource_community
     run_list:
       - recipe[test::community]
+    excludes:
+      - ubuntu-18.04
+      - amazonlinux-2023
   - name: resource_peclchannel
     run_list:
       - recipe[test::default]
@@ -40,6 +43,3 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/resource
-  - name: source_install
-    run_list:
-      - recipe[test::source]
