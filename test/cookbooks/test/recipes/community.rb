@@ -3,7 +3,7 @@ set_conf_dir = nil
 set_conf_dir = if platform_family?('rhel', 'amazon')
                  '/etc/opt/remi/php80'
                else
-                 '/etc/php/8.2/'
+                 '/etc/php/8.2'
                end
 
 apt_update 'update'
@@ -36,10 +36,10 @@ php_install 'Install PHP from community repo' do
   if platform_family?('rhel', 'amazon')
     lib_dir = node['kernel']['machine'] =~ /x86_64/ ? 'lib64' : 'lib'
 
-    packages %w(php80 php80-php-devel php80-php-cli php80-php-pear)
+    packages %w(php80 php80-php-devel php80-php-cli php80-php-xml php80-php-pear)
     ext_dir "/opt/remi/php80/root/#{lib_dir}/php/modules"
   else
-    packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php-pear)
+    packages %w(php8.2 php8.2-cgi php8.2-cli php8.2-dev php8.2-xml php-pear)
   end
 end
 
