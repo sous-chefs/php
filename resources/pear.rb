@@ -141,9 +141,9 @@ action_class do
   end
 
   def candidate_version
-    base_url = "https://#{new_resource.channel || new_resource.binary}.php.net/"
+    base_url = "https://#{new_resource.channel || new_resource.binary + '.php.net'}/"
     package_version_url = "/rest/r/#{new_resource.package_name.downcase}/allreleases.xml"
-    # url = "https://#{new_resource.channel || new_resource.binary}.php.net/rest/r/#{new_resource.package_name.downcase}/allreleases.xml"
+    # url = "https://#{new_resource.channel || new_resource.binary + '.php.net'}/rest/r/#{new_resource.package_name.downcase}/allreleases.xml"
     versions_response = Chef::HTTP.new(base_url).get(package_version_url)
 
     require 'nokogiri'
