@@ -141,14 +141,19 @@ action_class do
   end
 
   def candidate_version
-    candidate_version_cmd = "#{new_resource.binary} -d "
-    candidate_version_cmd << "preferred_state=#{new_resource.preferred_state}"
-    candidate_version_cmd << " search#{expand_channel(new_resource.channel)}"
-    candidate_version_cmd << " #{new_resource.package_name}"
-    p = shell_out(candidate_version_cmd)
-    response = nil
-    response = grep_for_version(p.stdout, new_resource.package_name) if p.stdout =~ /\.?Matched packages/i
-    response
+    base_url = "https://#{new_resource.channel || new_resource.binary}.php.net/"
+    package_version_url = "/rest/r/#{new_resource.package_name.downcase}/allreleases.xml"
+    # url = "https://#{new_resource.channel || new_resource.binary}.php.net/rest/r/#{new_resource.package_name.downcase}/allreleases.xml"
+    versions_response = Chef::HTTP.new(base_url).get(package_version_url)
+
+    require 'nokogiri'
+    doc = Nokogiri::XML(versions_response)
+    doc.remove_namespaces!
+    rows = doc.xpath('//r')
+    rows.each do |r|
+      next unless r.at_xpath('.//s').content == 'stable'
+      break r.at_xpath('.//v').content
+    end
   end
 
   def install_package(name, version, **opts)
