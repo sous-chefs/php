@@ -26,7 +26,7 @@ More info: <https://www.php.net/manual/en/install.fpm.php>
 | `max_spare_servers` | `Integer`       | `3`                                  | Maximum number of servers to have as spares                                           |
 | `chdir`             | `String`        | `/`                                  | The startup working directory of the pool                                             |
 | `additional_config` | `Hash`          | `{}`                                 | Additional parameters in JSON                                                         |
-| `fpm_ini_control`   | `[true, false]` | `false`                              | Whether to add a new `php.ini` file for FPM
+| `fpm_ini_control`   | `[true, false]` | `false`                              | Whether to add a new `php.ini` file for FPM                                           |
 
 ## Examples
 
