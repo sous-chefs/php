@@ -151,7 +151,7 @@ action_class do
     doc.remove_namespaces!
     rows = doc.xpath('//r')
     rows.each do |r|
-      next unless r.at_xpath('.//s').content == 'stable'
+      next unless r.at_xpath('.//s').content == new_resource.preferred_state
       break r.at_xpath('.//v').content
     end
   end
