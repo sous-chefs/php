@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 10.0.2 - *2024-05-23*
 
 - Fix typos in documentation for `php_install` and `php_ini` resources
