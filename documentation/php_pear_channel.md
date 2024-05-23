@@ -11,11 +11,11 @@
 
 ## Properties
 
-| Name           | Type     | Default | Descrption                                          |
+| Name           | Type     | Default | Description                                         |
 | -------------- | -------- | ------- | --------------------------------------------------- |
 | `channel_name` | `String` |         | Name attribute. The name of the channel to discover |
 | `channel_xml`  | `String` |         | The channel.xml file of the channel you are adding  |
-| `binary`       | `String` | `pear`  | Pear binary, default: pear                          |
+| `binary`       | `String` | `pear`  | Pear binary                                         |
 
 ## Examples
 

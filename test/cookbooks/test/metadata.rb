@@ -7,3 +7,6 @@ version           '1.0.0'
 
 depends 'php'
 depends 'apt'
+depends 'ondrej_ppa_ubuntu'
+depends 'yum-epel'
+depends 'yum-remi-chef', '>= 5.0.1'

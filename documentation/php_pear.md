@@ -12,16 +12,16 @@
 
 ## Properties
 
-| Name              | Type     | Default  | Descrption                                                                                                                    |
+| Name              | Type     | Default  | Description                                                                                                                   |
 | ----------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `package_name`    | `String` |          | The name of the pear package to install                                                                                       |
 | `version`         | `String` |          | the version of the pear package to install/upgrade. If no version is given latest is assumed.                                 |
 | `channel`         | `String` |          |                                                                                                                               |
 | `options`         | `String` |          | Add additional options to the underlying pear package command                                                                 |
-| `directives`      | `Hash`   | `{}`     | extra extension directives (settings) for a pecl. on most platforms these usually get rendered into the extension's .ini file |
+| `directives`      | `Hash`   | `{}`     | Extra extension directives (settings) for a pecl. On most platforms these usually get rendered into the extension's .ini file |
 | `zend_extensions` | `Array`  | `[]`     | PEAR by default installs stable packages only, this allows you to install pear packages in a devel, alpha or beta state       |
 | `preferred_state` | `String` | `stable` | Package type to install                                                                                                       |
-| `binary`          | `String` |          | The pear binary to use, by default pear, can be overridden if the binary is not called pear, e.g. pear7                       |
+| `binary`          | `String` |          | The pear binary to use, by default `pear`, can be overridden if the binary is not called `pear`, e.g. `pear7`                 |
 
 ## Examples
 

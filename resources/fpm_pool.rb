@@ -3,7 +3,7 @@
 # Cookbook:: php
 # Resource:: fpm_pool
 #
-# Copyright:: 2015-2021, Chef Software, Inc <legal@chef.io>
+# Copyright:: 2015-2023, Chef Software, Inc <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,30 +20,56 @@
 
 unified_mode true
 
-property :pool_name, String, name_property: true
-property :listen, String, default: lazy { node['php']['fpm_socket'] }
-property :user, String, default: lazy { node['php']['fpm_user'] }
-property :group, String, default: lazy { node['php']['fpm_group'] }
-property :listen_user, String, default: lazy { node['php']['fpm_listen_user'] }
-property :listen_group, String, default: lazy { node['php']['fpm_listen_group'] }
-property :process_manager, String, default: 'dynamic'
-property :max_children, Integer, default: 5
-property :start_servers, Integer, default: 2
-property :min_spare_servers, Integer, default: 1
-property :max_spare_servers, Integer, default: 3
-property :chdir, String, default: '/'
 property :additional_config, Hash, default: {}
+property :chdir, String, default: '/'
+property :default_conf, String, default: lazy { php_fpm_default_conf }
+property :fpm_package, String, default: lazy { php_fpm_package }
+property :group, String, default: lazy { php_fpm_group }
+property :listen, String, default: lazy { php_fpm_socket }
+property :listen_group, String, default: lazy { php_fpm_listen_group }
+property :listen_user, String, default: lazy { php_fpm_listen_user }
+property :max_children, Integer, default: 5
+property :max_spare_servers, Integer, default: 3
+property :min_spare_servers, Integer, default: 1
+property :pool_cookbook, String, default: 'php'
+property :pool_dir, String, default: lazy { php_fpm_pool_dir }
+property :pool_name, String, name_property: true
+property :pool_template, String, default: lazy { php_fpm_pool_template }
+property :process_manager, String, default: 'dynamic'
+property :service, String, default: lazy { php_fpm_service }
+property :start_servers, Integer, default: 2
+property :user, String, default: lazy { php_fpm_user }
+
+property :fpm_ini_control, [true, false], default: false
+property :fpm_conf_dir, String, default: lazy { php_fpm_conf_dir }
+property :ini_template, String, default: lazy { php_ini_template }
+property :ini_cookbook, String, default: 'php'
+property :directives, Hash, default: {}
+property :ext_dir, String, default: lazy { php_ext_dir }
 
 action :install do
-  # Ensure the FPM pacakge is installed, and the service is registered
+  # Ensure the FPM package is installed, and the service is registered
   install_fpm_package
   register_fpm_service
+
+  if new_resource.fpm_ini_control
+    php_ini 'fpm_ini' do
+      conf_dir new_resource.fpm_conf_dir
+      ini_template new_resource.ini_template
+      ini_cookbook new_resource.ini_cookbook
+      directives new_resource.directives
+      ext_dir new_resource.ext_dir
+      notifies :restart, "service[#{new_resource.service}]"
+      not_if { new_resource.fpm_conf_dir.nil? }
+    end
+  end
+
   # I wanted to have this as a function in itself, but doing this seems to
   # break testing suites?
-  template "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
-    source 'fpm-pool.conf.erb'
+  template "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
+    source new_resource.pool_template
     action :create
-    cookbook 'php'
+    cookbook new_resource.pool_cookbook
     variables(
       fpm_pool_name: new_resource.pool_name,
       fpm_pool_user: new_resource.user,
@@ -59,40 +85,38 @@ action :install do
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
     )
-    notifies :restart, "service[#{node['php']['fpm_service']}]"
+    notifies :restart, "service[#{new_resource.service}]"
   end
 end
 
 action :uninstall do
-  # Ensure the FPM pacakge is installed, and the service is registered
+  # Ensure the FPM package is installed, and the service is registered
   register_fpm_service
   # Delete the FPM pool.
-  file "#{node['php']['fpm_pooldir']}/#{new_resource.pool_name}.conf" do
+  file "#{new_resource.pool_dir}/#{new_resource.pool_name}.conf" do
     action :delete
   end
 end
 
 action_class do
   def install_fpm_package
-    # Install the FPM pacakge for this platform, if it's available
-    # Fail the run if it's an unsupported OS (FPM pacakge name not populated)
-    # also, this is skipped for source
-    return if node['php']['install_method'] == 'source'
+    # Install the FPM package for this platform, if it's available
+    # Fail the run if it's an unsupported OS (FPM package name not populated)
 
-    raise 'PHP-FPM package not found (you probably have an unsupported distro)' if node['php']['fpm_package'].nil?
+    raise 'PHP-FPM package not found (you probably have an unsupported distro)' if new_resource.fpm_package.nil?
 
-    file node['php']['fpm_default_conf'] do
+    file new_resource.default_conf do
       action :nothing
     end
 
-    package node['php']['fpm_package'] do
+    package new_resource.fpm_package do
       action :install
-      notifies :delete, "file[#{node['php']['fpm_default_conf']}]", :immediately
+      notifies :delete, "file[#{new_resource.default_conf}]", :immediately
     end
   end
 
   def register_fpm_service
-    service node['php']['fpm_service'] do
+    service new_resource.service do
       action :enable
     end
   end
