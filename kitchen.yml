@@ -20,7 +20,6 @@ platforms:
   - name: centos-stream-8
   - name: debian-10
   - name: debian-11
-  - name: ubuntu-18.04
   - name: ubuntu-20.04
   - name: ubuntu-22.04
   - name: rockylinux-8
