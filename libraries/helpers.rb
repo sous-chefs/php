@@ -156,8 +156,10 @@ module Php
             case node['platform_version'].to_i
             when 10
               '7.3'
+            when 11
+              '7.4'
             else
-              '7.4' # >= 11
+              '8.2' # >= 12
             end
           when 'ubuntu'
             case node['platform_version'].to_f
@@ -165,8 +167,10 @@ module Php
               '7.2'
             when 20.04
               '7.4'
-            else # >= 22.04
+            when 22.04
               '8.1'
+            else
+              '8.3' # >= 24.04
             end
           else
             '7.0'
