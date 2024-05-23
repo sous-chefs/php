@@ -10,6 +10,8 @@ Standardise files with files in sous-chefs/repo-management
 - Add custom resources php_install and php_ini
 - Drop direct support for installation from community repos and source
 - Fix failing Actions
+  - Drop support for CentOS 7, Debian 10, and Amazon Linux 2
+  - Add support for AlmaLinux 9, CentOS Stream 9, Rocky Linux 9, and Ubuntu 24.04
   - Exclude Amazon Linux and Ubuntu 18.04 from community install tests because
     they aren't supported by the community repos
 
