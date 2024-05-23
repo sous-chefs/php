@@ -1,4 +1,4 @@
-# `php_install`
+# `php_ini`
 
 Adds a `php.ini` to the appropriate location.
 
@@ -11,8 +11,8 @@ Adds a `php.ini` to the appropriate location.
 
 | Name                | Type             | Default                                               | Description                                                 |
 | ------------------- | ---------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
-| `conf_dir`          | `String`         | Platform-specific - see `libraries/helpers.rb         | Directory to place the `php.ini` file under                 |
-| `ini_template       | `String`         | `php.ini.erb` (see `templates/<distro>/php.ini.rb`)   | Template to use to create the `php.ini` file                |
+| `conf_dir`          | `String`         | Platform-specific - see `libraries/helpers.rb`        | Directory to place the `php.ini` file under                 |
+| `ini_template`      | `String`         | `php.ini.erb` (see `templates/<distro>/php.ini.rb`)   | Template to use to create the `php.ini` file                |
 | `ini_cookbook`      | `String`         | `php` (this cookbook)                                 | Cookbook where the template is located                      |
 | `directives`        | `Hash`           | `{}`                                                  | Directive-value pairs to add to the `php.ini` file          |
 | `ext_dir`           | `String`         | Platform-specific - see `libraries/helpers.rb`        | Directory in which the loadable extensions (modules) reside |
