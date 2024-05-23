@@ -1,4 +1,4 @@
-# `php_install`
+# `php_ini`
 
 Adds a `php.ini` to the appropriate location.
 
