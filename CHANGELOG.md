@@ -6,6 +6,8 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 Standardise files with files in sous-chefs/repo-management
 
+- Correct the php version for rhel9. Visible in the fpm pool
+
 ## 10.0.2 - *2024-05-23*
 
 - Fix typos in documentation for `php_install` and `php_ini` resources

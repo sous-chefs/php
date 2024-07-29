@@ -147,7 +147,11 @@ module Php
       def php_version
         case node['platform_family']
         when 'rhel'
-          '7.2'
+          if node['platform_version'].to_i >= 9
+            '8.0'
+          else
+            '7.2'
+          end
         when 'amazon'
           '8.2'
         when 'debian'
