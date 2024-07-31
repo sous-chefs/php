@@ -4,6 +4,9 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
 
+- Support fedora platform
+- Update cicd platforms because of EOL
+
 ## 10.0.3 - *2024-07-29*
 
 Standardise files with files in sous-chefs/repo-management

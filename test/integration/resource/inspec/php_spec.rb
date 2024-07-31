@@ -11,7 +11,7 @@ describe command('php --ri sync') do
   its('exit_status') { should eq 0 }
 end
 
-unless os[:family] == 'redhat'
+unless os[:family] == 'redhat' || os[:family] == 'fedora'
   describe command('php -i') do
     its('stdout') { should match(/50-sync/) }
   end

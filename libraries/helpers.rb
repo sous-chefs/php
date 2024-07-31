@@ -2,7 +2,7 @@ module Php
   module Cookbook
     module Helpers
       def php_conf_dir
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           '/etc'
         else
           "/etc/php/#{php_version}/cli"
@@ -18,7 +18,7 @@ module Php
       end
 
       def php_ext_conf_dir
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           '/etc/php.d'
         else
           "/etc/php/#{php_version}/mods-available"
@@ -30,7 +30,7 @@ module Php
       end
 
       def php_fpm_conf_dir
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           '/etc/php-fpm.d'
         else
           "/etc/php/#{php_version}/fpm"
@@ -38,7 +38,7 @@ module Php
       end
 
       def php_fpm_default_conf
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           '/etc/php-fpm.d/www.conf'
         else
           "/etc/php/#{php_version}/fpm/pool.d/www.conf"
@@ -46,34 +46,31 @@ module Php
       end
 
       def php_fpm_group
-        case node['platform_family']
-        when 'rhel', 'amazon'
+        if platform_family?('rhel', 'amazon', 'fedora')
           'apache'
-        when 'debian'
+        else
           'www-data'
         end
       end
 
       def php_fpm_listen_group
-        case node['platform_family']
-        when 'rhel', 'amazon'
+        if platform_family?('rhel', 'amazon', 'fedora')
           'apache'
-        when 'debian'
+        else
           'www-data'
         end
       end
 
       def php_fpm_listen_user
-        case node['platform_family']
-        when 'rhel', 'amazon'
+        if platform_family?('rhel', 'amazon', 'fedora')
           'apache'
-        when 'debian'
+        else
           'www-data'
         end
       end
 
       def php_fpm_package
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           'php-fpm'
         else
           "php#{php_version}-fpm"
@@ -81,7 +78,7 @@ module Php
       end
 
       def php_fpm_pool_dir
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           '/etc/php-fpm.d'
         else
           "/etc/php/#{php_version}/fpm/pool.d"
@@ -93,7 +90,7 @@ module Php
       end
 
       def php_fpm_service
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           'php-fpm'
         else
           "php#{php_version}-fpm"
@@ -101,7 +98,7 @@ module Php
       end
 
       def php_fpm_socket
-        if platform_family?('rhel', 'amazon')
+        if platform_family?('rhel', 'amazon', 'fedora')
           "/var/run/php#{php_version}-fpm.sock"
         else
           "/var/run/php/php#{php_version}-fpm.sock"
@@ -109,10 +106,9 @@ module Php
       end
 
       def php_fpm_user
-        case node['platform_family']
-        when 'rhel', 'amazon'
+        if platform_family?('rhel', 'amazon', 'fedora')
           'apache'
-        when 'debian'
+        else
           'www-data'
         end
       end
@@ -123,7 +119,7 @@ module Php
 
       def php_installation_packages
         case node['platform_family']
-        when 'rhel'
+        when 'rhel', 'fedora'
           %w(php php-devel php-cli php-pear)
         # Sometimes Amazon will default to different versions for each package,
         # so versions are pinned here to avoid packages getting ahead of each
@@ -152,6 +148,8 @@ module Php
           else
             '7.2'
           end
+        when 'fedora'
+          '8.3'
         when 'amazon'
           '8.2'
         when 'debian'
