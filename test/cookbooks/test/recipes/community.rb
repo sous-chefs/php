@@ -9,7 +9,7 @@ set_conf_dir = if platform_family?('rhel', 'amazon')
 apt_update 'update'
 
 # Start of the old community_package recipe ---
-if platform_family?('rhel')
+if platform_family?('rhel', 'fedora')
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
   # ondrej no longer supports Ubuntu <20.04
