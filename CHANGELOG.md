@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 10.1.1 - *2024-08-01*
 
 - resolved cookstyle error: metadata.rb:14:20 refactor: `Chef/Correctness/SupportsMustBeFloat`
