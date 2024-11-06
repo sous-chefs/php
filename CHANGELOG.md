@@ -3,6 +3,7 @@
 This file is used to list changes made in each version of the PHP cookbook.
 
 ## Unreleased
+
 ## 10.1.2 - *2024-11-06*
 
 - delay `phpX.Y-fpm` service restart upon configuration update
