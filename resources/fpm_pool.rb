@@ -85,7 +85,7 @@ action :install do
       fpm_pool_chdir: new_resource.chdir,
       fpm_pool_additional_config: new_resource.additional_config
     )
-    notifies :restart, "service[#{new_resource.service}]"
+    notifies :restart, "service[#{new_resource.service}]", :delayed
   end
 end
 
