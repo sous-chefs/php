@@ -28,12 +28,55 @@ More info: <https://www.php.net/manual/en/install.fpm.php>
 | `additional_config` | `Hash`          | `{}`                                 | Additional parameters in JSON                                                         |
 | `fpm_ini_control`   | `[true, false]` | `false`                              | Whether to add a new `php.ini` file for FPM                                           |
 
+
 ## Examples
 
-Install a FPM pool named 'default'
+1. Install a FPM pool named 'default'
 
-```ruby
-php_fpm_pool 'default' do
-  action :install
-end
-```
+   ```ruby
+   php_fpm_pool 'default' do
+     action :install
+   end
+   ```
+
+2. Multiple FPM Pools
+   Changes in configuration during provisioning of an FPM pool will lead to a restart of the `phpX.Y-fpm` service.
+   If more than `5` FPM pools are affected by a configuration change, this will lead to subsequent `5+` service restarts.
+   However, `systemd` will deny this number of subsequent service restarts with the following error:
+
+   ```
+   php8.1-fpm.service: Start request repeated too quickly.
+   php8.1-fpm.service: Failed with result 'start-limit-hit'.
+   Failed to start The PHP 8.1 FastCGI Process Manager.
+   ```
+
+   This behavior is due to the `unified_mode true` setting of an `fpm_pool` custom resource, which is a [default setting](https://docs.chef.io/deprecations_unified_mode/) for `chef-clients v18+`. In this mode, notifications set as `:delayed` within a custom resource action (like `action :install`) are queued to be processed once the action completes (i.e., at the end of the resource `action :install` block), rather than waiting until the end of the Chef client run.
+
+   ### Possible Workaround
+
+   In a wrapper cookbook, define a `ruby_block` with a call to the `sleep(X)` function, which will be called upon an `fpm_pool` resource update:
+
+   ```ruby
+   # frozen_string_literal: true
+   #
+   # Cookbook:: my_php
+   # Recipe:: fpm
+
+   ruby_block "wait after_service restart" do
+     block do
+       Chef::Log.info("Waiting 5 seconds after php-fpm service restart...")
+       sleep(5)
+     end
+     action :nothing
+   end
+
+   # Fancy loop on all defined pools for this node
+   node['php']['fpm_pool'].each do |pool_name, parameters|
+     php_fpm_pool pool_name do
+       parameters.each do |param, value|
+         send(param, value)
+       end unless parameters.nil?
+       notifies :run, "ruby_block[wait after_service restart]", :immediately
+     end
+   end
+   ```
