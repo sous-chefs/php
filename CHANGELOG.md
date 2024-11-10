@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the PHP cookbook.
 
+## Unreleased
+
 ## 10.2.1 - *2024-11-10*
 
 ## 10.2.0 - *2024-11-07*
