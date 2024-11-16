@@ -6,6 +6,8 @@ This file is used to list changes made in each version of the PHP cookbook.
 
 Standardise files with files in sous-chefs/repo-management
 
+Standardise files with files in sous-chefs/repo-management
+
 ## 10.2.2 - *2024-11-10*
 
 ## 10.2.1 - *2024-11-10*
