@@ -51,18 +51,18 @@ end
 
 def grep_for_version(stdout, package)
   version = nil
-  stdout.split(/\n/).grep(/^#{package}\s/i).each do |m|
+  stdout.split("\n").grep(/^#{package}\s/i).each do |m|
     # XML_RPC          1.5.4    stable
     # mongo   1.1.4/(1.1.4 stable) 1.1.4 MongoDB database driver
     # Horde_Url -n/a-/(1.0.0beta1 beta)       Horde Url class
     # Horde_Url 1.0.0beta1 (beta) 1.0.0beta1 Horde Url class
     version = m.split(/\s+/)[1].strip
-    version = if version.split(%r{///})[0] =~ /.\./
+    version = if version.split(%r{///}).first =~ /.\./
                 # 1.1.4/(1.1.4 stable)
-                version.split(%r{///})[0]
+                version.split(%r{///}).first
               else
                 # -n/a-/(1.0.0beta1 beta)
-                version.split(%r{/(.*)/\((.*)/}).last.split(/\s/)[0]
+                version.split(%r{/(.*)/\((.*)/}).last.split(/\s/).first
               end
   end
   version
@@ -236,8 +236,6 @@ action_class do
   end
 
   def get_extension_files(name)
-    files = []
-
     # use appropriate binary when listing pecl packages
     list_binary = if new_resource.channel == 'pecl.php.net'
                     new_resource.pecl
@@ -246,11 +244,9 @@ action_class do
                   end
 
     p = shell_out("#{list_binary} list-files #{name}")
-    p.stdout.each_line.grep(/^(src|ext)\s+.*\.so$/i).each do |line|
-      files << line.split[1]
+    p.stdout.each_line.grep(/^(src|ext)\s+.*\.so$/i).map do |line|
+      line.split[1]
     end
-
-    files
   end
 
   def pecl?
@@ -277,7 +273,7 @@ action_class do
 
   def manage_pecl_ini(name, action, directives, zend_extensions, priority)
     ext_prefix = extension_dir
-    ext_prefix << ::File::SEPARATOR if ext_prefix[-1].chr != ::File::SEPARATOR
+    ext_prefix << ::File::SEPARATOR if ext_prefix.last.chr != ::File::SEPARATOR
 
     files = get_extension_files(name)
 
