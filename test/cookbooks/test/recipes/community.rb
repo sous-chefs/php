@@ -1,5 +1,4 @@
 # Set constants
-set_conf_dir = nil
 set_conf_dir = if platform_family?('rhel', 'amazon')
                  '/etc/opt/remi/php80'
                else
