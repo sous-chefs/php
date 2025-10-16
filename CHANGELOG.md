@@ -5,6 +5,32 @@ This file is used to list changes made in each version of the PHP cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [10.3.0](https://github.com/sous-chefs/php/compare/v10.2.6...v10.3.0) (2025-10-16)
+
+
+### Features
+
+* Add ability to install newer PHP versions ([071ed93](https://github.com/sous-chefs/php/commit/071ed9351a4b60e829c49ef82edec6fd66699823))
+* Add support for Ubuntu 20.04 ([7aca680](https://github.com/sous-chefs/php/commit/7aca680b41afc55b6b72287da1eb35118d547331))
+* Update Ubuntu 18.04 to build latest PHP 7.2 ([a63f54d](https://github.com/sous-chefs/php/commit/a63f54d8cceb1ea1a71f34b643d27ba88a7a4bdb))
+
+
+### Bug Fixes
+
+* Add back supported RHEL flavors ([cba479d](https://github.com/sous-chefs/php/commit/cba479d519097232fc526909d52c0b7fbcbc1763))
+* Add guard for source builds on Debian 9 ([d9559a8](https://github.com/sous-chefs/php/commit/d9559a860b8d8a7909a0e72c525845bff9183f2a))
+* **ci:** Update workflows to use release pipeline ([#380](https://github.com/sous-chefs/php/issues/380)) ([20e69fe](https://github.com/sous-chefs/php/commit/20e69feecbc463d4648c22e99776dc0bdf885fe0))
+* DRY up php::package recipe ([3d1e544](https://github.com/sous-chefs/php/commit/3d1e5448e1a3dd3c0e86bd21c6c3524c7a5283f9))
+* Enable php_pear mods on Debian family OS’s ([8a71a00](https://github.com/sous-chefs/php/commit/8a71a00ff2b33677186ad4a65452e89a444006d6))
+* Ensure we have build tools for php_pear ([f0edde8](https://github.com/sous-chefs/php/commit/f0edde86419cf0afc464a45bbd2281c82b814ec2))
+* Only symlink GMP lib on Ubuntu 16.04 ([7b1c391](https://github.com/sous-chefs/php/commit/7b1c39140a9bbea84cd55d932968b741ac816f09))
+* Prevent Apache from being pulled in as a dep on Ubuntu 20.04 ([#311](https://github.com/sous-chefs/php/issues/311)) ([37d956b](https://github.com/sous-chefs/php/commit/37d956b7e2aa22bfb37476df8d0a80f942c80cf4))
+* Prevent Apache from being pulled in as a dep on Ubuntu 20.04 ([#311](https://github.com/sous-chefs/php/issues/311)) ([37607d6](https://github.com/sous-chefs/php/commit/37607d69bfbdc58df5dfc580d784d33b7515c1c5))
+* Update attributes for Debian 10 ([d2be518](https://github.com/sous-chefs/php/commit/d2be51859f0ec5d404d63fd38c8fcc6bcd0a3f44))
+* Update URL for downloading source ([07aaf93](https://github.com/sous-chefs/php/commit/07aaf9337419c6ab34513731b8a3e4c904096e33))
+* Use last stable version of PHP 5.6 ([757f955](https://github.com/sous-chefs/php/commit/757f9555d0c5bc6e5e31c7eb4070a599b839221f))
+* Use working URL for PHP source ([5cfc56e](https://github.com/sous-chefs/php/commit/5cfc56eb4befd1ed475e48affba3b997b1878b65))
+
 ## [10.2.6](https://github.com/sous-chefs/php/compare/10.2.5...v10.2.6) (2025-10-15)
 
 
