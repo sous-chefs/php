@@ -5,7 +5,7 @@ license           'Apache-2.0'
 description       'Installs and maintains php and php modules'
 source_url        'https://github.com/sous-chefs/php'
 issues_url        'https://github.com/sous-chefs/php/issues'
-version           '10.2.6'
+version           '10.3.0'
 chef_version      '>= 15.3'
 
 supports 'amazon', '>= 2.0'
