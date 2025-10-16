@@ -5,6 +5,13 @@ This file is used to list changes made in each version of the PHP cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [10.2.6](https://github.com/sous-chefs/php/compare/10.2.5...v10.2.6) (2025-10-15)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#380](https://github.com/sous-chefs/php/issues/380)) ([20e69fe](https://github.com/sous-chefs/php/commit/20e69feecbc463d4648c22e99776dc0bdf885fe0))
+
 ## 10.2.3 - *2024-11-18*
 
 Standardise files with files in sous-chefs/repo-management
