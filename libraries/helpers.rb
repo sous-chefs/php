@@ -104,6 +104,7 @@ module Php
           "/var/run/php/php#{php_version}-fpm.sock"
         end
       end
+    end
 
       def php_fpm_user
         if platform_family?('rhel', 'amazon', 'fedora')
