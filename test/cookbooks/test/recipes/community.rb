@@ -9,11 +9,32 @@ apt_update 'update'
 
 # Start of the old community_package recipe ---
 if platform_family?('rhel', 'fedora')
+  if platform?('fedora')
+    Chef::Log.fatal 'Skipping run - Fedora Remi packages do not provide the php8.2 package set used by this community test'
+    return
+  end
+
+  if platform_version.to_i >= 9
+    node.default['yum-remi-chef']['gpgkey'] = %w(
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2017
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2018
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2019
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2020
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2021
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2022
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2023
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2024
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2025
+      https://rpms.remirepo.net/RPM-GPG-KEY-remi2026
+    )
+  end
+
   include_recipe 'yum-remi-chef::remi'
 elsif platform?('ubuntu')
-  # ondrej no longer supports Ubuntu <20.04
-  if platform_version.to_i < 20
-    Chef::Log.fatal 'Skipping run - Ubuntu <20.04 is not supported by the ondrej ppa'
+  # ondrej no longer supports Ubuntu <22.04 for the PHP 8.2 packages used here.
+  if platform_version.to_i < 22
+    Chef::Log.fatal 'Skipping run - Ubuntu <22.04 does not provide the php8.2 package set used by this community test'
     return
   end
 

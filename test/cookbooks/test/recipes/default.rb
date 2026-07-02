@@ -18,11 +18,15 @@ php_pear_channel 'pecl.php.net' do
   action :update
 end
 
-# Install https://pecl.php.net/package/sync
-pecl_method = node['pecl_method'] || 'binary'
-php_pear "sync-#{pecl_method}" do
-  package_name 'sync'
-  binary 'pecl' if pecl_method == 'binary'
-  channel 'pecl.php.net' if pecl_method == 'channel'
-  priority '50'
+if platform?('fedora')
+  Chef::Log.warn 'Skipping PECL sync on Fedora: sync 1.1.3 does not build against Fedora latest PHP 8.5 headers'
+else
+  # Install https://pecl.php.net/package/sync
+  pecl_method = node['pecl_method'] || 'binary'
+  php_pear "sync-#{pecl_method}" do
+    package_name 'sync'
+    binary 'pecl' if pecl_method == 'binary'
+    channel 'pecl.php.net' if pecl_method == 'channel'
+    priority '50'
+  end
 end

@@ -105,13 +105,12 @@ action_class do
 
     raise 'PHP-FPM package not found (you probably have an unsupported distro)' if new_resource.fpm_package.nil?
 
-    file new_resource.default_conf do
-      action :nothing
-    end
-
     package new_resource.fpm_package do
       action :install
-      notifies :delete, "file[#{new_resource.default_conf}]", :immediately
+    end
+
+    file new_resource.default_conf do
+      action :delete
     end
   end
 

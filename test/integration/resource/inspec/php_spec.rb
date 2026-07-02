@@ -7,8 +7,10 @@ describe command('pear list-channels') do
   its('stdout') { should match(/pecl\.php\.net/) }
 end
 
-describe command('php --ri sync') do
-  its('exit_status') { should eq 0 }
+unless os[:family] == 'fedora'
+  describe command('php --ri sync') do
+    its('exit_status') { should eq 0 }
+  end
 end
 
 unless os[:family] == 'redhat' || os[:family] == 'fedora'

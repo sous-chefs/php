@@ -37,6 +37,11 @@ jobs:
           - resource
           - resource-community
           - resource-peclchannel
+        exclude:
+          - os: fedora-latest
+            suite: resource-community
+          - os: ubuntu-2004
+            suite: resource-community
       fail-fast: false
 
     steps:

@@ -36,7 +36,9 @@ suites:
       named_run_list: community
     excludes:
       - ubuntu-18.04
+      - ubuntu-20.04
       - amazonlinux-2023
+      - fedora-latest
   - name: resource_peclchannel
     provisioner:
       named_run_list: default

@@ -76,17 +76,14 @@ load_current_value do |new_resource|
 end
 
 action :install do
-  build_essential
+  install_build_dependencies
 
   # If we specified a version, and it's not the current version, move to the specified version
   unless new_resource.version.nil? || new_resource.version == current_resource.version
     install_version = new_resource.version
   end
-  # Check if the version we want is already installed
-  versions_match = candidate_version == current_installed_version(new_resource)
-
   # If it's not installed at all or an upgrade, install it
-  if install_version || new_resource.version.nil? && !versions_match
+  if install_version || new_resource.version.nil? && current_resource.version.nil?
     converge_by("install package #{new_resource.package_name} #{install_version}") do
       info_output = "Installing #{new_resource.package_name}"
       info_output << " version #{install_version}" if install_version && !install_version.empty?
@@ -98,7 +95,7 @@ end
 
 # reinstall is just an install that always fires
 action :reinstall do
-  build_essential
+  install_build_dependencies
 
   install_version = new_resource.version unless new_resource.version.nil?
   converge_by("reinstall package #{new_resource.package_name} #{install_version}") do
@@ -136,6 +133,16 @@ action :purge do
 end
 
 action_class do
+  def install_build_dependencies
+    if platform?('fedora')
+      package 'Install PEAR build dependencies' do
+        package_name %w(autoconf bison ca-certificates flex gcc gcc-c++ gettext make m4 ncurses-devel patch)
+      end
+    else
+      build_essential
+    end
+  end
+
   def expand_options(options)
     options ? " #{options}" : ''
   end
