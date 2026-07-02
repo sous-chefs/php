@@ -1,6 +1,8 @@
 ---
 driver: { name: exec }
 transport: { name: exec }
+provisioner:
+  policyfile: Policyfile.rb
 
 platforms:
   - name: macos-latest

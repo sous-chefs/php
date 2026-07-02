@@ -13,20 +13,20 @@ More info: <https://www.php.net/manual/en/install.fpm.php>
 
 ## Properties
 
-| Name                | Type            | Default                              | Description                                                                           |
-| ------------------- | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------- |
-| `pool_name`         | `String`        | The name of the FPM pool             |                                                                                       |
-| `listen`            | `String`        | `/var/run/php<version>-fpm.sock` (RHEL & Amazon) or `/var/run/php/php<version>-fpm.sock` (Debian) | The listen address |
-| `user`              | `String`        | The webserver user for your distro.  | The user to run the FPM under                                                         |
-| `group`             | `String`        | The webserver group for your distro. | The group to run the FPM under                                                        |
-| `process_manager`   | `String`        | `dynamic`                            | Process manager to use - see <https://www.php.net/manual/en/install.fpm.configuration.php> |
-| `max_children`      | `Integer`       | `5`                                  | Max children to scale to                                                              |
-| `start_servers`     | `Integer`       | `2`                                  | Number of servers to start the pool with                                              |
-| `min_spare_servers` | `Integer`       | `1`                                  | Minimum number of servers to have as spares                                           |
-| `max_spare_servers` | `Integer`       | `3`                                  | Maximum number of servers to have as spares                                           |
-| `chdir`             | `String`        | `/`                                  | The startup working directory of the pool                                             |
-| `additional_config` | `Hash`          | `{}`                                 | Additional parameters in JSON                                                         |
-| `fpm_ini_control`   | `[true, false]` | `false`                              | Whether to add a new `php.ini` file for FPM                                           |
+| Name                | Type            | Default                                                                                           | Description                                                                               |
+| ------------------- | --------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `pool_name`         | `String`        | The name of the FPM pool                                                                          |                                                                                           |
+| `listen`            | `String`        | `/var/run/php<version>-fpm.sock` (RHEL & Amazon) or `/var/run/php/php<version>-fpm.sock` (Debian) | The listen address                                                                        |
+| `user`              | `String`        | The webserver user for your distro.                                                               | The user to run the FPM under                                                             |
+| `group`             | `String`        | The webserver group for your distro.                                                              | The group to run the FPM under                                                            |
+| `process_manager`   | `String`        | `dynamic`                                                                                         | Process mgr - see <https://www.php.net/manual/en/install.fpm.configuration.php>           |
+| `max_children`      | `Integer`       | `5`                                                                                               | Max children to scale to                                                                  |
+| `start_servers`     | `Integer`       | `2`                                                                                               | Number of servers to start the pool with                                                  |
+| `min_spare_servers` | `Integer`       | `1`                                                                                               | Minimum number of servers to have as spares                                               |
+| `max_spare_servers` | `Integer`       | `3`                                                                                               | Maximum number of servers to have as spares                                               |
+| `chdir`             | `String`        | `/`                                                                                               | The startup working directory of the pool                                                 |
+| `additional_config` | `Hash`          | `{}`                                                                                              | Additional parameters in JSON                                                             |
+| `fpm_ini_control`   | `[true, false]` | `false`                                                                                           | Whether to add a new `php.ini` file for FPM                                               |
 
 ## Examples
 

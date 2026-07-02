@@ -1,6 +1,6 @@
 ---
 provisioner:
-  name: chef_infra
+  name: policyfile_zero
   product_name: chef
   product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   channel: stable
@@ -10,6 +10,7 @@ provisioner:
   multiple_converge: <%= ENV['MULTIPLE_CONVERGE'] || 2 %>
   deprecations_as_errors: true
   log_level: <%= ENV['CHEF_LOG_LEVEL'] || 'auto' %>
+  policyfile: Policyfile.rb
 
 verifier:
   name: inspec

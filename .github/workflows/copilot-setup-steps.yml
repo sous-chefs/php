@@ -20,5 +20,5 @@ jobs:
         uses: actions/checkout@v7
       - name: Install Chef
         uses: actionshub/chef-install@main
-      - name: Install cookbooks
-        run: berks install
+      - name: Install Policyfile dependencies
+        run: chef install Policyfile.rb

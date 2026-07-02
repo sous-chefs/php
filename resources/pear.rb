@@ -219,11 +219,7 @@ action_class do
   end
 
   def removing_package?
-    if new_resource.version.nil?
-      true # remove any version of a package
-    else
-      new_resource.version == @current_resource.version # we don't have the version we want to remove
-    end
+    new_resource.version.nil? || new_resource.version == @current_resource.version
   end
 
   def extension_dir
