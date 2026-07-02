@@ -16,6 +16,11 @@ elsif platform?('ubuntu')
     Chef::Log.fatal 'Skipping run - Ubuntu <20.04 is not supported by the ondrej ppa'
     return
   end
+
+  directory '/etc/apt/keyrings' do
+    recursive true
+  end
+
   include_recipe 'ondrej_ppa_ubuntu'
 elsif platform?('debian')
   # use sury repo for debian (https://deb.sury.org/)
