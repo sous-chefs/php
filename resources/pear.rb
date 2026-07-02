@@ -269,7 +269,7 @@ action_class do
 
   def manage_pecl_ini(name, action, directives, zend_extensions, priority)
     ext_prefix = extension_dir
-    ext_prefix << ::File::SEPARATOR if ext_prefix.last.chr != ::File::SEPARATOR
+    ext_prefix << ::File::SEPARATOR unless ext_prefix.end_with?(::File::SEPARATOR)
 
     files = get_extension_files(name)
 
