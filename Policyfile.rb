@@ -10,7 +10,7 @@ cookbook 'ondrej_ppa_ubuntu', git: 'https://github.com/MelonSmasher/ondrej_ppa_u
 cookbook 'test', path: './test/cookbooks/test'
 cookbook 'yum', git: 'https://github.com/sous-chefs/yum.git', branch: 'main'
 cookbook 'yum-epel', git: 'https://github.com/sous-chefs/yum-epel.git', branch: 'main'
-cookbook 'yum-remi-chef', '>= 5.0.1', git: 'https://github.com/sous-chefs/yum-remi-chef.git', branch: 'main'
+cookbook 'yum-remi-chef', '>= 5.0.1', git: 'https://github.com/sous-chefs/yum-remi-chef.git', tag: '5.0.1'
 
 Dir.children('./test/cookbooks/test/recipes').grep(/\.rb\z/).sort.each do |recipe|
   recipe_name = File.basename(recipe, '.rb')
