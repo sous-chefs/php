@@ -444,7 +444,7 @@ track_errors = Off
 ; referred to as EGPCS or GPC).  Registration is done from left to right, newer
 ; values override older values.
 variables_order = "EGPCS"
-<% if [8, 9, 10].include?(node['platform_version'].to_i) -%>
+<% if [7, 8, 9, 10].include?(node['platform_version'].to_i) -%>
 request_order = "GP"
 <% end -%>
 

@@ -39,7 +39,20 @@ describe 'php_ini' do
       end
     end
 
-    it { is_expected.not_to render_file('/etc/php.ini').with_content(/^request_order\s*=/) }
+    it { is_expected.to render_file('/etc/php.ini').with_content(/^request_order = "GP"$/) }
+  end
+
+  context 'on Red Hat 7 with an override' do
+    platform 'redhat', '7'
+
+    recipe do
+      php_ini 'default' do
+        conf_dir '/etc'
+        directives 'request_order' => 'GPC'
+      end
+    end
+
+    it { is_expected.to render_file('/etc/php.ini').with_content(/^request_order = "GP"$.*^request_order=GPC$/m) }
   end
 
   context 'on CentOS 7' do
