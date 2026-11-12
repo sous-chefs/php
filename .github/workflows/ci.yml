@@ -41,6 +41,9 @@ jobs:
           - resource
           - resource-community
           - resource-peclchannel
+        include:
+          - os: centos-stream-9
+            suite: default
         exclude:
           - os: fedora-latest
             suite: resource-community

@@ -28,6 +28,11 @@ platforms:
   - name: ubuntu-24.04
 
 suites:
+  - name: default
+    includes:
+      - centos-stream-9
+    provisioner:
+      named_run_list: default
   - name: resource
     provisioner:
       named_run_list: default

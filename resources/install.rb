@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 unified_mode true
+provides :php_install
 
 property :packages, Array, default: lazy { php_installation_packages }
 property :options, [ String, Array ]

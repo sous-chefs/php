@@ -1,6 +1,18 @@
+# frozen_string_literal: true
+
 apt_update 'update'
 
 php_install 'php'
+
+if platform?('centos') && [7, 8, 9, 10].include?(node['platform_version'].to_i)
+  %w(default override).each do |variant|
+    directory "/tmp/php-ini-#{variant}"
+    php_ini variant do
+      conf_dir "/tmp/php-ini-#{variant}"
+      directives({ 'request_order' => 'GPC' }) if variant == 'override'
+    end
+  end
+end
 
 # Create a test pool
 php_fpm_pool 'test-pool'

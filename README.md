@@ -37,6 +37,8 @@ This cookbook includes resources for managing:
 
 ## Usage
 
+See the [migration guide](migration.md) for the request order change and how to retain an existing setting.
+
 <!-- markdown-link-check-disable-next-line -->
 Simply use the `php_install` resource wherever you would like PHP installed from a package. By default, it will install from the platform's package manager (see [`libraries/helpers.rb`](https://github.com/sous-chefs/php/tree/main/libraries/helpers.rb) to see the default packages list for each platoform).
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name              'test'
 maintainer        'Chef Software, Inc.'
 maintainer_email  'cookbooks@chef.io'

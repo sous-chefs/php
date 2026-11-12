@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Set constants
 set_conf_dir = if platform_family?('rhel', 'amazon')
                  '/etc/opt/remi/php80'

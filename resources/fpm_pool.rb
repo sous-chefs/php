@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Author:: Chris Marchesi <cmarchesi@paybyphone.com>
 # Cookbook:: php
@@ -19,6 +21,7 @@
 #
 
 unified_mode true
+provides :php_fpm_pool
 
 property :additional_config, Hash, default: {}
 property :chdir, String, default: '/'

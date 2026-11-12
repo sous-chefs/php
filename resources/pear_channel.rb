@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Author:: Seth Chisamore <schisamo@chef.io>
 # Author:: Jennifer Davis <sigje@chef.io>
@@ -20,6 +22,7 @@
 #
 
 unified_mode true
+provides :php_pear_channel
 
 property :channel_xml, String
 property :channel_name, String, name_property: true

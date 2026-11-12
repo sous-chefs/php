@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe command('php -v') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match(/PHP 8/) }
