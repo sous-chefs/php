@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 unified_mode true
+provides :php_ini
 
 property :conf_dir, String, default: lazy { php_conf_dir }
 property :ini_template, String, default: lazy { php_ini_template }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Author:: Seth Chisamore <schisamo@chef.io>
 # Cookbook:: php
@@ -19,6 +21,7 @@
 #
 
 unified_mode true
+provides :php_pear
 
 property :package_name, String, name_property: true
 property :version, [String, nil]
@@ -256,7 +259,7 @@ action_class do
     @pecl ||=
       begin
         # search as a pear first since most 3rd party channels will report pears as pecls!
-        search_args = ''
+        search_args = +''
         search_args << " -d preferred_state=#{new_resource.preferred_state}"
         search_args << " search#{expand_channel(new_resource.channel)} #{new_resource.package_name}"
 

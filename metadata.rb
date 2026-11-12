@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name              'php'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'

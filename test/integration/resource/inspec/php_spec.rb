@@ -1,5 +1,17 @@
+# frozen_string_literal: true
+
 describe command('php -v') do
   its('exit_status') { should eq 0 }
+end
+
+if os[:name] == 'centos' && [7, 8, 9, 10].include?(os[:release].to_i)
+  describe command("php -c /tmp/php-ini-default/php.ini -r 'echo ini_get(\"request_order\");'") do
+    its('stdout') { should cmp 'GP' }
+  end
+
+  describe command("php -c /tmp/php-ini-override/php.ini -r 'echo ini_get(\"request_order\");'") do
+    its('stdout') { should cmp 'GPC' }
+  end
 end
 
 describe command('pear list-channels') do

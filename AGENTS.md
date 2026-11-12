@@ -1,5 +1,23 @@
 # Agent Notes
 
+## PHP request-order defaults
+
+The owner requested the defaults shipped by Red Hat packages for issue #235.
+Official default-stream php-common packages in Red Hat UBI 8, 9 and 10 and
+CentOS 7, 8, Stream 9 and Stream 10 set `request_order` to `GP`. The CentOS 8
+package was inspected from the official CentOS vault without executing its
+x86_64 binary. Red Hat 7 could not be independently verified, so its existing
+behaviour is preserved. The `directives` property must continue to override the
+template's default by appearing later in the generated file.
+
+The existing Kitchen files contain different platform lists: `kitchen.yml`
+defines the Vagrant matrix, `kitchen.dokken.yml` adds images, and
+`kitchen.exec.yml` has macOS and Windows entries that are not declared in
+`metadata.rb`. The default package helper has no SUSE branch even though an
+openSUSE Dokken image is listed. These differences are retained; they do not
+prove support for those extra entries. The CI `default` suite runs on CentOS
+Stream 9 and retains the pre-existing resource suites and matrix.
+
 ## Policyfile Integration Limits
 
 The `resource-community` suite exercises external community package repositories, not only this cookbook's resources. Keep the suite matrix aligned with package availability:

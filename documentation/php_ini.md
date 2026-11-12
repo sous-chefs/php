@@ -2,6 +2,8 @@
 
 Adds a `php.ini` to the appropriate location.
 
+On CentOS 7, 8, 9 and 10 and Red Hat Enterprise Linux 8, 9 and 10, the bundled templates set `request_order` to `GP`, matching the verified default PHP packages. Cookies are excluded from `$_REQUEST`; use the `directives` property to set a different value. Other versions retain their previous behaviour.
+
 ## Actions
 
 - `:add`: Add a `php.ini` file (default)

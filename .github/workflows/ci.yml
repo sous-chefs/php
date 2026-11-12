@@ -14,6 +14,8 @@ concurrency:
 jobs:
   lint-unit:
     uses: sous-chefs/.github/.github/workflows/lint-unit.yml@9.0.1
+    with:
+      gems: nokogiri
     permissions:
       actions: write
       checks: write
@@ -41,6 +43,9 @@ jobs:
           - resource
           - resource-community
           - resource-peclchannel
+        include:
+          - os: centos-stream-9
+            suite: default
         exclude:
           - os: fedora-latest
             suite: resource-community
@@ -58,6 +63,11 @@ jobs:
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+          GIT_CONFIG_COUNT: 2
+          GIT_CONFIG_KEY_0: maintenance.auto
+          GIT_CONFIG_VALUE_0: false
+          GIT_CONFIG_KEY_1: gc.auto
+          GIT_CONFIG_VALUE_1: 0
         with:
           suite: ${{ matrix.suite }}
           os: ${{ matrix.os }}
@@ -84,6 +94,11 @@ jobs:
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+          GIT_CONFIG_COUNT: 2
+          GIT_CONFIG_KEY_0: maintenance.auto
+          GIT_CONFIG_VALUE_0: false
+          GIT_CONFIG_KEY_1: gc.auto
+          GIT_CONFIG_VALUE_1: 0
         with:
           suite: ${{ matrix.suite }}
           os: ${{ matrix.os }}
