@@ -5,6 +5,17 @@ This file is used to list changes made in each version of the PHP cookbook.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [11.0.0](https://github.com/sous-chefs/php/compare/v10.4.0...v11.0.0) (2026-11-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* align PHP request defaults ([#402](https://github.com/sous-chefs/php/issues/402))
+
+### Features
+
+* align PHP request defaults ([#402](https://github.com/sous-chefs/php/issues/402)) ([a2f18df](https://github.com/sous-chefs/php/commit/a2f18dff71400749919a3787a273d070b7494d11))
+
 ## [10.4.0](https://github.com/sous-chefs/php/compare/v10.3.0...v10.4.0) (2026-08-15)
 
 
