@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@9.0.1
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@9.0.2
     with:
       gems: nokogiri
     permissions:
